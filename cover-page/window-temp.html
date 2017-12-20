@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+		<h2>Press the button to make our EV3 do something!</h2>
+
+		<form action="press_button.py" method="GET">
+			<!-- <input type="text" name="textVar"><br> -->
+			<!-- <input type="radio" name="radioVar" value="action1">Do Something<br>
+			<input type="radio" name="radioVar" value="action2">Do Something Else<br> -->
+			<p class="lead"><input type="submit" class="btn btn-lg btn-default" value="Click Me!"></p>
+			<!-- <input type="submit" class="button big-btn" name="button1" value="Click Me!"--> 
+		</form>
+{% endblock %}
+

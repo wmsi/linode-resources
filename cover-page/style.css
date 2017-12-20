@@ -101,6 +101,10 @@ body {
   text-decoration: none;
 }
 
+.masthead-mobile > li > a {
+  font-size: 12px;
+}
+
 @media (min-width: 768px) {
   .masthead-brand {
     float: left;
@@ -161,7 +165,7 @@ body {
 }
 
 .overlay {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.75);
   width:100%;
   height:100%;
   position:absolute;
