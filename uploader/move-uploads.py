@@ -1,7 +1,14 @@
+#!/usr/bin/python3
+
+# move-uploads.py
+# This script should be run automatically on the server to move new albums into their subdomains and generate galleries. To check if this script is scheduled to run type 'crontab -l' while signed in as the webpics user
+
 import subprocess
 import datetime 
+import os
 
-subdomains = ["berlin","bethlehem","canaan","colebrook","gorham","groveton","haverhill","lancaster","milan","pittsburgh","stark","stewartstown","strafford","whitefield"]
+subdomains = [name for name in os.listdir('/var/www/html/wmsinh.org/public_html') if os.path.join('.', name)]
+# ["berlin","bethlehem","canaan","colebrook","gorham","groveton","haverhill","lancaster","milan","pittsburgh","stark","stewartstown","strafford","whitefield"]
 
 ls_output = subprocess.check_output(['ls']).decode('utf-8')
 contents = ls_output.splitlines()

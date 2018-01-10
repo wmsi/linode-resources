@@ -1,5 +1,5 @@
 <h2>Welcome to WMSI Linode Resources!</h2> 
-<p>Here you can find most of the development resources for our Linode-hosted server at 45.79.101.26, wmsinh.org. This server was set up in late 2017 as a testing place for web development projects. Someday it may become the hosting platform for our main site. The projects you'll find in this repository are:</p>
+<p>Here you can find most of the development resources for our Linode-hosted server, wmsinh.org. This server was set up in late 2017 as a testing place for web development projects. Someday it may become the hosting platform for our main site. The projects you'll find in this repository are:</p>
 	<ol>
 		<li>Web page source code for the pages hosted on our server</li>
 		<li>Source code for our Internet of Things window example</li>
