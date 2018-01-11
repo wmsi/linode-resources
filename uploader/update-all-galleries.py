@@ -6,12 +6,13 @@ import subprocess
 import os
 
 # subdomains = ["berlin","bethlehem","canaan","colebrook","gorham","groveton","haverhill","lancaster","milan","pittsburgh","stark","stewartstown","stratford","whitefield"]
-path = '/var/www/html/wmsinh.org/public_html'
-subdomains = [name for name in os.listdir(path) if os.path.isdir(os.path.join(path, name, 'gallery-source'))]
+THUMBSUP_SITES_DIREC = '/var/www/html/wmsinh.org/public_html/thumbsup_sites'
+subdomains = [name for name in os.listdir(THUMBSUP_SITES_DIREC) if os.path.isdir(os.path.join(THUMBSUP_SITES_DIREC, name, 'gallery-source'))]
 
 #thumbs up gallery generation, only for those that were changed
 for town in subdomains:
 	gallery_name = 'Pictures from ' + town.title()
-	command = 'thumbsup --input /var/www/html/wmsinh.org/public_html/' + town + '/gallery-source/ --output /var/www/html/wmsinh.org/public_html/' + town + '/gallery --title "' + gallery_name + '"'
+	gallery_loc = THUMBSUP_SITES_DIREC + '/' + town
+	command = 'thumbsup --config thumbsup-global-config.json --input "%s/gallery-source/" --output "%s/gallery" --title "%s"' % (gallery_loc, gallery_loc, gallery_name)
 	# print(command)
- 	subprocess.call(command, shell=True)
+	subprocess.call(command, shell=True)

@@ -7,7 +7,9 @@ import subprocess
 import datetime 
 import os
 
-subdomains = [name for name in os.listdir('/var/www/html/wmsinh.org/public_html') if os.path.join('.', name)]
+THUMBSUP_SITES_DIREC = '/var/www/html/wmsinh.org/public_html/thumbsup_sites'
+
+subdomains = [name for name in os.listdir(THUMBSUP_SITES_DIREC) if os.path.join('.', name)]
 # ["berlin","bethlehem","canaan","colebrook","gorham","groveton","haverhill","lancaster","milan","pittsburgh","stark","stewartstown","strafford","whitefield"]
 
 ls_output = subprocess.check_output(['ls']).decode('utf-8')
@@ -28,7 +30,7 @@ for town in subdomains:
 				# otherwise use the current year
 				year = str(datetime.datetime.now().year)
 			# add date info for gallery folder nesting
-			command = 'mv -p "' + name + '" "/var/www/html/wmsinh.org/public_html/' + town + '/gallery-source/' + year + '/' + new_name + '"'
+			command = 'mv -p "%s" "%s/%s/gallery-source/%d/%s"' % (name, THUMBSUP_SITES_DIREC, town, year, new_name)
 			# print(command)
 			subprocess.call(command, shell=True)
 
@@ -36,6 +38,8 @@ for town in subdomains:
 #thumbs up gallery generation, only for those that were changed
 for town in update_list:
 	gallery_name = 'Pictures from ' + town.title()
-	command = 'thumbsup --input /var/www/html/wmsinh.org/public_html/' + town + '/gallery-source/ --output /var/www/html/wmsinh.org/public_html/' + town + '/gallery --title "' + gallery_name + '"'
+	gallery_loc = THUMBSUP_SITES_DIREC + '/' + town
+	command = 'thumbsup --config thumbsup-global-config.json --input "%s/gallery-source/" --output "%s/gallery" --title "%s"' % (gallery_loc, gallery_loc, gallery_name)
+	
 	# print(command)
 	subprocess.call(command, shell=True)
