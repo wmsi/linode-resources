@@ -13,6 +13,7 @@ subdomains = [name for name in os.listdir(THUMBSUP_SITES_DIREC) if os.path.isdir
 for town in subdomains:
 	gallery_name = 'Pictures from ' + town.title()
 	gallery_loc = THUMBSUP_SITES_DIREC + '/' + town
-	command = 'thumbsup --config thumbsup-global-config.json --input "%s/gallery-source/" --output "%s/gallery" --title "%s"' % (gallery_loc, gallery_loc, gallery_name)
+	css = 'style.css'
+	command = 'thumbsup --config thumbsup-global-config.json --input "%s/gallery-source/" --output "%s/gallery" --title "%s" --css "%s"' % (gallery_loc, gallery_loc, gallery_name, css)
 	# print(command)
 	subprocess.call(command, shell=True)

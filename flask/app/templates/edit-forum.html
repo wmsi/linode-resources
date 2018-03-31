@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Subdomain Forum</h1>
+
+    {# raw #}
+    {# endraw #}
+
+    <h3>Welcome to Sample Topic Discussion!</h3>
+    <table class="content" border="2"><!-- class="lead table table-responsive" -->
+    <form action="" method="post">
+    {% block topic %}
+        
+        {% for post in posts %}
+        <tr>
+            <td><b>{{ post.author.username }} says: </b></td>
+            <td><p>{{ post.body }}</p></td>
+            <td><p><a href="{{ url_for('delete_post', post_id=post.id) }}" class="btn btn-default">Delete</a> 
+            <!-- <td><p>{{ post.id }} {{ form.delete() }} {{ form.delete.label }}</p></td> -->
+        </tr>
+        {% endfor %}
+    {% endblock %}
+    </table>
+{% endblock %}
