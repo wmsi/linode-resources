@@ -179,19 +179,20 @@ def data_story():
     datastory = DataStory.query.all()
     return render_template('data_story.html', title='Digital Data Stories', datastory=datastory)
 
-@app.route('/scratchx', methods=['GET', 'POST'])
+@app.route('/scratchx', methods=['POST'])
 def scratchx():
-    if request.method == 'POST':
-        project_id = request.form.get('project_id')
-        data_type = request.form.get('data_type')
-        value = request.form.get('value')
+    # if request.method == 'POST':
+    # add some validation/ security screening here
+    project_id = request.form.get('project_id')
+    data_type = request.form.get('data_type')
+    value = request.form.get('value')
 
-        data = DataStory(project_id=int(project_id), data_type=str(data_type), value=int(value))
-        db.session.add(data)
-        db.session.commit()
-        app.logger.warning("project_id: %s, data_type: %s, value: %s" \
-            % (str(project_id), str(data_type), str(value)))
-    return redirect("index")
+    data = DataStory(project_id=int(project_id), data_type=str(data_type), value=int(value))
+    db.session.add(data)
+    db.session.commit()
+    app.logger.warning("project_id: %s, data_type: %s, value: %s" \
+        % (str(project_id), str(data_type), str(value)))
+    return "Thanks for posting! Your data has been added to https://wmsinh.org/data-story\n"
 
 ## IOT ROUTES ###
 
