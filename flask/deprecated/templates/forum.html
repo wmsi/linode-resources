@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block style %}
+    textarea {
+        height: 15em;
+        width: 40em;
+    }
+{% endblock %}
+
+{% block content %}
+    <h1>Subdomain Forum</h1>
+
+    {# raw #}
+    {# endraw #}
+
+    <h3>Welcome to Sample Topic Discussion!</h3>
+    <table class="content" border="2"><!-- class="lead table table-responsive" -->
+    {% block topic %}
+        
+        {% for post in posts %}
+        <tr>
+            <td><b>{{ post.author.username }} says: </b></td>
+            <td><p>{{ post.body }}</p></td>
+        </tr>
+        {% endfor %}
+    {% endblock %}
+        <tr>
+            <form action="" method="post">
+            <td>
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.email.label }}<br>
+                    {{ form.email(size=32) }}<br>
+                    {% for error in form.email.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                    {{ form.user.label }}<br>
+                    {{ form.user(size=32, value="Same as Email") }}<br>
+                </p>
+                <p>{{ form.submit() }}</p>
+            </td>
+            <td>
+                <p>
+                    {{ form.post.label }}<br>
+                    {{ form.post(size=1000) }}<br>
+                    {% for error in form.post.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </p>
+            </td>
+            </form>
+        </tr>
+    </table>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>iFrame Gallery Forum</h1>
+
+    {# raw #}
+    {# endraw #}
+
+    <table class="content" border="2"><!-- class="lead table table-responsive" -->
+    {% block topic %}
+        
+        {% for frame in frames %}
+        <tr>
+            <iframe src={{ frame.src }} style="border:1px #000000 solid;" name={{ frame.name }} scrolling="auto" align="bottom" height={{ frame.height }} width={{ frame.width }}>
+            </iframe>
+        </tr>
+        {% endfor %}
+    {% endblock %}
+    </table>
+{% endblock %}
