@@ -6,10 +6,13 @@
 
 
 table.center {
-  margin-left:auto; 
-  margin-right:auto;
-  text-align:left;
+  margin-left: auto; 
+  margin-right: auto;
+  text-align: left;
   border-spacing: 10px;
+  background: rgba(0, 0, 0, 0.75)
+  /* opacity: 0.5;
+  filter: alpha(opacity=50); /* For IE8 and earlier */
 }
 
 td {
