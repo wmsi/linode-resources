@@ -228,25 +228,3 @@ def status():
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('page_not_found.html'), 404
-
-# Run server when this file is executed
-
-
-    # posts = [
-    #     {
-    #         'author': {'username': 'Billy Student'},
-    #         'body': 'I love Mobile! '
-    #     },
-    #     {
-    #         'author': {'username': 'randomteacher@randomschool.org'},
-    #         'body': 'Go STEM!'
-    #     },
-    #     {
-    #         'author': {'username': 'WMSI Admin'},
-    #         'body': 'Thanks for posting!'
-    #     }
-<<<<<<< HEAD
-    # ]
-=======
-    # ]
->>>>>>> 0b4ba179fb1952870380ff9d0f9caab766720bc2

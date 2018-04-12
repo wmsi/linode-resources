@@ -4,10 +4,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from config import Config
+from include.credentials import *
 import logging
 from logging.handlers import RotatingFileHandler
 
 app=Flask(__name__)
+Config.SECRET_KEY = SECRET_KEY          # so that SECRET_KEY can be stored in secure credentials.py file
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
