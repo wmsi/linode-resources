@@ -18,7 +18,7 @@
         {% for data in datastory %}
         <tr>
             <td>{{ data.project_id }}</td>
-            <td>{{ data.timestamp }}</td> <!-- format timestamp -->
+            <td>{{ data.timestamp|datetime }}</td> <!-- format timestamp -->
             <td>{{ data.value }}</td>
             <td>{{ data.data_type }}</td>
         </tr>
