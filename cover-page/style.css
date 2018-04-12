@@ -2,20 +2,6 @@
  * forbetterweb.com - Classic Cover – One Page Websites (html, bootstrap)
  */
 
- /* Tables */
-
-
-table.center {
-  margin-left:auto; 
-  margin-right:auto;
-  text-align:left;
-  border-spacing: 10px;
-}
-
-td {
-  padding: 10px;
-}
-
 /* Links */
 a,
 a:focus,
@@ -98,7 +84,7 @@ body {
 .masthead-brand > li > a {
   padding-right: 0;
   padding-left: 0;
-  font-size: 16px;
+  font-size: 28px;
   font-weight: bold;
   color: #fff;
 }
@@ -117,7 +103,7 @@ body {
 
 
 .masthead-mobile > li > a {
-  font-size: 8x;
+  font-size: 12px;
 }
 
 @media (min-width: 768px) {

@@ -1,11 +1,8 @@
 image-uploader
 app.db
 credentials.py
-<<<<<<< HEAD
 thumbsup_sites/
 certbot.log
-=======
->>>>>>> 0b4ba179fb1952870380ff9d0f9caab766720bc2
 
 #####################    Python.gitignore    ########################
 # Byte-compiled / optimized / DLL files
@@ -111,8 +108,4 @@ venv.bak/
 /site
 
 # mypy
-<<<<<<< HEAD
 .mypy_cache/
-=======
-.mypy_cache/
->>>>>>> 0b4ba179fb1952870380ff9d0f9caab766720bc2

@@ -1,6 +1,6 @@
 #!/usr/bin/python
-from flask import Flask, request, render_template, send_file, redirect, url_for, flash
-from app import app,db
+# from flask import Flask, request, render_template, send_file, redirect, url_for
+from app import app, db
 from app.models import User, Post, DataStory
 import subprocess
 import iot.press_button as pressButton
@@ -12,7 +12,7 @@ from include.school_subdomains import *
 
 @app.shell_context_processor
 def make_shell_contact():
-    return{'db':db, 'User': User,'Post': Post, 'DataStory': DataStory}
+	return{'db':db, 'User': User,'Post': Post, 'DataStory': DataStory}
 
 # See __init__.py for global constants
 
@@ -48,20 +48,11 @@ def make_shell_contact():
 # # (see here: http://flask.pocoo.org/docs/0.12/quickstart/#variable-rules))
 # @app.route("/", subdomain="<site_subdomain>")
 # def school_index(site_subdomain):
-#     app.logger.warning("sering subdomain")
 #     return redirect("/gallery/") # direct redirect below
 
 # # make sure the root page displays the index
 # @app.route("/gallery/", subdomain="<site_subdomain>")
 # def subdomain_index(site_subdomain):
-#     app.logger.warning("sering subdomain")
-#     return school_subdomain(site_subdomain, "index.html")
-
-# @app.route("/subdomain")
-# def sub_test():
-# 	app.logger.warning("subdomain test")
-# 	return render_template('index.html')
-
 #     return school_subdomain(site_subdomain, "index.html")
 
 # # any requests to gallery items for each subdomain are passed
@@ -71,7 +62,6 @@ def make_shell_contact():
 # #  statically (from the filesystem) from there)
 # @app.route("/gallery/<path:filename>", subdomain="<site_subdomain>")
 # def school_subdomain(site_subdomain, filename):
-#     app.logger.warning("sering subdomain")
 #     if site_subdomain == DEFAULT_SUBDOMAIN: # www
 #         return redirect(url_for('index'))
 #     else:

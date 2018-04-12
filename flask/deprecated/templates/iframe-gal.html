@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block style %}
+     .frame-cell {
+          background:url({{ url_for('static', filename='img/loading.png') }}) center center no-repeat;
+          <!-- position: absolute; -->
+          <!-- background-size: 100vh; -->
+          border: 10px #FFFFFF solid;
+          width: 60vw;
+          height: 60vh;
+          margin: auto;
+          <!-- padding-bottom: 100px;  -->
+     }
+    ul {
+        list-style-position: inside;
+    }
+
+{% endblock %}
+
+{% block headscript %}
+    <script>
+    var window_source = 0;
+    function changeSlide() {
+        var sources = {{ sources|safe }};
+        document.getElementById('frame').src = sources[window_source];
+        window_source = window_source + 1;
+        window_source = window_source % sources.length;
+    }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <h1>iFrame Gallery Prototype</h1>
+
+    {# raw #}
+    {# endraw #}
+        
+    <div class='frame-cell' onclick='changeSlide()'>
+        <iframe id="frame" src="static/placeholder.html" scrolling="auto" align="bottom" height='100%' width='100%' allowtransparency="true" allowfullscreen>
+        </iframe>
+    </div>
+    <br>
+    <div>
+        <p class="lead"><a href="#" class="btn btn-default btn-lg" onclick="changeSlide()">Next</a></p>
+    <br>
+    <h3>List of sources being generated:</h3>
+    <ul>
+
+    {% for source in sources %}
+        <li>{{ source }}
+    {% endfor %}
+{% endblock %}
