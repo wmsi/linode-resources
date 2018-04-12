@@ -62,6 +62,8 @@ def make_shell_contact():
 # 	app.logger.warning("subdomain test")
 # 	return render_template('index.html')
 
+#     return school_subdomain(site_subdomain, "index.html")
+
 # # any requests to gallery items for each subdomain are passed
 # # onto the correct school domain subfolder
 # # (thumbs up stores files and SETS LINKS assuming that 

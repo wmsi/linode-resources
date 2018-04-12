@@ -10,7 +10,6 @@ SCHOOL_SUBDOMAIN_FOLDER = "/var/www/html/wmsinh.org/public_html/thumbsup_sites/"
 
 def serve_school_subdomain(subdomain, filename):
     if subdomain not in SCHOOL_SUBDOMAINS:
-        print("subdomain404")
         abort(404)
     else:
         direc = SCHOOL_SUBDOMAIN_FOLDER + subdomain + "/gallery/"

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+		<h2>Waiting...</span></h2>
+		<p>The Internet (of Things) is a big place! It has been <div id="time"></div> since your button press.</p>
+		<p>Status is </p><div id="status"></div>
+
+
+			<!-- jQuery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script>
+		// Set the date we're counting down to
+		var countDownDate = new Date("Sep 5, 2018 15:37:25").getTime();
+		var success = false;
+
+		// Update the count down every 1 second
+		var timer = setInterval(function() {
+
+		    // Get todays date and time
+		    var now = new Date().getTime();
+		    
+		    // Find the distance between now an the count down date
+		    var distance = now - startTime;
+		    
+		    // Time calculations for days, hours, minutes and seconds
+		    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+		    
+		    // Output the result in an element with id="demo"
+		    document.getElementById("time").innerHTML = minutes + "m " + seconds + "s ";
+
+		}, 1000);
+
+		var update = setInterval(function loadStatus() {
+			if(!success) {
+				var xhttp = new XMLHttpRequest();
+				xhttp.onreadystatechange = function() {
+					if (this.readyState == 4 && this.status == 200) {
+						document.getElementById("status").innerHTML = this.responseText;
+						if(responseText.indexOf("success") != -1) {
+							success = true;
+							document.location.href='../window.py';
+						}
+					}
+				};
+				xhttp.open("GET", "status.txt", true);
+				xhttp.send();
+			}
+		}, 500);
+		</script>
+{% end block %}
+

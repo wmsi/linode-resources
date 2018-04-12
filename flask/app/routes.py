@@ -124,7 +124,7 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
-
+ 
 ### SCHOOL SUBDOMAIN ROUTES ###
 
 # for now always redirect to the gallery index for school subdomains
@@ -135,13 +135,11 @@ def register():
 # (see here: http://flask.pocoo.org/docs/0.12/quickstart/#variable-rules))
 @app.route("/", subdomain="<site_subdomain>")
 def school_index(site_subdomain):
-    app.logger.warning('attempting to serve subdomain')
     return redirect("/gallery/") # direct redirect below
 
 # make sure the root page displays the index
 @app.route("/gallery/", subdomain="<site_subdomain>")
 def subdomain_index(site_subdomain):
-    app.logger.warning('attempting to serve subdomain gallery')
     return school_subdomain(site_subdomain, "index.html")
 
 # any requests to gallery items for each subdomain are passed
@@ -195,7 +193,7 @@ def scratchx():
             % (str(project_id), str(data_type), str(value)))
     return redirect("index")
 
-### IOT ROUTES ###
+## IOT ROUTES ###
 
 @app.route("/window")
 def window():
@@ -247,4 +245,8 @@ def page_not_found(error):
     #         'author': {'username': 'WMSI Admin'},
     #         'body': 'Thanks for posting!'
     #     }
+<<<<<<< HEAD
     # ]
+=======
+    # ]
+>>>>>>> 0b4ba179fb1952870380ff9d0f9caab766720bc2
