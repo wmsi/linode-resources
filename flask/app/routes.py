@@ -199,7 +199,7 @@ def scratchx():
 
         data_set = DataStory.query.filter_by(project_id=project_id, data_type=data_type).all()
         values = [];
-        for(datum in data_set):
+        for datum in data_set:
             values.append(datum.value)
         return jsonify(values)
 
