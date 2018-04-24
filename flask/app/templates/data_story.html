@@ -6,12 +6,20 @@
     {# raw #}
     {# endraw #}
 
-    <table class="center" border="2"><!-- class="lead table table-responsive" -->
+    <div class="selector" align="left">
+        <select id="project_id" onchange="renderTable(this)">
+            <option value="">Select Project ID</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            
+    </div>
+    <table class="center" border="2" id="data-table"><!-- class="lead table table-responsive" -->
         <tr><b>
-            <td>Project ID</td>
-            <td>Timestamp</td>
-            <td>Value</td>
-            <td>Data Type</td>
+            <th>Project ID</th>
+            <th>Timestamp</th>
+            <th>Value</th>
+            <th>Data Type</th>
         </tr></b>
     {% block topic %}
         
@@ -29,4 +37,24 @@
     {% if current_user.wmsi_user %}
     <p class="lead"><a href="#" class="btn btn-default">Edit Data Stories</a></p>
     {% endif %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        var raw_data = [
+            {% for data in datastory %}
+                {
+                    "project_id":"{{ data.project_id }}", 
+                    "timestamp":"{{ data.timestamp|datetime }}",.
+                    "value":"{{ data.value }}",
+                    "data_type":"{{ data.data_type }}"
+                }
+            {% endfor %}
+        ];
+        function renderTable(selectObject) {
+            var filter_id = selectObject.value;
+            var render_data = raw_data.filter(function (el) {
+                return el.project_id == filter_id;
+            });
+            alert(render_data);
+        }
+    </script>
 {% endblock %}
