@@ -196,7 +196,7 @@ def scratchx():
     if request.method == 'GET':
         project_id = request.form.get('project_id')
         data_type = request.form.get('data_type')
-        if !data_type:
+        if data_type is None:
             data_set = DataStory.query.filter_by(project_id=int(project_id)).all()
         else:
             data_set = DataStory.query.filter_by(project_id=int(project_id), data_type=str(data_type)).all()
