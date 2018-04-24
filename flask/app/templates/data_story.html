@@ -53,21 +53,11 @@
             });
         {% endfor %}
 
-        // function renderDropdown() {
-            var lookup = {};
-            var options = [];
-            for(var i=0; i < raw_data.length; i++) {
-                var id = raw_data[i].project_id;
-                if(!(id in lookup)) {
-                    lookup[id] = true;
-                    options.push(id);
-                }
-            }
-            $('#project_id').append(
-                $.map(options, function(item, index) {
-                    return '<option value="' + item + '">' + item + '</option>';
-                }).join());
-        // }
+        var options = $.unique(raw_data.map(function (d) {return d.project_id}));
+        $('#project_id').append(
+            $.map(options, function(item, index) {
+                return '<option value="' + item + '">' + item + '</option>';
+            }).join());
 
         function renderTable(selectObject) {
             var filter_id = selectObject.value;
