@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from flask import Flask, request, render_template, send_file, redirect, url_for, flash
+from flask import Flask, request, render_template, send_file, redirect, url_for, flash, jsonify
 from app import app, forms, db
 from app.models import User, Post, DataStory
 from flask_login import current_user, login_user, logout_user, login_required
@@ -179,20 +179,30 @@ def data_story():
     datastory = DataStory.query.all()
     return render_template('data_story.html', title='Digital Data Stories', datastory=datastory)
 
-@app.route('/scratchx', methods=['POST'])
+@app.route('/scratchx', methods=['POST','GET'])
 def scratchx():
-    # if request.method == 'POST':
+    if request.method == 'POST':
     # add some validation/ security screening here
-    project_id = request.form.get('project_id')
-    data_type = request.form.get('data_type')
-    value = request.form.get('value')
+        project_id = request.form.get('project_id')
+        data_type = request.form.get('data_type')
+        value = request.form.get('value')
 
-    data = DataStory(project_id=int(project_id), data_type=str(data_type), value=int(value))
-    db.session.add(data)
-    db.session.commit()
-    app.logger.warning("project_id: %s, data_type: %s, value: %s" \
-        % (str(project_id), str(data_type), str(value)))
-    return "Thanks for posting! Your data has been added to https://wmsinh.org/data-story\n"
+        data = DataStory(project_id=int(project_id), data_type=str(data_type), value=int(value))
+        db.session.add(data)
+        db.session.commit()
+        app.logger.warning("project_id: %s, data_type: %s, value: %s" \
+            % (str(project_id), str(data_type), str(value)))
+        return "Thanks for posting! Your data has been added to https://wmsinh.org/data-story\n"
+    if request.method == 'GET':
+        project_id = request.form.get('project_id')
+        data_type = request.form.get('value')
+
+        data_set = DataStory.query.filter_by(project_id=project_id, data_type=data_type).all()
+        values = [];
+        for(datum in data_set):
+            values.append(datum.value)
+        return jsonify(values)
+
 
 ## IOT ROUTES ###
 
