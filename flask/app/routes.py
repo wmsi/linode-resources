@@ -194,8 +194,8 @@ def scratchx():
             % (str(project_id), str(data_type), str(value)))
         return "Thanks for posting! Your data has been added to https://wmsinh.org/data-story\n"
     if request.method == 'GET':
-        project_id = request.form.get('project_id')
-        data_type = request.form.get('data_type')
+        project_id = request.args.get('project_id')
+        data_type = request.args.get('data_type')
         if data_type is None:
             data_set = DataStory.query.filter_by(project_id=int(project_id)).all()
         else:
