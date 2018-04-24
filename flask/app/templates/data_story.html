@@ -7,31 +7,35 @@
     {# endraw #}
 
     <div class="selector" align="left">
-        <select id="project_id" onchange="renderTable(this)">
+        <select id="project_id" onload="renderDropdown()" onchange="renderTable(this)">
             <option value="">Select Project ID</option>
-            <option value="0">0</option>
+           <!--  <option value="0">0</option>
             <option value="1">1</option>
-            <option value="2">2</option>
-            
+            <option value="2">2</option> -->
+        </select>
     </div>
     <table class="center" border="2" id="data-table"><!-- class="lead table table-responsive" -->
-        <tr><b>
-            <th>Project ID</th>
-            <th>Timestamp</th>
-            <th>Value</th>
-            <th>Data Type</th>
-        </tr></b>
-    {% block topic %}
-        
-        {% for data in datastory %}
-        <tr>
-            <td>{{ data.project_id }}</td>
-            <td>{{ data.timestamp|datetime }}</td> <!-- format timestamp -->
-            <td>{{ data.value }}</td>
-            <td>{{ data.data_type }}</td>
-        </tr>
-        {% endfor %}
-    {% endblock %}
+        <thead>
+            <tr><b>
+                <th>Project ID</th>
+                <th>Timestamp</th>
+                <th>Value</th>
+                <th>Data Type</th>
+            </tr></b>
+        </thead>
+        <tbody id='table-content'>
+            {% block topic %}
+                
+                {% for data in datastory %}
+                <tr>
+                    <td>{{ data.project_id }}</td>
+                    <td>{{ data.timestamp|datetime }}</td> <!-- format timestamp -->
+                    <td>{{ data.value }}</td>
+                    <td>{{ data.data_type }}</td>
+                </tr>
+                {% endfor %}
+            {% endblock %}
+        </tbody>
     </table>
     <br>
     {% if current_user.wmsi_user %}
@@ -39,22 +43,42 @@
     {% endif %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script>
-        var raw_data = [
-            {% for data in datastory %}
-                {
-                    "project_id":"{{ data.project_id }}", 
-                    "timestamp":"{{ data.timestamp|datetime }}",.
-                    "value":"{{ data.value }}",
-                    "data_type":"{{ data.data_type }}"
+        var raw_data = [];
+        {% for data in datastory %}
+            raw_data.push({
+                "project_id":"{{ data.project_id }}", 
+                "timestamp":"{{ data.timestamp|datetime }}",
+                "value":"{{ data.value }}",
+                "data_type":"{{ data.data_type }}"
+            });
+        {% endfor %}
+
+        // function renderDropdown() {
+            var lookup = {};
+            var options = [];
+            for(var i=0; i < raw_data.length; i++) {
+                var id = raw_data[i].project_id;
+                if(!(id in lookup)) {
+                    lookup[id] = true;
+                    options.push(id);
                 }
-            {% endfor %}
-        ];
+            }
+            $('#project_id').append(
+                $.map(options, function(item, index) {
+                    return '<option value="' + item + '">' + item + '</option>';
+                }).join());
+        // }
+
         function renderTable(selectObject) {
             var filter_id = selectObject.value;
+            var trHTML = "";
             var render_data = raw_data.filter(function (el) {
                 return el.project_id == filter_id;
             });
-            alert(render_data);
+            $('#table-content').html(
+                $.map(render_data, function(item, index) {
+                    return '<tr><td>' + item.project_id + '</td><td>' + item.timestamp + '</td><td>' + item.value + '</td><td>' + item.data_type + '</td>';
+                }).join());
         }
     </script>
 {% endblock %}
