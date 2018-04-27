@@ -5,16 +5,40 @@
 
     {# raw #}
     {# endraw #}
+    <form>
+        <div class="col main-panel">
+            <div class="row">
+                <div class="col">
+                    <label>Select your Project ID</label>
+                <!-- <div class="selector" align="left"> -->
+                    <select class="form-control form-control-lg" id="project_id" onload="renderDropdown()" onchange="renderTable(this)">
+                        <option value="">Select Project ID</option>
+                    </select>
+                <!-- </div> -->
+                </div>
+                <div class="col form-group">
+                    <label>Choose a Date Range</label><br>
+                    <div id="datepicker" class="pull-right datepicker form-control form-control-lg">
+                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                        <span></span> <b class="caret"></b>
+                    </div>
 
-    <div class="selector" align="left">
-        <select id="project_id" onload="renderDropdown()" onchange="renderTable(this)">
-            <option value="">Select Project ID</option>
-           <!--  <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option> -->
-        </select>
-    </div>
-    <table class="center" border="2" id="data-table"><!-- class="lead table table-responsive" -->
+                    <!-- <input class="form-control corm-control-lg" type="text" value="01/01/2018 - 03/31/2018" /> -->
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col sensor-panel">
+            <label>Select Sensors</label>
+            <div class="form-check form-control form-control-lg">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <label class="form-check-label" for="defaultCheck1">
+                Sensor 1
+                </label>
+            </div>
+        </div> -->
+    </form>
+   
+    <table class="table center" border="2" id="data-table"><!-- class="lead table table-responsive" -->
         <thead>
             <tr><b>
                 <th>Project ID</th>
@@ -41,7 +65,10 @@
     {% if current_user.wmsi_user %}
     <p class="lead"><a href="#" class="btn btn-default">Edit Data Stories</a></p>
     {% endif %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+{% endblock %}
+
+{% block script %}
+    <!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script -->
     <script>
         var raw_data = [];
         {% for data in datastory %}
@@ -70,5 +97,32 @@
                     return '<tr><td>' + item.project_id + '</td><td>' + item.timestamp + '</td><td>' + item.value + '</td><td>' + item.data_type + '</td>';
                 }).join());
         }
+
+        /* date range picker config */
+        /* from www.daterangepicker.com */
+        $(function() {
+            var start = moment().subtract(29, 'days');
+            var end = moment();
+
+            function cb(start, end) {
+                $('#datepicker span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+            }
+
+            $('#datepicker').daterangepicker({
+                startDate: start,
+                endDate: end,
+                ranges: {
+                   'Today': [moment(), moment()],
+                   'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                   'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                   'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                   'This Month': [moment().startOf('month'), moment().endOf('month')],
+                   'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                }
+            }, cb);
+
+            cb(start, end);
+            
+        });
     </script>
 {% endblock %}
