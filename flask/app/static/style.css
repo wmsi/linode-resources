@@ -2,23 +2,6 @@
  * forbetterweb.com - Classic Cover – One Page Websites (html, bootstrap)
  */
 
- /* Tables */
-
-
-table.center {
-  margin-left: auto; 
-  margin-right: auto;
-  text-align: left;
-  border-spacing: 10px;
-  background: rgba(0, 0, 0, 0.75)
-  /* opacity: 0.5;
-  filter: alpha(opacity=50); /* For IE8 and earlier */
-}
-
-td {
-  padding: 10px;
-}
-
 /* Links */
 a,
 a:focus,
@@ -36,6 +19,13 @@ a:hover {
   text-decoration: none;
 }
 
+.btn {
+  padding: 14px 24px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  /*text-transform: uppercase;*/
+}
+
 /* Custom default button */
 .btn-default,
 .btn-default:hover,
@@ -47,6 +37,15 @@ a:hover {
   border-radius: 2px;
 }
 
+.btn-lg {
+  font-size: 36px;
+}
+
+/* Images */
+.feature {
+  height: 25vh;
+}
+
 /*
  * Base structure
  */
@@ -56,11 +55,14 @@ body {
   height: 100%;
   background-color: #000;
 }
+
 body {
   font-family: Roboto, sans-serif;
   color: #fff;
   text-align: center;
   text-shadow: 0 1px 3px rgba(0,0,0,.5);
+  background-image: url('{{ bgimg }}');
+  background-size: 100vw;
 }
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
@@ -257,4 +259,60 @@ small {
   .masthead {
     max-width: 100%;
      }
+}
+
+
+ /* Layouts */
+
+
+table.center {
+  margin-left: auto; 
+  margin-right: auto;
+  text-align: left;
+  border-spacing: 10px;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 10px;
+  /* opacity: 0.5;
+  filter: alpha(opacity=50); /* For IE8 and earlier */
+}
+
+td {
+  padding: 10px;
+}
+
+.main-panel {
+  float: left;
+  width: 75vw;
+  text-align: left;
+}
+
+.sensor-panel {
+  float: right;
+  width: 25vw;
+}
+
+.dropdown { 
+    background-color: black; 
+    color: #fff;
+}
+
+/* HTML Forms */
+input[type=text], input[type=password], input[type=submit], select {
+    width: 50%;
+    /*padding: 12px 20px;*/
+    margin: 2px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #000;
+    box-sizing: border-box;
+}
+
+.datepicker {
+  background: #fff; 
+  cursor: pointer; 
+  padding: 5px 10px; 
+  border: 1px solid #ccc; 
+  width: 100%;
+  color: #000;
 }

@@ -36,11 +36,9 @@
 
     <!-- Bootstrap core CSS -->
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" /> -->
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <!-- Datepicker CSS -->
-    <link rel="stylesheet" type="text/css" media="all" href="{{ url_for('static',filename='daterangepicker.css') }}" />
+    <link rel="stylesheet" type="text/css" media="all" href="{{ url_for('static',filename='datepicker.css') }}" />
 
     <!-- Custom styles for this template -->
     <link href="{{ url_for('static',filename='style.css') }}" rel="stylesheet">
@@ -49,16 +47,49 @@
     <link href='https://fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'> 
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900' rel='stylesheet' type='text/css'>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 
+    <!-- Datepicker JS files -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/moment.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/datepicker.js') }}"></script>
     <style>
+    <!-- 
+        .masthead-nav > li > .dropdown-menu { 
+            background-color: black; 
+        }
 
+        .btn {
+            padding: 14px 24px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        /*.btn.btn-lg.btn-default {
+            font-size: 36px;
+        }*/
+
+    /* HTML Forms */
+    input[type=text], input[type=password], input[type=submit], select {
+        width: 50%;
+        /*padding: 12px 20px;*/
+        margin: 2px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        color: #000;
+        box-sizing: border-box;
+    }
+    
+	img {
+		height: 25vh;
+	} */
 	{% if bgimg %}
 	body {
 	    background-image: url('{{ bgimg }}');
         background-size: 100vw;
 	}
-
+    
 	{% endif %}
 
     {% if style %}
@@ -106,19 +137,17 @@
                             <li><a href="/window">Internet of Things<!-- <br><small>super cool tech <i class="fa fa-level-up"></i></small> --></a></li>
                             <li><a href="http://www.whitemountainscience.org/about/">About WMSI</a></li>
                             <li><a href="http://www.whitemountainscience.org/contact-us/">Contact Us</a></li>
-                            <li class="dropdown show">
-                                <a href="#" class="dropdown-toggle" role="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mobile STEM Lab</a>
-                                <!-- <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mobile STEM Lab<span class="caret"></span></a> -->
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink"> <!-- nav masthead-nav -->
-                                    <a class="dropdown-item" href="{{ url_for('mobile') }}">About</a>
-                                    <a class="dropdown-item" href="https://gorham.wmsinh.org">Gorham</a>
-                                    <a class="dropdown-item" href="https://milan.wmsinh.org">Milan</a>
-                                    <a class="dropdown-item" href="https://berlin.wmsinh.org">Berlin</a>
-                                    <a class="dropdown-item" href="https://haverhill.wmsinh.org">Haverhill</a>
-                                    <a class="dropdown-item" href="https://whitefield.wmsinh.org">Whitefield</a>
-                                    <a class="dropdown-item" href="https://lancaster.wmsinh.org">Lancaster</a>
-                                </div>
-                              <!-- </ul> -->
+                            <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mobile STEM Lab<span class="caret"></span></a>
+                              <ul class="nav masthead-nav dropdown-menu">
+                                <li><a href="{{ url_for('mobile') }}">About</a></li><br>
+                                <li><a href="https://gorham.wmsinh.org">Gorham</a></li><br>
+                                <li><a href="https://milan.wmsinh.org">Milan</a></li><br>
+                                <li><a href="https://berlin.wmsinh.org">Berlin</a></li><br>
+                                <li><a href="https://haverhill.wmsinh.org">Haverhill</a></li><br>
+                                <li><a href="https://whitefield.wmsinh.org">Whitefield</a></li><br>
+                                <li><a href="https://lancaster.wmsinh.org">Lancaster</a></li><br>
+                              </ul>
                             </li>
                             <li>{% if current_user.is_anonymous %}
                                 <a href="{{ url_for('login') }}">Login</a>
@@ -165,16 +194,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <!-- Bootstrap core JavaScript -->
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-
-
-<!-- Datepicker JS files -->
-<!-- <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script> -->
-<script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="{{ url_for('static',filename='js/moment.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static',filename='js/daterangepicker.js') }}"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <!-- Plugins and Custom JavaScript -->
 <script src="{{ url_for('static', filename='js/device.min.js') }}"></script>
@@ -185,10 +205,6 @@
 Google Analitics
 Change UA-XXXXXXX-X to be your site's ID
  -->
-{% block script %}
-{% endblock %}
-
-
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
