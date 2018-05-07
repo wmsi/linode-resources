@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <label>Select your Project ID</label>
-                    <select class="form-control form-control-lg" id="project_id" onchange="renderTable()">
+                    <select class="form-control form-control-lg" id="project_id" onchange="renderTable(true)">
                         <option value="">Select Project ID</option>
                     </select>
                 </div>
@@ -46,7 +46,7 @@
 
     <div class="row">
         <div class="col-md-8">
-            <canvas id="chartCanvas" width="400" height="200"></canvas>
+            <canvas id="chartCanvas" width="400" height="400"></canvas>
         </div>
         <div class="col-md-4">
             <a href='#' class='form-control btn' onclick='renderChart()'>Render Chart</a>
@@ -139,7 +139,7 @@
         }
         
 
-        function filterData() {
+        function filterData(set_dates=false) {
             var render_data = raw_data;
 
             var filter_id = document.getElementById("project_id").value;
@@ -156,29 +156,16 @@
                     });
             }
 
+            if(set_dates) {
+                autoSetDates(render_data);
+            }
+
             if(start_date && end_date) {
                 render_data = filterDate(render_data);
             }
 
             return render_data;
         }
-
-        // function filterID(selectObject) {
-        //     var filter_id = selectObject.value;
-        //     render_data = render_data.filter(function (el) { // var filter_by_id = 
-        //             return el.project_id == filter_id;
-        //         });
-        //     renderTable();
-        // }
-
-        // function filterDate(start, end) {
-        //     render_data = render_data.filter(function (el) {
-        //         timestamp = new Date(el.timestamp);
-        //         console.log("check if " + String(timestamp) + " is between " + String(start_date) + " and " + String(end_date));
-        //         return (timestamp >= start && timestamp <= end);
-        //     });
-        //     renderTable();
-        // }
 
         function filterDate(render_data) {
             render_data = render_data.filter(function (el) {
@@ -192,13 +179,19 @@
             // renderTable();
         }
 
-        function renderTable() {
-            render_data = filterData();
+        function renderTable(set_dates=false) {
+            render_data = filterData(set_dates);
 
             $('#table-content').html(
                 $.map(render_data, function(item, index) {
                     return '<tr><td>' + item.project_id + '</td><td>' + item.timestamp.format('MMMM Do YYYY, h:mm:ss a') + '</td><td>' + item.value + '</td><td>' + item.data_type + '</td>';
                 }).join());
+        }
+
+        function autoSetDates(render_data) {
+            var start = getFirstDate(render_data);
+            var end = getLastDate(render_data);
+            $('#datepicker span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
         }
 
         /* date range picker config */
@@ -237,14 +230,17 @@
 
     window.onload = renderSelects();
 
+    const canvas = document.getElementById('chartCanvas');
     const ctx = document.getElementById('chartCanvas').getContext('2d');
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     // window.onload = renderChart();
 
     function renderChart() {
         render_data = filterData();
         if(!singleType(render_data)) {
             ctx.font = "36px Roboto";
-            ctx.fillText("Please select a single Data Type to render a chart");
+            ctx.fillText("Please select a single Data Type to render a chart",10,50);
             return;
         }
     
