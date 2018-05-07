@@ -58,8 +58,13 @@
 	    background-image: url('{{ bgimg }}');
         background-size: 100vw;
 	}
-
+    {% elif bgcolor %}
+    body {
+        background-color: '{{ bgcolor }}';
+    }
 	{% endif %}
+
+
 
     {% if style %}
         {{ style }}
