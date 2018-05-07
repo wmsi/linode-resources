@@ -177,7 +177,7 @@ def data_story():
                 contact a WMSI administrator to make the change""")
         return redirect(url_for('forum'))
     datastory = DataStory.query.all()
-    return render_template('data_story.html', title='Digital Data Stories', datastory=datastory)
+    return render_template('data_story.html', title='Digital Data Stories', datastory=datastory, bgcolor='black')
 
 @app.route('/scratchx', methods=['POST','GET'])
 def scratchx():
