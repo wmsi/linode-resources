@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <label>Select your Project ID</label>
-                    <select class="form-control form-control-lg" id="project_id" onchange="renderTable(true)">
+                    <select class="form-control form-control-lg" id="project_id" onchange="renderTable()">
                         <option value="">Select Project ID</option>
                     </select>
                 </div>
@@ -46,7 +46,7 @@
 
     <div class="row">
         <div class="col-md-8">
-            <canvas id="chartCanvas" width="400" height="400"></canvas>
+            <canvas id="chartCanvas" width="400" height="200"></canvas>
         </div>
         <div class="col-md-4">
             <a href='#' class='form-control btn' onclick='renderChart()'>Render Chart</a>
@@ -88,7 +88,6 @@
 
     <script>
         var raw_data = [];
-
         {% for data in datastory %}
             raw_data.push({
                 "project_id":"{{ data.project_id }}", 
@@ -101,23 +100,18 @@
         // render_data = raw_data;
         var start_date = getFirstDate(raw_data); // = new Date();
         var end_date = moment(); // = new Date();
-
-
-
         function renderSelects() {
             var id_options = $.unique(raw_data.map(function (d) {return d.project_id}));
             $('#project_id').append(
                 $.map(id_options, function(item, index) {
                     return '<option value="' + item + '">' + item + '</option>';
                 }).join());
-
             var type_options = $.unique(raw_data.map(function (d) {return d.data_type}));
             $('#data_type').append(
                 $.map(type_options, function(item, index) {
                     return '<option value="' + item + '">' + item + '</option>';
                 }).join());        
         }
-
         function getFirstDate(data_array) {
             var first_date = moment(data_array[0].timestamp);
             for(i=1; i<data_array.length; i++) {
@@ -127,7 +121,6 @@
             }
             return first_date;
         }
-
         function getLastDate(data_array) {
             var last_date = moment(data_array[0].timestamp);
             for(i=1; i<data_array.length; i++) {
@@ -138,35 +131,40 @@
             return last_date;
         }
         
-
-        function filterData(set_dates=false) {
+        function filterData() {
             var render_data = raw_data;
-
             var filter_id = document.getElementById("project_id").value;
             if (filter_id != "Select Project ID" && filter_id != "") {
                 render_data = render_data.filter(function (el) { // var filter_by_id = 
                         return el.project_id == filter_id;
                     });
             }
-
             var filter_type = document.getElementById("data_type").value;
             if (filter_type != "Select Data Type" && filter_type != "") {
                 render_data = render_data.filter(function (el) { // var filter_by_id = 
                         return el.data_type == filter_type;
                     });
             }
-
-            if(set_dates) {
-                autoSetDates(render_data);
-            }
-
             if(start_date && end_date) {
                 render_data = filterDate(render_data);
             }
-
             return render_data;
         }
-
+        // function filterID(selectObject) {
+        //     var filter_id = selectObject.value;
+        //     render_data = render_data.filter(function (el) { // var filter_by_id = 
+        //             return el.project_id == filter_id;
+        //         });
+        //     renderTable();
+        // }
+        // function filterDate(start, end) {
+        //     render_data = render_data.filter(function (el) {
+        //         timestamp = new Date(el.timestamp);
+        //         console.log("check if " + String(timestamp) + " is between " + String(start_date) + " and " + String(end_date));
+        //         return (timestamp >= start && timestamp <= end);
+        //     });
+        //     renderTable();
+        // }
         function filterDate(render_data) {
             render_data = render_data.filter(function (el) {
                 // timestamp = new Date(el.timestamp);
@@ -178,28 +176,18 @@
             return render_data;
             // renderTable();
         }
-
-        function renderTable(set_dates=false) {
-            render_data = filterData(set_dates);
-
+        function renderTable() {
+            render_data = filterData();
             $('#table-content').html(
                 $.map(render_data, function(item, index) {
                     return '<tr><td>' + item.project_id + '</td><td>' + item.timestamp.format('MMMM Do YYYY, h:mm:ss a') + '</td><td>' + item.value + '</td><td>' + item.data_type + '</td>';
                 }).join());
         }
-
-        function autoSetDates(render_data) {
-            var start = getFirstDate(render_data);
-            var end = getLastDate(render_data);
-            $('#datepicker span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-        }
-
         /* date range picker config */
         /* from www.daterangepicker.com */
         $(function() {
             var start = start_date; //moment().subtract(29, 'days');
             var end = end_date; //moment();
-
             function cb(start, end) {
                 $('#datepicker span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
                 // console.log("A new date range was chosen: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
@@ -208,7 +196,6 @@
                 end_date = end;
                 renderTable();
             }
-
             $('#datepicker').daterangepicker({
                 startDate: start,
                 endDate: end,
@@ -221,26 +208,19 @@
                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
                 }
             }, cb);
-
             cb(start, end);
         });
-
     // render dropdowns when the page loads
-
-
     window.onload = renderSelects();
-
-    const canvas = document.getElementById('chartCanvas');
     const ctx = document.getElementById('chartCanvas').getContext('2d');
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
     // window.onload = renderChart();
-
     function renderChart() {
         render_data = filterData();
         if(!singleType(render_data)) {
-            ctx.font = "36px Roboto";
-            ctx.fillText("Please select a single Data Type to render a chart",10,50);
+            ctx.font = "24px Roboto";
+            ctx.fillStyle = 'white';
+        ctx.fillText("Please select a single Data Type",20,90);
+        ctx/fillText("to render a chart.",20,120);
             return;
         }
     
@@ -253,7 +233,6 @@
             // labels: [new Date(getFirstDate(test_data)), new Date(getLastDate(test_data))],
             datasets: [],
         }
-
         render_data.map(function(item) {
             if(!chart_projects.includes(item.project_id)) {
                 var index = chart_projects.length;
@@ -273,7 +252,6 @@
                 data.datasets[index].data.push(item.value);
             }
         });
-
         var options = {
             type: 'line',
             data: data,
@@ -304,7 +282,6 @@
         }
         var myChart = new Chart(ctx, options);
     }
-
     function singleType(data) {
         var type = data[0].data_type;
         for(var i in data) {
