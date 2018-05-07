@@ -244,7 +244,8 @@
         render_data = filterData();
         if(!singleType(render_data)) {
             ctx.font = "36px Roboto";
-            ctx.fillText("Please select a single Data Type to render a chart");
+            ctx.fillStyle = 'white';
+	    ctx.fillText("Please select a single Data Type to render a chart");
             return;
         }
     
