@@ -11,13 +11,13 @@
             <div class="row">
                 <div class="col-md-4">
                     <label>Select your Project ID</label>
-                    <select class="form-control form-control-lg" id="project_id" onchange="filterData()">
+                    <select class="form-control form-control-lg" id="project_id" onchange="renderTable()">
                         <option value="">Select Project ID</option>
                     </select>
                 </div>
                 <div class="col-md-4">
                     <label>Select your Project ID</label>
-                    <select class="form-control form-control-lg" id="data_type" onchange="filterData()">
+                    <select class="form-control form-control-lg" id="data_type" onchange="renderTable()">
                         <option value="">Select Data Type</option>
                     </select>
                 </div>
@@ -43,7 +43,16 @@
         </div> -->
     </div>
     </form>
-   
+
+    <div class="row">
+        <div class="col-md-8">
+            <canvas id="chartCanvas" width="400" height="200"></canvas>
+        </div>
+        <div class="col-md-4">
+            <a href='#' class='form-control btn' onclick='renderChart()'>Render Chart</a>
+        </div>
+    </div>
+
     <table class="table center" border="2" id="data-table"><!-- class="lead table table-responsive" -->
         <thead>
             <tr><b>
@@ -75,6 +84,8 @@
 
 {% block script %}
     <!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+
     <script>
         var raw_data = [];
 
@@ -88,8 +99,10 @@
             });
         {% endfor %}
         // render_data = raw_data;
-        var start_date = getFirstDate(); // = new Date();
-        var end_date = moment(); // = new Date();
+        var start_date = getFirstDate(raw_data); // = new Date();
+        var end_date = moment.(); // = new Date();
+
+
 
         function renderSelects() {
             var id_options = $.unique(raw_data.map(function (d) {return d.project_id}));
@@ -105,14 +118,24 @@
                 }).join());        
         }
 
-        function getFirstDate() {
-            var start_date = moment(raw_data[0].timestamp);
-            for(i=1; i<raw_data.length; i++) {
-                if(moment(raw_data[i].timestamp).isBefore(start_date)) {
-                    start_date = moment(raw_data[i].timestamp);
+        function getFirstDate(data_array) {
+            var first_date = moment(data_array[0].timestamp);
+            for(i=1; i<data_array.length; i++) {
+                if(moment(data_array[i].timestamp).isBefore(first_date)) {
+                    first_date = moment(data_array[i].timestamp);
                 }
             }
-            return start_date;
+            return first_date;
+        }
+
+        function getLastDate(data_array) {
+            var last_date = moment(data_array[0].timestamp);
+            for(i=1; i<data_array.length; i++) {
+                if(moment(data_array[i].timestamp).isAfter(last_date)) {
+                    last_date = moment(data_array[i].timestamp);
+                }
+            }
+            return last_date;
         }
         
 
@@ -137,7 +160,7 @@
                 render_data = filterDate(render_data);
             }
 
-            renderTable(render_data);
+            return render_data;
         }
 
         // function filterID(selectObject) {
@@ -169,7 +192,9 @@
             // renderTable();
         }
 
-        function renderTable(render_data) {
+        function renderTable() {
+            render_data = filterData();
+
             $('#table-content').html(
                 $.map(render_data, function(item, index) {
                     return '<tr><td>' + item.project_id + '</td><td>' + item.timestamp.format('MMMM Do YYYY, h:mm:ss a') + '</td><td>' + item.value + '</td><td>' + item.data_type + '</td>';
@@ -188,7 +213,7 @@
                 // filterDate(start, end);
                 start_date = start;
                 end_date = end;
-                filterData();
+                renderTable();
             }
 
             $('#datepicker').daterangepicker({
@@ -208,6 +233,90 @@
         });
 
     // render dropdowns when the page loads
+
+
     window.onload = renderSelects();
+
+    const ctx = document.getElementById('chartCanvas').getContext('2d');
+    // window.onload = renderChart();
+
+    function renderChart() {
+        render_data = filterData();
+        if(!singleType(render_data)) {
+            ctx.font = "36px Roboto";
+            ctx.fillText("Please select a single Data Type to render a chart");
+            return;
+        }
+    
+        // add data type error handling here
+        var y_label = render_data[0].data_type;
+        var chart_projects = [];
+        const line_colors = ['#F15854', '#5DA5DA', '#DECF3F', '#B276B2', '#B2912F', '#F17CB0', '#60BD68', '#FAA43A', '#4D4D4D'];
+        var data = {
+            labels: [],
+            // labels: [new Date(getFirstDate(test_data)), new Date(getLastDate(test_data))],
+            datasets: [],
+        }
+
+        render_data.map(function(item) {
+            if(!chart_projects.includes(item.project_id)) {
+                var index = chart_projects.length;
+                chart_projects.push(item.project_id);
+                data.labels.push(new Date(item.timestamp));
+                data.datasets.push({
+                    fill: false,
+                    label: item.data_type + " from Project " + item.project_id,
+                    data: [item.value],
+                    borderColor: line_colors[index],
+                    backgroundColor: line_colors[index],
+                    lineTension: 0,
+                });
+            } else {
+                var index = chart_projects.indexOf(item.project_id);
+                data.labels.push(new Date(item.timestamp));
+                data.datasets[index].data.push(item.value);
+            }
+        });
+
+        var options = {
+            type: 'line',
+            data: data,
+            options: {
+                fill: false,
+                responsive: true,
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: "Date",
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: false,
+                        },
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: y_label,
+                        }
+                    }]
+                }
+            }
+        }
+        var myChart = new Chart(ctx, options);
+    }
+
+    function singleType(data) {
+        var type = data[0].data_type;
+        for(var i in data) {
+            if(data[i].data_type != type) {
+                return false;
+            }
+        }
+        return true;
+    }
     </script>
 {% endblock %}
