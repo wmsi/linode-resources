@@ -179,6 +179,7 @@ def data_story():
     datastory = DataStory.query.all()
     return render_template('data_story.html', title='Digital Data Stories', datastory=datastory, bgcolor='black')
 
+
 @app.route('/scratchx', methods=['POST','GET'])
 def scratchx():
     if request.method == 'POST':

@@ -243,8 +243,10 @@
     function renderChart() {
         render_data = filterData();
         if(!singleType(render_data)) {
-            ctx.font = "36px Roboto";
-            ctx.fillText("Please select a single Data Type to render a chart");
+            ctx.font = "24px Roboto";
+            ctx.fillStyle = 'white';
+	    ctx.fillText("Please select a single Data Type",20,90);
+	    ctx/fillText("to render a chart.",20,120);
             return;
         }
     
