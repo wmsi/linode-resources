@@ -185,10 +185,11 @@ def scratchx():
     if request.method == 'POST':
     # add some validation/ security screening here
         project_id = request.form.get('project_id')
+        sensor_id = request.form.get('sensor_id')
         data_type = request.form.get('data_type')
         value = request.form.get('value')
 
-        data = DataStory(project_id=int(project_id), data_type=str(data_type), value=int(value))
+        data = DataStory(project_id=int(project_id), data_type=str(data_type), sensor_id=int(sensor_id), value=float(value))
         db.session.add(data)
         db.session.commit()
         app.logger.warning("project_id: %s, data_type: %s, value: %s" \
