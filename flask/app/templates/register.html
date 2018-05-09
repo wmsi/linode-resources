@@ -5,29 +5,45 @@
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
+            <div class="col-md-3">
+                {{ form.username.label }}
+            </div>
+            <div class="col-md-6">
+                {{ form.username(size=32) }}
+            </div>
             {% for error in form.username.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
-            {{ form.email.label }}
-            {{ form.email(size=64) }}<br>
+            <div class="col-md-3">
+                {{ form.email.label }}
+            </div>
+            <div class="col-md-6">
+                {{ form.email(size=64) }}
+            </div>
             {% for error in form.email.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}<br>
+            <div class="col-md-3">
+                {{ form.password.label }}
+            </div>
+            <div class="col-md-6">
+                {{ form.password(size=32) }}
+            </div>
             {% for error in form.password.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
-            {{ form.password2.label }}<br>
-            {{ form.password2(size=32) }}<br>
+            <div class="col-md-3">
+                {{ form.password2.label }}
+            </div>
+            <div class="col-md-6">
+                {{ form.password2(size=32) }}
+            </div>
             {% for error in form.password2.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
