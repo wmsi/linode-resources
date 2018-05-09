@@ -117,8 +117,8 @@ def register():
         user.set_password(form.password.data)
         if "whitemountainscience.org" in user.email:
             user.wmsi_user = True
-            user.data_story = True
             # only for testing, this should be more secure
+        user.data_story = True
         db.session.add(user)
         db.session.commit()
         flash('Congratulations, you are now a registered user!')

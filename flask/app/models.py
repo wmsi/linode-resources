@@ -34,8 +34,9 @@ class DataStory(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
 	project_id = db.Column(db.Integer)
+	sensor_id = db.Column(db.Integer)
 	data_type = db.Column(db.String)
-	value = db.Column(db.Integer)
+	value = db.Column(db.Float)
 
 	def __repr__(self):
 		return '<DataStory %s, %s>' % (str(self.project_id), str(self.timestamp)) # format datetime
