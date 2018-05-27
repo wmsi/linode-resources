@@ -194,7 +194,9 @@ def scratchx():
         db.session.commit()
         app.logger.warning("project_id: %s, data_type: %s, value: %s" \
             % (str(project_id), str(data_type), str(value)))
-        return "Thanks for posting! Your data has been added to https://wmsinh.org/data-story\n"
+        # return "Thanks for posting! Your data has been added to https://wmsinh.org/data-story\n"
+        return str(data.timestamp.strftime("%Y-%m-%d %H:%M:%S"));
+
     if request.method == 'GET':
         project_id = request.args.get('project_id')
         data_type = request.args.get('data_type')

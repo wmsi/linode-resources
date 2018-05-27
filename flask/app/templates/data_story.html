@@ -16,9 +16,15 @@
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <label>Select your Project ID</label>
+                    <label>Select your Data Type</label>
                     <select class="form-control form-control-lg" id="data_type" onchange="renderTable()">
                         <option value="">Select Data Type</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label>Select your Sensor ID</label>
+                    <select class="form-control form-control-lg" id="data_type" onchange="renderTable()">
+                        <option value="">Select Sensor ID</option>
                     </select>
                 </div>
                 <div class="col-md-4 form-group">
@@ -49,6 +55,9 @@
             <canvas id="chartCanvas" width="400" height="400"></canvas>
         </div>
         <div class="col-md-4">
+            <div class="sensor_id">
+
+            </div>
             <a href='#' class='form-control btn' onclick='renderChart()'>Render Chart</a>
         </div>
     </div>
@@ -100,7 +109,7 @@
         {% endfor %}
         // render_data = raw_data;
         var start_date = getFirstDate(raw_data); // = new Date();
-        var end_date = getLastDate(raw_data); // = new Date();
+        var end_date = getLastDate(raw_data); // = raw_data Date();
 
 
 
@@ -111,11 +120,16 @@
                     return '<option value="' + item + '">' + item + '</option>';
                 }).join());
 
+            // id_options = $.unique(raw_data.map(function (d) {return d.sensor_id}));
+            // $('#project_id').append(
+            //     $.map(id_options, function(item, index) {
+            //         return '<option value="' + item + '">' + item + '</option>';
+
             var type_options = $.unique(raw_data.map(function (d) {return d.data_type}));
             $('#data_type').append(
                 $.map(type_options, function(item, index) {
                     return '<option value="' + item + '">' + item + '</option>';
-                }).join());        
+                }).join());      
         }
 
         function getFirstDate(data_array) {
@@ -142,12 +156,21 @@
         function filterData(set_dates=false) {
             var render_data = raw_data;
 
+            // first filter by project ID
             var filter_id = document.getElementById("project_id").value;
             if (filter_id != "Select Project ID" && filter_id != "") {
-                render_data = render_data.filter(function (el) { // var filter_by_id = 
+                render_data = render_data.filter(function (el) {
                         return el.project_id == filter_id;
                     });
             }
+
+            // now filter by sensor ID
+            // filter_id = document.getElementById("sensor_id").value;
+            // if (filter_id != "Select Sensor ID" && sensor_id != "") {
+            //     render_data = render_data.filter(function (el) {
+            //             return el.sensor_id == filter_id;
+            //         });
+            // }
 
             var filter_type = document.getElementById("data_type").value;
             if (filter_type != "Select Data Type" && filter_type != "") {
@@ -186,6 +209,12 @@
                 $.map(render_data, function(item, index) {
                     return '<tr><td>' + item.project_id + '</td><td>' + item.timestamp.format('MMMM Do YYYY, h:mm:ss a') + '</td><td>' + item.value + '</td><td>' + item.data_type + '</td>';
                 }).join());
+
+            var sensor_options = $.unique(render_data.map(function (d) {return d.sensor_id}));
+            $('#sensor_id').append(
+                $.map(type_options, function(item, index) {
+                    return '<input type="checkbox" value="Sensor ' + item + '"><label>Sensor ' + item + '</label><br>';
+                }).join()); 
         }
 
         function autoSetDates(render_data) {
@@ -240,7 +269,14 @@
         render_data = filterData();
         if(!singleType(render_data)) {
             ctx.font = "36px Roboto";
-            ctx.fillText("Please select a single Data Type to render a chart",10,50);
+            ctx.fillText("Please select a single Data Type",10,50);
+            cts.fillTexct(" to render a chart",10,70);
+            return;
+        }
+        if(document.getElementById('project_id').value == "Select Project ID") {
+            ctx.font = "36px Roboto";
+            ctx.fillText("Please select a Project ID",10,50);
+            cts.fillTexct(" to render a chart",10,70);
             return;
         }
     
