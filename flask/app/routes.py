@@ -1,12 +1,14 @@
 #!/usr/bin/python
 from flask import Flask, request, render_template, send_file, redirect, url_for, flash, jsonify
-from app import app, forms, db
+from app import app, forms, db, socketio
 from app.models import User, Post, DataStory
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
+from flask_socketio import emit, send
 import subprocess
 import iot.press_button as pressButton
 import logging
+import json
 from logging.handlers import RotatingFileHandler
 from include.utils import *
 from include.config import *
@@ -179,6 +181,9 @@ def data_story():
     datastory = DataStory.query.all()
     return render_template('data_story.html', title='Digital Data Stories', datastory=datastory, bgcolor='black')
 
+# @socketio.on('connect')
+# def test_connect():
+#     emit('new value', {'data': 'test'})
 
 @app.route('/scratchx', methods=['POST','GET'])
 def scratchx():
@@ -194,6 +199,8 @@ def scratchx():
         db.session.commit()
         app.logger.warning("project_id: %s, data_type: %s, value: %s" \
             % (str(project_id), str(data_type), str(value)))
+
+        send_new_value(data);
         # return "Thanks for posting! Your data has been added to https://wmsinh.org/data-story\n"
         return str(data.timestamp.strftime("%Y-%m-%d %H:%M:%S"));
 
@@ -245,3 +252,14 @@ def status():
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('page_not_found.html'), 404
+
+def send_new_value(data):
+    new_val = {}
+    new_val['project_id'] = str(data.project_id)
+    new_val['sensor_id'] = str(data.sensor_id)
+    new_val['data_type'] = str(data.data_type)
+    new_val['timestamp'] = format_datetime(data.timestamp)
+    new_val['value'] = str(data.value)
+    json_value = json.dumps(new_val)
+    
+    socketio.emit('new value', json_value)
