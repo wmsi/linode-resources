@@ -118,7 +118,8 @@
         var start_date = getFirstDate(raw_data); // = new Date();
         var end_date = getLastDate(raw_data); // = raw_data Date();
 
-        var socket = io.connect('http://' + document.domain + ':' + location.port);
+        var socket = io.connect('https://' + document.domain + ':' + location.port);
+        console.log('socket at https://' + document.domain + ':' + location.port);
         socket.on('connect', function() {
             socket.emit('my event', {data: 'I\'m connected!'});
             console.log('socket connected');
