@@ -3,6 +3,7 @@ app.db
 credentials.py
 thumbsup_sites/
 certbot.log
+error.*
 
 #####################    Python.gitignore    ########################
 # Byte-compiled / optimized / DLL files
