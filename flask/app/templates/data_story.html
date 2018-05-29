@@ -124,6 +124,9 @@
             socket.emit('my event', {data: 'I\'m connected!'});
             console.log('socket connected');
         });
+        socket.on('test response', function() {
+	    console.log('test response');
+	});
         socket.on('new value', function(data) {
             var new_val = JSON.parse(data);
             raw_data.push({
