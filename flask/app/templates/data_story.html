@@ -118,32 +118,6 @@
         var start_date = getFirstDate(raw_data); // = new Date();
         var end_date = getLastDate(raw_data); // = raw_data Date();
 
-        var socket = io.connect('https://' + document.domain + ':' + location.port);
-        console.log('socket at https://' + document.domain + ':' + location.port);
-        socket.on('connect', function() {
-            socket.emit('my event', {data: 'I\'m connected!'});
-            console.log('socket connected');
-        });
-        socket.on('test response', function() {
-	    console.log('test response');
-	});
-        socket.on('new value', function(data) {
-            var new_val = JSON.parse(data);
-            raw_data.push({
-                "project_id": new_val.project_id,
-                "sensor_id": new_val.sensor_id,
-                "timestamp": moment(new_val.timestamp, "ddd DD-MM-YYYY HH:mm:ss"),
-                "value": new_val.value,
-                "data_type": new_val.data_type
-            });
-            console.log('new val: ', raw_data[raw_data.length-1]);
-            renderTable(true);
-            if(document.getElementById("auto_refresh").checked) {
-                renderChart();
-            }
-        });
-
-
         function renderSelects() {
             var id_options = $.unique(raw_data.map(function (d) {return d.project_id}));
             $('#project_id').append(
@@ -379,5 +353,33 @@
         }
         return true;
     }
+
+// socketio seems not to work with apache but would be a great option for push 
+// notifications if we ever switch servers
+
+        // var socket = io.connect('https://' + document.domain + ':' + location.port);
+        // console.log('socket at https://' + document.domain + ':' + location.port);
+        // socket.on('connect', function() {
+        //     socket.emit('my event', {data: 'I\'m connected!'});
+        //     console.log('socket connected');
+        // });
+        // socket.on('test response', function() {
+        //     console.log('test response');
+        // });
+        // socket.on('new value', function(data) {
+        //     var new_val = JSON.parse(data);
+        //     raw_data.push({
+        //         "project_id": new_val.project_id,
+        //         "sensor_id": new_val.sensor_id,
+        //         "timestamp": moment(new_val.timestamp, "ddd DD-MM-YYYY HH:mm:ss"),
+        //         "value": new_val.value,
+        //         "data_type": new_val.data_type
+        //     });
+        //     console.log('new val: ', raw_data[raw_data.length-1]);
+        //     renderTable(true);
+        //     if(document.getElementById("auto_refresh").checked) {
+        //         renderChart();
+        //     }
+        // });
     </script>
 {% endblock %}
