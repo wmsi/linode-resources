@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from flask import Flask, request, render_template, send_file, redirect, url_for, flash, jsonify
+from flask import Flask, request, render_template, send_file, redirect, url_for, flash, jsonify, Response
 from app import app, forms, db#, socketio
 from app.models import User, Post, DataStory
 from flask_login import current_user, login_user, logout_user, login_required
@@ -9,6 +9,7 @@ import subprocess
 import iot.press_button as pressButton
 import logging
 import json
+import time
 from logging.handlers import RotatingFileHandler
 from include.utils import *
 from include.config import *
@@ -181,12 +182,32 @@ def data_story():
     datastory = DataStory.query.all()
     return render_template('data_story.html', title='Digital Data Stories', datastory=datastory, bgcolor='black')
 
-# socketio appears not to work with apache but would be a great option if we ever
-# change servers
+
+# socketio uses websocket which doesn't work with apache 
+# but would be a great option if we ever change servers
 
 # @socketio.on('connect')
 # def test_connect():
 #     emit('test response', {'data': 'test'})
+
+@app.route('/get_new_data')
+def get_new_data():
+    since = request.args.get('since', 0.0, type=float)
+    all_data = DataStory.query.all()
+    new_data = []
+    # app.logger.warning('checking for new data')
+    for d in all_data:
+        if(d.timestamp.timestamp() > since):
+            new_data.append({
+                'project_id': d.project_id,
+                'sensor_id': d.sensor_id,
+                'timestamp': d.timestamp.timestamp(),   # use this method to send the timestamp as a float
+                'value': d.value,
+                'data_type': d.data_type
+            })
+            # app.logger.warning('new data found at' + str(d.timestamp.timestamp()))
+
+    return jsonify(new_data)
 
 @app.route('/scratchx', methods=['POST','GET'])
 def scratchx():
@@ -205,7 +226,8 @@ def scratchx():
 
         # send_new_value(data);
         # return "Thanks for posting! Your data has been added to https://wmsinh.org/data-story\n"
-        return str(data.timestamp.strftime("%Y-%m-%d %H:%M:%S"));
+        return str(data.timestamp.timestamp());
+        # return str(data.timestamp.strftime("%Y-%m-%d %H:%M:%S"));
 
     if request.method == 'GET':
         project_id = request.args.get('project_id')
