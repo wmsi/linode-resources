@@ -204,7 +204,7 @@ def get_new_data():
         else:
             epoch = datetime.datetime.utcfromtimestamp(0)
             timefloat =  (d.timestamp - epoch).total_seconds()
-        if(d.timestamp.timestamp() > since):
+        if(time_float > since):
             new_data.append({
                 'project_id': d.project_id,
                 'sensor_id': d.sensor_id,
@@ -212,7 +212,7 @@ def get_new_data():
                 'value': d.value,
                 'data_type': d.data_type
             })
-            # app.logger.warning('new data found at' + str(d.timestamp.timestamp()))
+            app.logger.warning('new data found at' + str(d.timestamp.timestamp()))
 
     return jsonify(new_data)
 
@@ -233,8 +233,8 @@ def scratchx():
 
         # send_new_value(data);
         # return "Thanks for posting! Your data has been added to https://wmsinh.org/data-story\n"
-        return str(data.timestamp.timestamp());
-        # return str(data.timestamp.strftime("%Y-%m-%d %H:%M:%S"));
+        # return str(data.timestamp.timestamp());
+        return str(data.timestamp.strftime("%Y-%m-%d %H:%M:%S"));
 
     if request.method == 'GET':
         project_id = request.args.get('project_id')
