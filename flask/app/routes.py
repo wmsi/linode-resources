@@ -200,8 +200,8 @@ def get_new_data():
     # app.logger.warning('checking for new data')
     for d in all_data:
         if (sys.version_info > (3, 0)):
-             time_float = d.timestamp.timestamp()
-         else:
+            time_float = d.timestamp.timestamp()
+        else:
             epoch = datetime.datetime.utcfromtimestamp(0)
             timefloat =  (d.timestamp - epoch).total_seconds()
         if(d.timestamp.timestamp() > since):
