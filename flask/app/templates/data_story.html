@@ -62,7 +62,6 @@
             <br>
             <div class="auto_refresh">
                 Refresh Automatically: <input type="checkbox" id="auto_refresh">
-
             </div>
         </div>
     </div>
@@ -106,11 +105,11 @@
 
         {% for data in datastory %}
             raw_data.push({
-                "project_id":"{{ data.project_id }}", 
-                "sensor_id":"{{ data.sensor_id }}",
+                "project_id":{{ data.project_id }}, 
+                "sensor_id":{{ data.sensor_id }},
                 // "timestamp": "{{ data.timestamp|datetime }}",
-                "timestamp": moment("{{ data.timestamp|datetime }}", "ddd DD-MM-YYYY HH:mm:ss"),
-                "value":"{{ data.value }}",
+                "timestamp":moment("{{ data.timestamp|datetime }}", "ddd DD-MM-YYYY HH:mm:ss"),
+                "value":{{ data.value }},
                 "data_type":"{{ data.data_type }}"
             });
         {% endfor %}
@@ -118,8 +117,37 @@
         var start_date = getFirstDate(raw_data); // = new Date();
         var end_date = getLastDate(raw_data); // = raw_data Date();
 
+        // pull new data from the server and save the most recent timestamp
+        $(function() {
+            var since = getLastDate(raw_data).unix();
+            setInterval(function() {
+                $.ajax("{{ url_for('get_new_data') }}?since=" + since).done(
+                    function(new_data) {
+                        // console.log('get data since ' + since);
+                        for (var i = 0; i < new_data.length; i++) {
+                            new_data[i].timestamp = moment.unix(new_data[i].timestamp);
+                            // console.log(JSON.stringify(new_data[i]));
+                            raw_data.push(new_data[i]);
+                            
+                            since = new_data[i].timestamp.unix()+1;
+                            // console.log('new since: ' + String(since));
+                            renderTable();
+                            if(document.getElementById("auto_refresh").checked) {
+                                end_date = getLastDate(raw_data);
+                                renderChart();
+                            }
+                        }
+                    }
+                );
+            }, 5000);
+        });
+
         function renderSelects() {
-            var id_options = $.unique(raw_data.map(function (d) {return d.project_id}));
+            // var id_options = $.unique(raw_data.map(function (d) {return d.project_id}));
+            var id_options = [];
+            $.each(raw_data, function(i, el) {
+                if($.inArray(el.project_id, id_options) === -1) id_options.push(el.project_id);
+            });
             $('#project_id').append(
                 $.map(id_options, function(item, index) {
                     return '<option value="' + item + '">' + item + '</option>';
@@ -226,6 +254,8 @@
             $('#datepicker span').html(start_date.format('MMMM D, YYYY') + ' - ' + end_date.format('MMMM D, YYYY'));
         }
 
+    // render dropdowns when the page loads
+
         /* date range picker config */
         /* from www.daterangepicker.com */
         $(function() {
@@ -257,8 +287,6 @@
             cb(start, end);
         });
 
-    // render dropdowns when the page loads
-
 
     window.onload = renderSelects();
 
@@ -284,9 +312,9 @@
         }
     
         // add data type error handling here
+        const line_colors = ['#F15854', '#5DA5DA', '#DECF3F', '#B276B2', '#B2912F', '#F17CB0', '#60BD68', '#FAA43A', '#4D4D4D'];
         var y_label = render_data[0].data_type;
         var chart_projects = [];
-        const line_colors = ['#F15854', '#5DA5DA', '#DECF3F', '#B276B2', '#B2912F', '#F17CB0', '#60BD68', '#FAA43A', '#4D4D4D'];
         var data = {
             labels: [],
             // labels: [new Date(getFirstDate(test_data)), new Date(getLastDate(test_data))],
@@ -354,8 +382,9 @@
         return true;
     }
 
-// socketio seems not to work with apache but would be a great option for push 
-// notifications if we ever switch servers
+// socketio uses websocket, which is not supported by apache
+// if we reach the point of requiring immediate server updates
+// we could look into implementing this
 
         // var socket = io.connect('https://' + document.domain + ':' + location.port);
         // console.log('socket at https://' + document.domain + ':' + location.port);
