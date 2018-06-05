@@ -10,6 +10,7 @@ import iot.press_button as pressButton
 import logging
 import json
 import time
+import sys
 from logging.handlers import RotatingFileHandler
 from include.utils import *
 from include.config import *
@@ -195,13 +196,19 @@ def get_new_data():
     since = request.args.get('since', 0.0, type=float)
     all_data = DataStory.query.all()
     new_data = []
+    time_float = None
     # app.logger.warning('checking for new data')
     for d in all_data:
+        if (sys.version_info > (3, 0)):
+             time_float = d.timestamp.timestamp()
+         else:
+            epoch = datetime.datetime.utcfromtimestamp(0)
+            timefloat =  (d.timestamp - epoch).total_seconds()
         if(d.timestamp.timestamp() > since):
             new_data.append({
                 'project_id': d.project_id,
                 'sensor_id': d.sensor_id,
-                'timestamp': d.timestamp.timestamp(),   # use this method to send the timestamp as a float
+                'timestamp': time_float,   # use this method to send the timestamp as a float
                 'value': d.value,
                 'data_type': d.data_type
             })
