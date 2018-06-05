@@ -123,14 +123,14 @@
             setInterval(function() {
                 $.ajax("{{ url_for('get_new_data') }}?since=" + since).done(
                     function(new_data) {
-                        // console.log('get data since ' + since);
+                        console.log('get data since ' + since);
                         for (var i = 0; i < new_data.length; i++) {
                             new_data[i].timestamp = moment.unix(new_data[i].timestamp);
                             // console.log(JSON.stringify(new_data[i]));
                             raw_data.push(new_data[i]);
                             
                             since = new_data[i].timestamp.unix()+1;
-                            // console.log('new since: ' + String(since));
+                            console.log('new since: ' + String(since));
                             renderTable();
                             if(document.getElementById("auto_refresh").checked) {
                                 end_date = getLastDate(raw_data);
