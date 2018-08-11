@@ -32,7 +32,7 @@ class Post(db.Model):
 
 class DataStory(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
+	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 	project_id = db.Column(db.Integer)
 	sensor_id = db.Column(db.Integer)
 	data_type = db.Column(db.String)
