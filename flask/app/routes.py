@@ -111,6 +111,9 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+# Add a new user account to the database
+# If the user signs up with a @whitemountainscience.org email address
+# set user.wmsi_userto True so they have full permissions on the site
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -158,23 +161,22 @@ def school_subdomain(site_subdomain, filename):
     else:
         return serve_school_subdomain(site_subdomain, filename)
 
+
+
 ### DATA STORIES ###
+# This section contains routes associated with the Digital Data Stories project./
+# POSTs can be received from a ScratchX project or by using a cURL command:
+# curl -d "project_id=0&data_type=tempC&value=25" -X POST https://wmsinh.org/scratchx
+# The /data-story route and data_story.html page are respondisble for rendering data
 
-# this is where routes associated with the Digital Data Stories project
-# live. POSTs can be received from a ScratchX project hooked up to a sensor
-# **ideally** using the standard form validation. GET requests will return 
-# a web page rendering all the data collected so far. At some point we
-# should separate data into different web pages or add an option for 
-# selecting a dataset.
 
-@app.route('/data-story', methods=['GET', 'POST'])
+# Render the data_story.html page. In order to view the page, a user
+# must have the data_story attribute set to true for their account. 
+# While still in development this attribute is set to True for all
+# new users
+@app.route('/data-story')
 @login_required
 def data_story():
-    # hopefully this works with ScratchX, meaning that we're secured by our secret key
-    form = forms.DataForm()
-    if form.validate_on_submit():
-        # add new data point to the DATASTORY table
-        return "Yay new data!\n" # user never sees this 
     if current_user.data_story != True:
         flash("""Sorry, only users with project permissions can see this page. 
                 If you believe your account should be activated with permissions 
@@ -184,13 +186,10 @@ def data_story():
     return render_template('data_story.html', title='Digital Data Stories', datastory=datastory, bgcolor='black')
 
 
-# socketio uses websocket which doesn't work with apache 
-# but would be a great option if we ever change servers
-
-# @socketio.on('connect')
-# def test_connect():
-#     emit('test response', {'data': 'test'})
-
+# This route is pinged on a timer by the data_story page to get database updates
+# The code below depends on both the web page and the server being on the same
+# timer. In the past this has run into issues when the webpage and server clocks
+# are set to different timezones
 @app.route('/get_new_data')
 def get_new_data():
     since = request.args.get('since', 0.0, type=float)
@@ -215,7 +214,19 @@ def get_new_data():
             # app.logger.warning('new data found at' + str(d.timestamp.timestamp()))
 
     return jsonify(new_data)
+# socketio uses websocket which doesn't work with apache 
+# but would be a great option if we ever change servers.
+# With this we could remove timed polling and push new data from the server:
+    # @socketio.on('connect')
+    # def test_connect():
+    #     emit('test response', {'data': 'test'})
 
+
+# Handle all HTTP requests from Scratch.
+# As of now the only working blocks exist as a ScratchX extension]
+# These blocks allow users to push new data to the database and
+# retrieve a list of all data that meet certain attributes (specified
+# in Scratch)
 @app.route('/scratchx', methods=['POST','GET'])
 def scratchx():
     if request.method == 'POST':
