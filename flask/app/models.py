@@ -9,7 +9,7 @@ class User(UserMixin, db.Model):
 	email = db.Column(db.String(120), index=True, unique=True)
 	password_hash = db.Column(db.String(128))
 	wmsi_user = db.Column(db.Boolean, default=False)
-	data_story = db.Column(db.Boolean, default=False)	# while in dev this will only be true for wmsi users
+	data_story = db.Column(db.Boolean, default=False)	# while in dev this will be true for all users
 	posts = db.relationship('Post', backref='author', lazy='dynamic')
 
 	def set_password(self, password):
