@@ -203,7 +203,7 @@ def get_new_data():
             time_float = d.timestamp.timestamp()
         else:
             epoch = datetime.datetime.utcfromtimestamp(0)
-            timefloat =  (d.timestamp - epoch).total_seconds()
+            time_float =  (d.timestamp - epoch).total_seconds()
         if(time_float > since):
             new_data.append({
                 'project_id': d.project_id,
