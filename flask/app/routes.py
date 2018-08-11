@@ -204,7 +204,6 @@ def get_new_data():
         else:
             epoch = datetime.datetime.utcfromtimestamp(0)
             time_float =  (d.timestamp - epoch).total_seconds()
-        app.logger.warning('checking ' + str(time_float) + ' against ' + str(since))
         if(time_float > since):
             new_data.append({
                 'project_id': d.project_id,
