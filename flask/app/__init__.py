@@ -4,6 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_cors import CORS
+from flask_bootstrap import Bootstrap
+from flask_moment import Moment
 # from flask_socketio import SocketIO, emit
 from config import Config
 from include.credentials import *
@@ -17,7 +19,10 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 CORS(app)
 login = LoginManager(app)
+bootstrap = Bootstrap(app)
+moment = Moment(app)
 # socketio = SocketIO(app)
+
 login.login_view = 'login'
 handler = RotatingFileHandler('error.log', maxBytes=10000, backupCount=1)
 handler.setLevel(logging.INFO)

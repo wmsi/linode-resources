@@ -2,7 +2,7 @@
 
 {% block app_content %}
     <br><br><br><br>
-    <h1>Data Story Rendering</h1>
+    <h1>Raw Data</h1>
 
     {# raw #}
     {# endraw #}
@@ -13,40 +13,57 @@
         to select as many sensors as desired for the given data type.
     -->
 
-    <br><br>
 
-    <form>
     <div class="row">
         <div class="col main-panel">
             <div class="row">
-                <div class="col-md-4">
-                    <label>Select your Project ID</label>
-                    <select class="form-control form-control-lg" id="project_id" onchange="renderTable(true)">
-                        <option value="">Select Project ID</option>
-                    </select>
+                <div class="col-md-3">
+                    Choose one or more delimited text files to parse:
                 </div>
-                <div class="col-md-4">
-                    <label>Select your Data Type</label>
-                    <select class="form-control form-control-lg" id="data_type" onchange="renderTable()">
-                        <option value="">Select Data Type</option>
-                    </select>
+                <div class="col-md-3">
+                    <input type="file" id="file-select" class="form-control form-control-lg" multiple>
                 </div>
-               <!--  <div class="col-md-4">
-                    <label>Select your Sensor ID</label>
-                    <select class="form-control form-control-lg" id="data_type" onchange="renderTable()">
-                        <option value="">Select Sensor ID</option>
-                    </select>
-                </div> -->
-                <div class="col-md-4 form-group">
-                    <label>Choose a Date Range</label><br>
-                    <div id="datepicker" class="pull-right datepicker form-control form-control-lg">
-                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
-                        <span></span> <b class="caret"></b>
-                    </div>
-
-                    <!-- <input class="form-control corm-control-lg" type="text" value="01/01/2018 - 03/31/2018" /> -->
+                <div class="col-md-3">
+                    <button id="submit" class="form-control form-control-lg">Parse Into Table</button>   
+                </div>
+                <div class="col-md-3">
+                    <!-- Upload data to server -->
+                    <!-- <input type="file" id="file-select" multiple> -->
+                    <button id="upload" class="form-control form-control-lg">Upload Data to Server</button>
                 </div>
             </div>
+            <br><br>
+            <form>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Select your Project ID</label>
+                        <select class="form-control form-control-lg" id="project_id" onchange="renderTable(true)">
+                            <option value="">Select Project ID</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label>Select your Data Type</label>
+                        <select class="form-control form-control-lg" id="data_type" onchange="renderTable()">
+                            <option value="">Select Data Type</option>
+                        </select>
+                    </div>
+                   <!--  <div class="col-md-4">
+                        <label>Select your Sensor ID</label>
+                        <select class="form-control form-control-lg" id="data_type" onchange="renderTable()">
+                            <option value="">Select Sensor ID</option>
+                        </select>
+                    </div> -->
+                    <div class="col-md-4 form-group">
+                        <label>Choose a Date Range</label><br>
+                        <div id="datepicker" class="pull-right datepicker form-control form-control-lg">
+                            <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                            <span></span> <b class="caret"></b>
+                        </div>
+
+                        <!-- <input class="form-control corm-control-lg" type="text" value="01/01/2018 - 03/31/2018" /> -->
+                    </div>
+                </div>
+            </form>
         </div>
         <!-- <div class="col sensor-panel">
             <label>Select Sensors</label>
@@ -58,31 +75,8 @@
             </div>
         </div> -->
     </div>
-    </form>
 
-
-    <!--
-        This div contains the Chart object.
-        Charts are rendered using the chart.js library from https://www.chartjs.org/
-    -->
-    <div class="row">
-        <div class="col-md-8">
-            <canvas id="chartCanvas" width="400" height="400"></canvas>
-        </div>
-        <div class="col-md-4">
-            <!-- <div class="sensor_id"></div> -->
-            <a href='#' class='form-control btn' onclick='renderChart()'>Update Chart</a>
-            <br>
-            <div class="auto_refresh">
-                Get Live Updates: <input type="checkbox" id="auto_refresh">
-            </div>
-            <div class="text-left">
-                Export CSV of data table
-                <!-- <input type="file" id="file-select" multiple> -->
-                <button id="submit" class="form-control btn">Export</button>
-            </div>
-        </div>
-    </div>
+    <br><br>
 
     <!-- 
         This table contains all of the data selected from the database.
@@ -99,17 +93,7 @@
             </tr></b>
         </thead>
         <tbody id='table-content'>
-            {% block topic %}
-                
-                {% for data in datastory %}
-                <tr>
-                    <td>{{ data.project_id }}</td>
-                    <td>{{ data.timestamp|datetime }}</td> <!-- format timestamp -->
-                    <td>{{ data.value }}</td>
-                    <td>{{ data.data_type }}</td>
-                </tr>
-                {% endfor %}
-            {% endblock %}
+
         </tbody>
     </table>
     <br>
@@ -124,7 +108,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
     <script src="{{ url_for('static', filename='js/papaparse.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/render_chart.js') }}"></script>
 
     <script>
         /*
@@ -135,49 +118,10 @@
         */
         var raw_data = [];
 
-        {% for data in datastory %}
-            raw_data.push({
-                "project_id":{{ data.project_id }}, 
-                "sensor_id":{{ data.sensor_id }},
-                // "timestamp": "{{ data.timestamp|datetime }}",
-                "timestamp":moment("{{ data.timestamp }}"),
-                "value":{{ data.value }},
-                "data_type":"{{ data.data_type }}"
-            });
-        {% endfor %}
-        var render_data = raw_data;
-        var start_date = getFirstDate(raw_data); // = new Date();
-        var end_date = getLastDate(raw_data); // = raw_data Date();
+        // render_data = raw_data;
+        var start_date; // = getFirstDate(raw_data); // = new Date();
+        var end_date; // = getLastDate(raw_data); // = raw_data Date();
 
-        // pull new data from the server every 5 seconds 
-        // save the timestamp of the most recent post for comparison on the server
-        $(function() {
-            var since = getLastDate(raw_data).unix();
-            setInterval(function() {
-                if(document.getElementById("auto_refresh").checked) {
-                    $.ajax("{{ url_for('get_new_data') }}?since=" + since).done(
-                        function(new_data) {
-                            console.log('get data since ' + since);
-                            for (var i = 0; i < new_data.length; i++) {
-                                new_data[i].timestamp = moment(new_data[i].timestamp);
-                                // console.log(JSON.stringify(new_data[i]));
-                                raw_data.push(new_data[i]);
-                                
-                                // since = new_data[i].timestamp.unix()+1;
-                                console.log('new since: ' + String(since));
-                            }
-                            since = getLastDate(raw_data).unix();
-                            renderTable();
-                            if(new_data.length > 0 && document.getElementById('project_id').value != "" && singleType(render_data)) {
-                                console.log(new_data.length);
-                                end_date = getLastDate(render_data);
-                                renderChart();
-                            }
-                        }
-                    );
-                }
-            }, 5000);
-        });
 
         /*
             This function gets called with window.onload and populates the dropdowns
@@ -223,6 +167,7 @@
             //     $.map(type_options, function(item, index) {
             //         return '<input type="checkbox" value="Sensor ' + item + '"><label>Sensor ' + item + '</label><br>';
             //     }).join()); 
+            console.log("done rendering table");
         }
 
         /*
@@ -233,7 +178,7 @@
             have already been set    
         */
         function filterData(set_dates=false) {
-            render_data = raw_data;
+            var render_data = raw_data;
 
             // filter by project ID
             var filter_id = document.getElementById("project_id").value;
@@ -301,21 +246,6 @@
             }
             return last_date;
         }
-        
-       
-
-        /*
-            Deprecated- works better as part of filterData
-        */
-        // function filterDate(render_data) {
-        //     render_data = render_data.filter(function (el) {
-        //         // timestamp = new Date(el.timestamp);
-        //         timestamp = moment(el.timestamp);
-        //         return (timestamp.isAfter(start_date-1) && timestamp.isBefore(end_date+1));
-        //         // return (timestamp >= start_date && timestamp <= end_date);
-        //     });
-        //     return render_data;
-        // }
 
         /*
             Set the start_date and end_date variables with the first and last dates
@@ -334,8 +264,8 @@
             date range picker config from www.daterangepicker.com 
         */
         $(function() {
-            var start = start_date; //moment().subtract(29, 'days');
-            var end = end_date; //moment();
+            var start = moment().subtract(29, 'days'); //start_date; 
+            var end = moment(); // end_date;
 
             function cb(start, end) {
                 $('#datepicker span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
@@ -362,74 +292,117 @@
             cb(start, end);
         });
 
-    // does this need to be called after the function is defined?
-    window.onload = renderSelects();
-
-    // JQuery for to unparse data table
-    var inputType
-
+    /* Parse .csv files using PapaParse
+        Import a local file, check its contents, and add them to raw_data
+        Full doc at: https://www.papaparse.com/docs
+    */
     $('#submit').click(function() {
         var config = buildConfig();
-        // var print_data = render_data;    
-        $.map(render_data, function(item, index) {
-            item.timestamp = item.timestamp.format();
-        });
-        var csv = Papa.unparse(render_data);
-        $.map(render_data, function(item, index) {
-            item.timestamp = moment(item.timestamp);
-        });
-        // console.log("Results: ", csv);
-        
-        if (!csv.match(/^data:text\/csv/i)) {
-            csv = 'data:text/csv;charset=utf-8,' + csv;
+        if (!$('#file-select')[0].files.length)
+        {
+            alert("Please choose at least one file to parse.");
+            return;
         }
-        var data = encodeURI(csv);
-
-        var link = document.createElement('a');
-        link.setAttribute('href', data);
-        link.setAttribute('download', 'export.csv');
-        link.click();
+ 
+        $('#file-select').parse({
+            config: config,
+            //     // base config to use for each file
+            // },
+            before: function(file, inputElem)
+            {
+                // alert('parsing file');
+                // executed before parsing each file begins;
+                // what you return here controls the flow
+            },
+            error: function(err, file, inputElem, reason)
+            {
+                // alert('error parsing file');
+                // executed if an error occurs while loading the file,
+                // or if before callback aborted for some reason
+            },
+            complete: function()
+            {
+                alert('parsing file complete!');
+                // executed after all files are complete
+            }
+        });
+        // var results = Papa.parse()
     });
 
-    function buildConfig()
-    {
-        return {
-            // delimiter: $('#delimiter').val(),
-            // header: $('#header').prop('checked'),
-            // dynamicTyping: $('#dynamicTyping').prop('checked'),
-            // skipEmptyLines: $('#skipEmptyLines').prop('checked'),
-            // preview: parseInt($('#preview').val() || 0),
-            // step: $('#stream').prop('checked') ? stepFn : undefined,
-            // encoding: $('#encoding').val(),
-            // worker: $('#worker').prop('checked'),
-            // comments: $('#comments').val(),
-            complete: completeFn,
-            // error: errorFn,
-            download: true
-        };
-    }
-
-    function completeFn(results)
-    {
-        // var end = now();
-
-        if (results && results.errors)
-        {
-            if (results.errors)
-            {
-                errorCount = results.errors.length;
-                firstError = results.errors[0];
+    $('#upload').click(function() {
+        $.map(raw_data, function(item, index) {
+            item.timestamp = item.timestamp.format();
+        });
+        $.ajax("{{ url_for('load_csv') }}", {
+            dataType: 'text',
+            data: JSON.stringify(raw_data),
+            contentType: 'application/json',
+            type: 'POST',
+            processData: false,
+            success: function( data, textStatus, jQxhr ){
+                alert(data);
+            },
+            error: function( jqXhr, textStatus, errorThrown ){
+                console.log( errorThrown );
             }
-            if (results.data && results.data.length > 0)
-                rowCount = results.data.length;
+        });
+        $.map(raw_data, function(item, index) {
+            item.timestamp = moment(item.timestamp);
+        });
+    });
+
+function buildConfig()
+{
+    return {
+        // delimiter: $('#delimiter').val(),
+        header: true,
+        // dynamicTyping: $('#dynamicTyping').prop('checked'),
+        skipEmptyLines: true,
+        // preview: parseInt($('#preview').val() || 0),
+        // step: $('#stream').prop('checked') ? stepFn : undefined,
+        // encoding: $('#encoding').val(),
+        // worker: $('#worker').prop('checked'),
+        // comments: $('#comments').val(),
+        complete: completeFn,
+        // error: errorFn,
+        download: true
+    };
+}
+
+function completeFn(results)
+{
+    // var end = now();
+
+    if (results && results.errors)
+    {
+        if (results.errors)
+        {
+            errorCount = results.errors.length;
+            firstError = results.errors[0];
         }
-
-        console.log("Parse complete");
-        console.log("    Results:", results);
-
-        // icky hack
-        // setTimeout(enableButton, 100);
+        if (results.data && results.data.length > 0)
+            rowCount = results.data.length;
     }
+
+    console.log("Parse complete");
+    console.log("    Results:", results);
+    // add error handling!
+    // raw_data = results.data;
+    $.map(results.data, function(item, index) {
+        item.project_id = parseInt(item.project_id);
+        item.sensor_id = parseInt(item.sensor_id);
+        item.timestamp = moment(item.timestamp);
+        item.value = parseInt(item.value);
+        raw_data.push(item);
+    });
+    renderTable(set_dates=true);
+}
+
+// Document-wide error handling
+window.addEventListener('error', function (e) {
+  var error = e.error;
+  console.log(error);
+});
 
 // socketio uses websocket, which is not supported by apache
 // if we reach the point of requiring immediate server updates

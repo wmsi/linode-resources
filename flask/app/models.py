@@ -3,6 +3,10 @@ from app import db, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin	
 
+# create a class for Users in the database. Include attributes for WMSI users and
+# users with access to the data-story page. For security purposes only store the
+# password hash in the database. This class makes use of UserMixin to add support
+# for flask_login functions
 class User(UserMixin, db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String(64), index=True, unique=True)
@@ -10,26 +14,25 @@ class User(UserMixin, db.Model):
 	password_hash = db.Column(db.String(128))
 	wmsi_user = db.Column(db.Boolean, default=False)
 	data_story = db.Column(db.Boolean, default=False)	# while in dev this will be true for all users
+	# This attribute is added to by the forum pages (dev)
 	posts = db.relationship('Post', backref='author', lazy='dynamic')
 
+	# store the password hash for a new user password in the database
 	def set_password(self, password):
-		self.password_hash= generate_password_hash(password)
+		self.password_hash = generate_password_hash(password)
 
+	# check the hash of a submitted user password against the one in the database
 	def check_password(self, password):
 		return check_password_hash(self.password_hash, password)
 
+	# tell python how to print objects of this class. For now this set to only print the username
 	def __repr__(self):
 		return '<User {}>'.format(self.username)
 
-class Post(db.Model):
-	id = db.Column(db.Integer, primary_key=True)
-	body = db.Column(db.String(140))
-	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-	def __repr__(self):
-		return '<Post {}>'.format(self.body)
-
+# Class for data stored with the Digital Data Stories project. 
+# Potential imrpovements:
+#	- Attach all data story posts to users
+#	- Check for discrepancy between datetime.utcnow anc the datetime in data-story
 class DataStory(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
@@ -41,6 +44,18 @@ class DataStory(db.Model):
 	def __repr__(self):
 		return '<DataStory %s, %s>' % (str(self.project_id), str(self.timestamp)) # format datetime
 
+
+# create a class for Posts in the database. Posts are always attahed to a User
+class Post(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	body = db.Column(db.String(140))
+	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+	def __repr__(self):
+		return '<Post {}>'.format(self.body)
+
+# Point the flask_login functions toward the correct user in the database
 @login.user_loader
 def load_user(id):
 	return User.query.get(int(id))
