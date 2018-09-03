@@ -215,6 +215,7 @@ def get_new_data():
             })
             # app.logger.warning('new data found at ' + str(d.timestamp.timestamp()))
 
+
     return jsonify(new_data)
 
 # Handle all HTTP requests from Scratch.
