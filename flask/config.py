@@ -9,6 +9,6 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SERVER_NAME = "wmsinh.org" # server hostname required for subdomain support
+    SERVER_NAME = "wmsinh.org" # server hostname required  for subdomain support
 
 #### Important: install flask_moment and test new datetime handling before pushing to git

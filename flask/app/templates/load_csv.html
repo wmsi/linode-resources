@@ -32,9 +32,21 @@
                     <button id="upload" class="form-control form-control-lg">Upload Data to Server</button>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    Parse EV3 Data <input type="checkbox" id="ev3_data">
+                </div>
+                <div class="col-md-3">
+                    Ignore Columns with NaN <input type="checkbox" id="no_nan">
+                </div>
+                <div class="col-md-3">
+                    Start Timestamps at t = 0s <input type="checkbox" id="exp_time">
+                </div>
+            </div>
             <br><br>
-            <form>
-                <div class="row">
+            <div class="row">
+                <form>
                     <div class="col-md-4">
                         <label>Select your Project ID</label>
                         <select class="form-control form-control-lg" id="project_id" onchange="renderTable(true)">
@@ -47,33 +59,16 @@
                             <option value="">Select Data Type</option>
                         </select>
                     </div>
-                   <!--  <div class="col-md-4">
-                        <label>Select your Sensor ID</label>
-                        <select class="form-control form-control-lg" id="data_type" onchange="renderTable()">
-                            <option value="">Select Sensor ID</option>
-                        </select>
-                    </div> -->
                     <div class="col-md-4 form-group">
                         <label>Choose a Date Range</label><br>
                         <div id="datepicker" class="pull-right datepicker form-control form-control-lg">
                             <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
                             <span></span> <b class="caret"></b>
                         </div>
-
-                        <!-- <input class="form-control corm-control-lg" type="text" value="01/01/2018 - 03/31/2018" /> -->
                     </div>
-                </div>
-            </form>
-        </div>
-        <!-- <div class="col sensor-panel">
-            <label>Select Sensors</label>
-            <div class="col-md-6 form-check form-control form-control-lg">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                <label class="form-check-label" for="defaultCheck1">
-                Sensor 1
-                </label>
+                </form>
             </div>
-        </div> -->
+        </div>
     </div>
 
     <br><br>
@@ -87,7 +82,7 @@
         <thead>
             <tr><b>
                 <th>Project ID</th>
-                <th>Timestamp</th>
+                <th id="time">Timestamp</th>
                 <th>Value</th>
                 <th>Data Type</th>
             </tr></b>
@@ -153,13 +148,22 @@
 
         /*
             Fill the HTML table with the data set as determined by filterData
+
+            Add a feature for users to choose timestamp format
         */
         function renderTable(set_dates=false) {
+            var timestamp;
+
             render_data = filterData(set_dates);
 
             $('#table-content').html(
                 $.map(render_data, function(item, index) {
-                    return '<tr><td>' + item.project_id + '</td><td>' + item.timestamp.format('MMMM Do YYYY, h:mm:ss a') + '</td><td>' + item.value + '</td><td>' + item.data_type + '</td></tr>';
+                    if($('#exp_time').prop('checked')) {
+                        time = item.timestamp.format('x')/1000;
+                    } else {
+                        time = item.timestamp.format('MMMM Do YYYY, h:mm:ss a');
+                    }
+                    return '<tr><td>' + item.project_id + '</td><td>' + time + '</td><td>' + item.value + '</td><td>' + item.data_type + '</td></tr>';
                 }).join());
 
             // var sensor_options = $.unique(render_data.map(function (d) {return d.sensor_id}));
@@ -188,14 +192,6 @@
                     });
             }
 
-            // filter by sensor ID
-            // filter_id = document.getElementById("sensor_id").value;
-            // if (filter_id != "Select Sensor ID" && sensor_id != "") {
-            //     render_data = render_data.filter(function (el) {
-            //             return el.sensor_id == filter_id;
-            //         });
-            // }
-
             // filter by data type
             var filter_type = document.getElementById("data_type").value;
             if (filter_type != "Select Data Type" && filter_type != "") {
@@ -209,7 +205,7 @@
             }
 
             // filter by date
-            if(start_date && end_date) {
+            if(!$('#exp_time').prop('checked') && start_date && end_date) {
                 render_data = render_data.filter(function (el) {  //filterDate(render_data);
                     timestamp = moment(el.timestamp);
                     return (timestamp.isAfter(start_date-1) && timestamp.isBefore(end_date+1));
@@ -292,6 +288,14 @@
             cb(start, end);
         });
 
+    $('#exp_time').click(function() {
+        if($('#exp_time').prop('checked')) {
+            $('#time').html("Time (s)");
+        } else {
+            $('#time').html("Timestamp");
+        }
+    });
+
     /* Parse .csv files using PapaParse
         Import a local file, check its contents, and add them to raw_data
         Full doc at: https://www.papaparse.com/docs
@@ -310,7 +314,6 @@
             // },
             before: function(file, inputElem)
             {
-                // alert('parsing file');
                 // executed before parsing each file begins;
                 // what you return here controls the flow
             },
@@ -322,7 +325,7 @@
             },
             complete: function()
             {
-                alert('parsing file complete!');
+                // alert('parsing file complete!');
                 // executed after all files are complete
             }
         });
@@ -372,6 +375,13 @@ function buildConfig()
 function completeFn(results)
 {
     // var end = now();
+    if($('#no_nan').prop('checked')) {
+        deleteNan(results);
+    }
+
+    if($('#ev3_data').prop('checked')) {
+        parseEv3(results);
+    }
 
     if (results && results.errors)
     {
@@ -384,19 +394,82 @@ function completeFn(results)
             rowCount = results.data.length;
     }
 
+    // $(results.data).filter(function(x) {return x != "";});
+
     console.log("Parse complete");
     console.log("    Results:", results);
+
     // add error handling!
     // raw_data = results.data;
+    var format = '';
+    if($('#exp_time').prop('checked')) {
+        format = 'X';
+    }
     $.map(results.data, function(item, index) {
         item.project_id = parseInt(item.project_id);
         item.sensor_id = parseInt(item.sensor_id);
-        item.timestamp = moment(item.timestamp);
-        item.value = parseInt(item.value);
+        item.timestamp = moment(item.timestamp, format);
+        item.value = parseFloat(item.value);
         raw_data.push(item);
     });
-    renderTable(set_dates=true);
+
+    var set_dates = !$('#exp_time').prop('checked');
+    renderTable(set_dates);
 }
+
+function deleteNan(results) {
+    var nan_keys = [];
+    $.map(results.data, function(item, index) {
+        for(key in item) {
+            if(item[key] == "NaN") {
+                delete item[key]; 
+                if(!nan_keys.includes(key)){
+                    nan_keys.push(key);
+                }
+            }
+            if(key == "_parsed_extra") {
+                delete item[key];
+            }
+        }
+    });
+    nan_keys.forEach(function(value) {
+        var i =results.meta.fields.indexOf(value); 
+        results.meta.fields.splice(i,1);
+    });
+}
+
+function parseEv3(results) {
+    var data_type;
+    var project_id = prompt("Please choose a Project ID for this data set","0");
+    var sensor_id = prompt("Please choose a Sensor ID for this data set","1");
+
+    if(results.meta.fields.length > 2){
+        alert('We are sorry but for now we can only parse data sets with one data type. Please resubmit the file with only one column of sensor values.');
+    } else {
+        data_type = results.meta.fields[1];
+    }
+
+    $.map(results.data, function(item, index) {
+        // for(key in item) {
+        //     if(key == "Time") {
+        //         item.timestamp = item[key];
+        //         delete item[key];
+        //     }
+        // }
+        item.timestamp = item["Time"];
+        item.value = item[data_type];
+        item.data_type = data_type;
+        item.project_id = project_id;
+        item.sensor_id = sensor_id;
+
+        delete item["Time"];
+        delete item[data_type];
+    });
+}
+
+// function errorFn(results) {
+//     console.log(errors);
+// }
 
 // Document-wide error handling
 window.addEventListener('error', function (e) {
