@@ -134,13 +134,17 @@
             data is fetched from the server.
         */
         var raw_data = [];
+        var timestamp_temp;
 
         {% for data in datastory %}
+            // create a temp timestamp to adjust for timezone
+            timestamp_temp = moment("{{ data.timestamp }}");
             raw_data.push({
                 "project_id":{{ data.project_id }}, 
                 "sensor_id":{{ data.sensor_id }},
                 // "timestamp": "{{ data.timestamp|datetime }}",
-                "timestamp":moment("{{ data.timestamp }}"),
+                // "timestamp":moment("{{ data.timestamp }}"),
+                "timestamp": timestamp_temp.add(timestamp_temp.utcOffset(), 'minutes'),
                 "value":{{ data.value }},
                 "data_type":"{{ data.data_type }}"
             });
