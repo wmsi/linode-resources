@@ -246,13 +246,15 @@ def scratchx():
     if request.method == 'GET':
         project_id = request.args.get('project_id')
         data_type = request.args.get('data_type')
+        values = []
         if data_type is None:
             data_set = DataStory.query.filter_by(project_id=int(project_id)).all()
+            for datum in data_set:
+                values.append([datum.data_type,datum.value])
         else:
             data_set = DataStory.query.filter_by(project_id=int(project_id), data_type=str(data_type)).all()
-        values = [];
-        for datum in data_set:
-            values.append(datum.value)
+            for datum in data_set:
+                values.append(datum.value)
         return jsonify(values)
 
 
