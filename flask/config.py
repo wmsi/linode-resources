@@ -11,6 +11,6 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SCRATCH_ASSETS = os.path.join(basedir, 'app/static/scratch/assets/')
     SCRATCH_BLOCKS = os.path.join(basedir, 'app/static/scratch/blocks-media/')
-    # SERVER_NAME = "wmsinh.org" # server hostname required  for subdomain support
+    SERVER_NAME = "wmsinh.org" # server hostname required  for subdomain support
 
 #### Important: install flask_moment and test new datetime handling before pushing to git
