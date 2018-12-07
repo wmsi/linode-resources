@@ -38,11 +38,25 @@ class DataStory(db.Model):
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 	project_id = db.Column(db.Integer)
 	sensor_id = db.Column(db.Integer)
-	data_type = db.Column(db.String)
+	data_type = db.Column(db.String(64))
 	value = db.Column(db.Float)
 
 	def __repr__(self):
 		return '<DataStory %s, %s>' % (str(self.project_id), str(self.timestamp)) # format datetime
+
+# Store meta data about each Data Story project in the database.
+# The goal is for larger data types (such as strings) associated with projects to be 
+# stored in this format
+# class MetaData(db.Model):
+# 	id = db.Column(db.Integer, primary_key=True)
+# 	db_id = db.Column(db.Integer, db.ForeignKey('datastory.id'))
+# 	project_id = db.Column(db.Integer, db.ForeignKey('datastory.project_id'))
+# 	project_name = db.Column(db.String(64))
+# 	description = db.Column(db.String(500))
+
+
+# 	def __repr__(self):
+# 		return '<MetaData %s, %s>' % (str(self.project_name), str(self.project_id)) # format datetime
 
 
 # create a class for Posts in the database. Posts are always attahed to a User

@@ -259,8 +259,15 @@ def scratchx():
 
 @app.route('/scratch-gui')
 def scratch_gui():
-    return render_template('scratch_gui.html')
+    return render_template('scratch-build/index.html')
 
+@app.route('/static/assets/<path:path>')
+def send_assets(path):
+    return send_from_directory(app.config["SCRATCH_ASSETS"], path)
+
+@app.route('/static/blocks-media/<path:path>')
+def send_blocks(path):
+    return send_from_directory(app.config["SCRATCH_BLOCKS"], path)
 
 # socketio uses websocket which doesn't work with apache 
 # but would be a great option if we ever change servers.
