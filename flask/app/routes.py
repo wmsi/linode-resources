@@ -257,6 +257,10 @@ def scratchx():
                 values.append(datum.value)
         return jsonify(values)
 
+@app.route('/scratch-gui')
+def scratch_gui():
+    return render_template('scratch_gui.html')
+
 
 # socketio uses websocket which doesn't work with apache 
 # but would be a great option if we ever change servers.
