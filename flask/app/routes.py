@@ -246,15 +246,28 @@ def scratchx():
     if request.method == 'GET':
         project_id = request.args.get('project_id')
         data_type = request.args.get('data_type')
+        values = []
         if data_type is None:
             data_set = DataStory.query.filter_by(project_id=int(project_id)).all()
+            for datum in data_set:
+                values.append([datum.data_type,datum.value])
         else:
             data_set = DataStory.query.filter_by(project_id=int(project_id), data_type=str(data_type)).all()
-        values = [];
-        for datum in data_set:
-            values.append(datum.value)
+            for datum in data_set:
+                values.append(datum.value)
         return jsonify(values)
 
+@app.route('/scratch-gui')
+def scratch_gui():
+    return render_template('scratch-build/index.html')
+
+@app.route('/static/assets/<path:path>')
+def send_assets(path):
+    return send_from_directory(app.config["SCRATCH_ASSETS"], path)
+
+@app.route('/static/blocks-media/<path:path>')
+def send_blocks(path):
+    return send_from_directory(app.config["SCRATCH_BLOCKS"], path)
 
 # socketio uses websocket which doesn't work with apache 
 # but would be a great option if we ever change servers.
