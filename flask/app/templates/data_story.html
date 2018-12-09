@@ -66,20 +66,23 @@
         Charts are rendered using the chart.js library from https://www.chartjs.org/
     -->
     <div class="row">
-        <div class="col-md-8">
+        <!-- <div class="col-md-8">
             <canvas id="chartCanvas" width="400" height="400"></canvas>
-        </div>
+        </div> -->
         <div class="col-md-4">
             <!-- <div class="sensor_id"></div> -->
-            <a href='#' class='form-control btn' onclick='renderChart()'>Update Chart</a>
+            <!-- <a href='#' class='form-control btn' onclick='renderChart()'>Update Chart</a> -->
+            <a href='#' class='form-control btn' onclick='refreshData()'>Refresh Data</a>
             <br>
-            <div class="auto_refresh">
+            <!-- <div class="auto_refresh">
                 Get Live Updates: <input type="checkbox" id="auto_refresh">
-            </div>
+            </div> -->
+        </div>
+        <div class="col-md-4">
             <div class="text-left">
-                Export CSV of data table
+                <!-- Export CSV of data table -->
                 <!-- <input type="file" id="file-select" multiple> -->
-                <button id="submit" class="form-control btn">Export</button>
+                <button id="submit" class="form-control btn">Export .csv File</button>
             </div>
         </div>
     </div>
@@ -124,7 +127,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
     <script src="{{ url_for('static', filename='js/papaparse.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/render_chart.js') }}"></script>
+    <!-- script src="{{ url_for('static', filename='js/render_chart.js') }}"></script -->
 
     <script>
         /*
@@ -138,50 +141,80 @@
 
         {% for data in datastory %}
             // create a temp timestamp to adjust for timezone
-            timestamp_temp = moment("{{ data.timestamp }}");
+            // timestamp_temp = moment("{{ data.timestamp }}");
             raw_data.push({
                 "project_id":{{ data.project_id }}, 
                 "sensor_id":{{ data.sensor_id }},
                 // "timestamp": "{{ data.timestamp|datetime }}",
                 // "timestamp":moment("{{ data.timestamp }}"),
-                "timestamp": timestamp_temp.add(timestamp_temp.utcOffset(), 'minutes'),
+                "timestamp": _formatTimestamp(moment("{{ data.timestamp }}")), // timestamp_temp.add(timestamp_temp.utcOffset(), 'minutes')
                 "value":{{ data.value }},
                 "data_type":"{{ data.data_type }}"
             });
         {% endfor %}
+        var last_pull = moment().subtract(moment().utcOffset(), 'minutes');
         var render_data = raw_data;
         var start_date = getFirstDate(raw_data); // = new Date();
         var end_date = getLastDate(raw_data); // = raw_data Date();
 
         // pull new data from the server every 5 seconds 
         // save the timestamp of the most recent post for comparison on the server
-        $(function() {
-            var since = getLastDate(raw_data).unix();
-            setInterval(function() {
-                if(document.getElementById("auto_refresh").checked) {
-                    $.ajax("{{ url_for('get_new_data') }}?since=" + since).done(
-                        function(new_data) {
-                            console.log('get data since ' + since);
-                            for (var i = 0; i < new_data.length; i++) {
-                                new_data[i].timestamp = moment(new_data[i].timestamp);
-                                // console.log(JSON.stringify(new_data[i]));
-                                raw_data.push(new_data[i]);
+        // $(function() {
+        //     var since = getLastDate(raw_data).unix();
+        //     setInterval(function() {
+        //         if(document.getElementById("auto_refresh").checked) {
+        //             $.ajax("{{ url_for('get_new_data') }}?since=" + last_pull).done(
+        //                 function(new_data) {
+        //                     console.log('get data since ' + last_pull);
+        //                     for (var i = 0; i < new_data.length; i++) {
+        //                         new_data[i].timestamp = moment(new_data[i].timestamp);
+        //                         // console.log(JSON.stringify(new_data[i]));
+        //                         raw_data.push(new_data[i]);
                                 
-                                // since = new_data[i].timestamp.unix()+1;
-                                console.log('new since: ' + String(since));
-                            }
-                            since = getLastDate(raw_data).unix();
-                            renderTable();
-                            if(new_data.length > 0 && document.getElementById('project_id').value != "" && singleType(render_data)) {
-                                console.log(new_data.length);
-                                end_date = getLastDate(render_data);
-                                renderChart();
-                            }
-                        }
-                    );
+        //                         // since = new_data[i].timestamp.unix()+1;
+        //                         console.log('new since: ' + String(since));
+        //                     }
+        //                     since = getLastDate(raw_data).unix();
+        //                     renderTable();
+        //                     if(new_data.length > 0 && document.getElementById('project_id').value != "" && singleType(render_data)) {
+        //                         console.log(new_data.length);
+        //                         end_date = getLastDate(render_data);
+        //                         renderChart();
+        //                     }
+        //                 }
+        //             );
+        //         }
+        //     }, 5000);
+        // });
+
+        /*
+            Refresh data in the table without reloading the page or any controls. 
+            This function is triggered by the 'Refresh Data' button
+        */
+        function refreshData() {
+            $.ajax("{{ url_for('get_new_data') }}?since=" + last_pull).done(
+                function(new_data) {
+                    console.log('get data since ' + last_pull);
+                    for (var i = 0; i < new_data.length; i++) {
+                        console.log('new timestamp: ' + new_data[i].timestamp);
+                        new_data[i].timestamp = _formatTimestamp(moment(new_data[i].timestamp));
+                        // console.log(JSON.stringify(new_data[i]));
+                        raw_data.push(new_data[i]);
+                        
+                        // since = new_data[i].timestamp.unix()+1;
+                    }
+                    last_pull = moment().subtract(moment().utcOffset(), 'minutes');
+                    console.log('new since: ' + last_pull);
+                    end_date = last_pull;
+                    renderTable(true);
+                    // if(new_data.length > 0 && document.getElementById('project_id').value != "" && singleType(render_data)) {
+                    //     console.log(new_data.length);
+                    //     end_date = getLastDate(render_data);
+                    //     renderChart();
+                    // }
                 }
-            }, 5000);
-        });
+            );
+        }
 
         /*
             This function gets called with window.onload and populates the dropdowns
@@ -270,8 +303,8 @@
             // filter by date
             if(start_date && end_date) {
                 render_data = render_data.filter(function (el) {  //filterDate(render_data);
-                    timestamp = moment(el.timestamp);
-                    return (timestamp.isAfter(start_date-1) && timestamp.isBefore(end_date+1));
+                    // timestamp = el.timestamp;
+                    return (el.timestamp.isAfter(start_date-1) && el.timestamp.isBefore(end_date+1));
                 });
             }
 
@@ -304,6 +337,10 @@
                 }
             }
             return last_date;
+        }
+
+        function _formatTimestamp(db_timestamp) {
+            return db_timestamp.add(moment().utcOffset(), 'minutes');
         }
         
        

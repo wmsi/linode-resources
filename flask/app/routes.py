@@ -201,15 +201,16 @@ def get_new_data():
     # app.logger.warning('checking for new data')
     for d in all_data:
         if (sys.version_info > (3, 0)):
-            time_float = d.timestamp.timestamp()
+            time_int = int(d.timestamp.timestamp()*1000)
         else:
             epoch = datetime.datetime.utcfromtimestamp(0)
-            time_float =  (d.timestamp - epoch).total_seconds()
-        if(time_float > since):
+            time_int = int((d.timestamp - epoch).total_seconds()*1000)
+        if(time_int > since):
+            app.logger.warning('found new data at ' + str(time_int))
             new_data.append({
                 'project_id': d.project_id,
                 'sensor_id': d.sensor_id,
-                'timestamp': time_float,   # use this method to send the timestamp as a float
+                'timestamp': time_int,   # use this method to send the timestamp as a float
                 'value': d.value,
                 'data_type': d.data_type
             })
