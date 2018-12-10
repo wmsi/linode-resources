@@ -162,7 +162,7 @@
         // pull new data from the server every 5 seconds 
         // save the timestamp of the most recent post for comparison on the server
         $(function() {
-            var since = getLastDate(raw_data).unix();
+            // var since = getLastDate(raw_data).unix();
             setInterval(function() {
                 if(document.getElementById("auto_refresh").checked) {
                     refreshData();
@@ -177,15 +177,15 @@
         function refreshData() {
             $.ajax("{{ url_for('get_new_data') }}?since=" + last_pull).done(
                 function(new_data) {
-                    console.log('get data since ' + last_pull);
+                    // console.log('get data since ' + last_pull);
                     for (var i = 0; i < new_data.length; i++) {
                         console.log('new timestamp: ' + new_data[i].timestamp);
-                        new_data[i].timestamp = _formatTimestamp(moment(new_data[i].timestamp));
+                        new_data[i].timestamp = moment(new_data[i].timestamp); //_formatTimestamp(moment(new_data[i].timestamp));
                         // console.log(JSON.stringify(new_data[i]));
                         raw_data.push(new_data[i]);
                     }
                     last_pull = moment(); //.subtract(moment().utcOffset(), 'minutes');
-                    console.log('new since: ' + last_pull);
+                    // console.log('new since: ' + last_pull);
                     end_date = last_pull;
                     renderTable(true);
                     // if(new_data.length > 0 && document.getElementById('project_id').value != "" && singleType(render_data)) {
