@@ -166,7 +166,7 @@ def data_story():
         project = DataStory.query.filter_by(project_id=project_id).all()
         for datum in project:
             datum.archived = True
-            db.session.all(datum)
+            db.session.add(datum)
         db.session.commit()
         return str('project ' + project_id + ' has been archived. To revive this project contact a system administrator')
 
