@@ -69,21 +69,45 @@
         <!-- <div class="col-md-8">
             <canvas id="chartCanvas" width="400" height="400"></canvas>
         </div> -->
-        <div class="col-md-4">
+        <div class="col-md-3">
             <!-- <div class="sensor_id"></div> -->
             <!-- <a href='#' class='form-control btn' onclick='renderChart()'>Update Chart</a> -->
             <a href='#' class='form-control btn' onclick='refreshData()'>Refresh Data</a>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2">
             <div class="auto_refresh">
                 Get Live Updates: <input type="checkbox" id="auto_refresh">
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="text-left">
                 <!-- Export CSV of data table -->
                 <!-- <input type="file" id="file-select" multiple> -->
                 <button id="submit" class="form-control btn">Export .csv File</button>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="text-left">
+                <button class="open-button form-control btn" onclick="openForm()">Archive a Project</button>
+                <div class="form-popup" id="archiveForm">
+                    <!-- <form action="/action_page.php" class="form-container"> -->
+                    <h1>Select Data to Archive</h1>
+
+                    <label for="archive_project_id"><b>Project Id</b></label>
+                    <select class="form-control form-control-lg" id="archive_project_id"> <!-- onchange="renderDataTypes('archive_')" -->
+                        <option value="">Select Project ID</option>
+                    </select>
+
+                    <!-- <label for="archive_data_type"><b>Data Type</b></label>
+                    <select class="form-control form-control-lg" id="archive_data_type">
+                        <option value="">All Data Types</option>
+                    </select> -->
+
+                    <button type="button" class="form-control popup-btn btn" onclick="archiveData()">Archive Project</button>
+                    <button type="button" class="form-control popup-btn btn" onclick="closeForm()">Close</button>
+                    <!-- </form> -->
+                </div>
+                <!-- <button id="submit" class="form-control btn">Archive Data</button> -->
             </div>
         </div>
     </div>
@@ -201,13 +225,15 @@
             This function gets called with window.onload and populates the dropdowns
             with options. Consider calling this whenever new data is added to the database.
         */
-        function renderSelects() {
+        function renderSelects(prefix='') {
             // var id_options = $.unique(raw_data.map(function (d) {return d.project_id}));
             var id_options = [];
             $.each(raw_data, function(i, el) {
                 if($.inArray(el.project_id, id_options) === -1) id_options.push(el.project_id);
             });
-            $('#project_id').append(
+
+            _resetOptions(prefix + 'project_id');
+            $('#' + prefix + 'project_id').append(
                 $.map(id_options, function(item, index) {
                     return '<option value="' + item + '">' + item + '</option>';
                 }).join());
@@ -218,18 +244,48 @@
             //         return '<option value="' + item + '">' + item + '</option>';
 
             var type_options = $.unique(raw_data.map(function (d) {return d.data_type}));
-            $('#data_type').append(
+            _resetOptions(prefix + 'data_type');
+            $('#' + prefix + 'data_type').append(
                 $.map(type_options, function(item, index) {
                     return '<option value="' + item + '">' + item + '</option>';
                 }).join());      
         }
 
 
+        /* 
+            Render only the data types that exist in the selected project
+        */
+        function renderDataTypes(prefix='') {
+            var project_id = document.getElementById(prefix + "project_id").value;
+            var render_data = raw_data;
+            var data_types = [];
+
+            if (project_id != "Select Project ID" && project_id != "") {
+                render_data.filter(function (el) {
+                    if(el.project_id == project_id && !data_types.includes(el.data_type)) {
+                        data_types.push(el.data_type);
+                    }
+                    // return el.project_id == filter_id;
+                });
+
+                _resetOptions(prefix + 'data_type');
+                console.log('appending data types ' + data_types)
+                $('#' + prefix + 'data_type').append(
+                    $.map(data_types, function(item, index) {
+                        return '<option value="' + item + '">' + item + '</option>';
+                    }).join());
+            } else {
+                renderSelects();
+            }
+
+        }
+        
         /*
             Fill the HTML table with the data set as determined by filterData
         */
         function renderTable(set_dates=false) {
             render_data = filterData(set_dates);
+            renderDataTypes();
 
             $('#table-content').html(
                 $.map(render_data, function(item, index) {
@@ -292,6 +348,64 @@
             return render_data;
         }
 
+        /*
+            Toggle the Archive Project form between hidden and visible
+        */
+        function openForm() {
+            // renderSelects('archive_');
+            if(document.getElementById("archiveForm").style.display == "block") {
+                document.getElementById("archiveForm").style.display = "none";
+                return;
+            }
+
+            var id_options = [];
+            $.each(raw_data, function(i, el) {
+                if($.inArray(el.project_id, id_options) === -1) id_options.push(el.project_id);
+            });
+
+            // _resetOptions(prefix + 'project_id');
+            $('#archive_project_id').append(
+                $.map(id_options, function(item, index) {
+                    return '<option value="' + item + '">' + item + '</option>';
+                }).join());
+            document.getElementById("archiveForm").style.display = "block";
+        }
+
+        /*
+            Hide the Archive Project form
+        */ 
+        function closeForm() {
+            document.getElementById("archiveForm").style.display = "none";
+        }
+
+        /*
+            Archive some data so it doesn't appear on this page.
+            For now the only option is to archive an entire project, but we could
+            add support for archiving individual data sets. When a project has become archived,
+            users can continue to add new values to the project and only the new values will appear on the page
+        */
+        function archiveData() {
+            var project_id = document.getElementById('archive_project_id').value;
+            if(project_id == 'Select Project ID') {
+                alert('Please select a project to archive');
+                return;
+            }
+            
+            var post_data = new FormData();
+            post_data.append('project_id', project_id);
+            $.ajax({
+                url: 'https://wmsinh.org/data-story',
+                data: post_data,
+                processData: false,
+                contentType: false,
+                type: 'POST',
+                success: function(data){
+                    console.log(data);
+                }
+            });
+
+        }
+
 
         /* 
             Find the earliest timestamp in a data set.
@@ -320,8 +434,25 @@
             return last_date;
         }
 
+        /*
+            Format a timestamp from the database to match the user's timezone
+            Still not clear why this needs to be coded explicitly
+        */
         function _formatTimestamp(db_timestamp) {
             return db_timestamp.add(moment().utcOffset(), 'minutes');
+        }
+
+        /*
+            Reset the options for a dropdown menu while keeping the default option the same
+        */
+        function _resetOptions(id) {
+            var default_option = document.getElementById(id).options[0];
+            $('#' + id + ' option').remove();
+            $('#' + id).append(default_option);
+            // var select_options = document.getElementById(id);
+            // for(var i=1; i<select_options.options.length; i++) {
+            //     select_options.remove(i);
+            // }
         }
         
        

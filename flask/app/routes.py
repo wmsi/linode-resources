@@ -151,7 +151,7 @@ def school_subdomain(site_subdomain, filename):
 # must have the data_story attribute set to true for their account. 
 # While still in development this attribute is set to True for all
 # new users
-@app.route('/data-story')
+@app.route('/data-story',methods=['POST','GET'])
 @login_required
 def data_story():
     if current_user.data_story != True:
@@ -159,7 +159,12 @@ def data_story():
                 If you believe your account should be activated with permissions 
                 contact a WMSI administrator to make the change""")
         return redirect(url_for('index'))
+
     datastory = DataStory.query.all()
+    if request.method == 'POST':
+        project_id = request.form.get('project_id')
+        return str('archive project ' + project_id)
+
     return render_template('data_story.html', title='Digital Data Stories', datastory=datastory, bgcolor='black')
 
 @app.route('/load-csv',methods=['POST','GET'])
