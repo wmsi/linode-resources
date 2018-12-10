@@ -160,7 +160,7 @@ def data_story():
                 contact a WMSI administrator to make the change""")
         return redirect(url_for('index'))
 
-    datastory = DataStory.query.filter(archived != True).all()
+    datastory = DataStory.query.filter(archived!=True).all()
     if request.method == 'POST':
         project_id = request.form.get('project_id')
         project = DataStory.query.filter_by(project_id=project_id).all()
