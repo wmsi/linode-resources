@@ -163,7 +163,10 @@ def data_story():
     datastory = DataStory.query.all()
     if request.method == 'POST':
         project_id = request.form.get('project_id')
-        return str('archive project ' + project_id)
+        project = DataStory.query.filter_by(project_id=project_id).all()
+        for datum in project:
+            datum.archived = True
+        return str('project ' + project_id + ' has been archived. To revive this project contact a system administrator')
 
     return render_template('data_story.html', title='Digital Data Stories', datastory=datastory, bgcolor='black')
 

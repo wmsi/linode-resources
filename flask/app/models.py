@@ -40,6 +40,7 @@ class DataStory(db.Model):
 	sensor_id = db.Column(db.Integer)
 	data_type = db.Column(db.String(64))
 	value = db.Column(db.Float)
+	archived = db.Column(db.Boolean, default=False)
 
 	def __repr__(self):
 		return '<DataStory %s, %s>' % (str(self.project_id), str(self.timestamp)) # format datetime
