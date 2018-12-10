@@ -160,7 +160,7 @@ def data_story():
                 contact a WMSI administrator to make the change""")
         return redirect(url_for('index'))
 
-    datastory = DataStory.query.filter(archived!=True).all()
+    datastory = DataStory.query.all()
     if request.method == 'POST':
         project_id = request.form.get('project_id')
         project = DataStory.query.filter_by(project_id=project_id).all()
@@ -205,7 +205,7 @@ def load_csv():
 @app.route('/get_new_data')
 def get_new_data():
     since = request.args.get('since', 0.0, type=float)
-    all_data = DataStory.query.filter(archived!=True).all()
+    all_data = DataStory.query.all()
     new_data = []
     time_float = None
     # app.logger.warning('checking for new data')
@@ -220,7 +220,7 @@ def get_new_data():
             new_data.append({
                 'project_id': d.project_id,
                 'sensor_id': d.sensor_id,
-                'timestamp': time_int,   # use this method to send the timestamp as a float
+                'timestamp': time_int,   # use this method to send the timestamp as an int
                 'value': d.value,
                 'data_type': d.data_type
             })
