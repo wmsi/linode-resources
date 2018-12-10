@@ -160,7 +160,6 @@ def data_story():
                 contact a WMSI administrator to make the change""")
         return redirect(url_for('index'))
 
-    datastory = DataStory.query.filter(DataStory.archived!=True).all()
     if request.method == 'POST':
         project_id = request.form.get('project_id')
         project = DataStory.query.filter_by(project_id=project_id).all()
@@ -170,6 +169,7 @@ def data_story():
         db.session.commit()
         return str('project ' + project_id + ' has been archived. To revive this project contact a system administrator')
 
+    datastory = DataStory.query.filter(DataStory.archived!=True).all()
     return render_template('data_story.html', title='Digital Data Stories', datastory=datastory, bgcolor='black')
 
 @app.route('/load-csv',methods=['POST','GET'])
