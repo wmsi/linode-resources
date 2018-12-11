@@ -91,7 +91,7 @@
                 <button class="open-button form-control btn" onclick="openForm()">Archive a Project</button>
                 <div class="form-popup" id="archiveForm">
                     <!-- <form action="/action_page.php" class="form-container"> -->
-                    <h1>Select Data to Archive</h1>
+                    <h1>Select Data</h1>
 
                     <label for="archive_project_id"><b>Project Id</b></label>
                     <select class="form-control form-control-lg" id="archive_project_id"> <!-- onchange="renderDataTypes('archive_')" -->
@@ -198,7 +198,7 @@
             Refresh data in the table without reloading the page or any controls. 
             This function is triggered by the 'Refresh Data' button
         */
-        function refreshData() {
+        function refreshData(last_pull=last_pull) {
             $.ajax("{{ url_for('get_new_data') }}?since=" + last_pull).done(
                 function(new_data) {
                     // console.log('get data since ' + last_pull);
@@ -231,6 +231,7 @@
             $.each(raw_data, function(i, el) {
                 if($.inArray(el.project_id, id_options) === -1) id_options.push(el.project_id);
             });
+            id_options = id_options.sort((a, b) => a - b);
 
             _resetOptions(prefix + 'project_id');
             $('#' + prefix + 'project_id').append(
@@ -390,7 +391,7 @@
                 alert('Please select a project to archive');
                 return;
             }
-            
+
             var post_data = new FormData();
             post_data.append('project_id', project_id);
             $.ajax({
@@ -400,7 +401,10 @@
                 contentType: false,
                 type: 'POST',
                 success: function(data){
-                    console.log(data);
+                    alert(data);
+                    closeForm();
+                    raw_data = refreshData(getFirstDate(raw_data));
+                    renderTable();
                 }
             });
 
