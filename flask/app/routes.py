@@ -263,7 +263,7 @@ def scratchx():
             for datum in data_set:
                 values.append([datum.data_type,datum.value])
         else:
-            data_set = DataStory.query.filter(DataStory.archived==False, DataStory.project_id=int(project_id), DataStory.data_type=str(data_type)).all()
+            data_set = DataStory.query.filter(DataStory.archived==False, DataStory.project_id==int(project_id), DataStory.data_type==str(data_type)).all()
             for datum in data_set:
                 values.append(datum.value)
         return jsonify(values)
