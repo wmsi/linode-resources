@@ -36,14 +36,12 @@ class User(UserMixin, db.Model):
 class DataStory(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-	project_id = db.Column(db.Integer)
+	project_id = db.Column(db.Integer)#, db.ForeignKey('project_meta_data.id'))
 	sensor_id = db.Column(db.Integer)
 	data_type = db.Column(db.String(64))
 	value = db.Column(db.Float)
 	archived = db.Column(db.Boolean, default=False)
-	# project_metadata = db.relationship('ProjectMetaData')
 
-	__tablename__ = 'datastory'
 	def __repr__(self):
 		return '<DataStory %s, %s>' % (str(self.project_id), str(self.timestamp)) # format datetime
 
@@ -51,7 +49,7 @@ class DataStory(db.Model):
 # The goal is for larger data types (such as strings) associated with projects to be 
 # stored in this format
 # class ProjectMetaData(db.Model):
-# 	id = db.Column(db.Integer, db.ForeignKey('datastory.project_id'), primary_key=True)
+# 	id = db.Column(db.Integer, primary_key=True) # db.ForeignKey('datastory.project_id'), 
 # 	# project_id = db.Column(db.Integer, db.ForeignKey(datastory.project_id))
 # 	project_name = db.Column(db.String(64))
 # 	description = db.Column(db.String(500))		# formal explanation of project abstract
@@ -60,10 +58,6 @@ class DataStory(db.Model):
 
 # 	def __repr__(self):
 # 		return '<ProjectMetaData %s, %s>' % (str(self.id), str(self.project_name))
-
-
-# 	def __repr__(self):
-# 		return '<MetaData %s, %s>' % (str(self.project_name), str(self.project_id)) # format datetime
 
 
 # create a class for Posts in the database. Posts are always attahed to a User
