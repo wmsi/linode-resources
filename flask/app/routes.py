@@ -242,21 +242,31 @@ def scratchx():
         sensor_id = request.form.get('sensor_id')
         data_type = request.form.get('data_type')
         value = request.form.get('value')
-        if(request.form.get('pmd')):
-            return edit_meta_data(request)
 
-        return post_data_value(request)
+        data = DataStory(project_id=int(project_id), data_type=str(data_type), sensor_id=int(sensor_id), value=float(value))
+        db.session.add(data)
+        db.session.commit()
+        app.logger.warning("project_id: %s, data_type: %s, value: %s" \
+            % (str(project_id), str(data_type), str(value)))
+
+        # send_new_value(data);
+        # return "Thanks for posting! Your data has been added to https://wmsinh.org/data-story\n"
+        # return str(data.timestamp.timestamp());
+        return str(data.timestamp.strftime("%Y-%m-%d %H:%M:%S"));
 
     if request.method == 'GET':
-        # project_id = request.args.get('project_id')
-        # data_type = request.args.get('data_type')
-
-        # add support for project meta data
-        if(request.args.get('pmd')):
-            sample_pmd = '{"name": "test", "id": 0, "description": "example project", "miscellaneous": "", "data_sets": {"tempF": [69.0], "tempC": [22.0, 30.0]}}'
-            return sample_pmd
-            # return get_meta_data(request.args.get('project_id'))
-        return get_project_data(request)
+        project_id = request.args.get('project_id')
+        data_type = request.args.get('data_type')
+        values = []
+        if data_type is None:
+            data_set = DataStory.query.filter(DataStory.project_id==int(project_id), DataStory.archived==False).all()
+            for datum in data_set:
+                values.append([datum.data_type,datum.value])
+        else:
+            data_set = DataStory.query.filter(DataStory.archived==False, DataStory.project_id==int(project_id), DataStory.data_type==str(data_type)).all()
+            for datum in data_set:
+                values.append(datum.value)
+        return jsonify(values)
 
 @app.route('/scratch-gui')
 def scratch_gui():
@@ -360,75 +370,6 @@ def status():
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('page_not_found.html'), 404
-
-# def get_meta_data(project_id):
-#     pmd = ProjectMetaData.query.filter_by(id=project_id).all()
-#     data_set = DataStory.query.filter(DataStory.project_id==int(project_id), DataStory.archived==False).all()
-#     if(pmd == []):
-#         pmd = ProjectMetaData(id=project_id, project_name=str(project_id))
-#     else:
-#         pmd = pmd[0]
-#     project = {}
-#     project['name'] = pmd.project_name
-#     project['id'] = pmd.id
-#     project['description'] = pmd.description
-#     project['miscellaneous'] = pmd.miscellaneous
-#     project['data_sets'] = {}
-#     for datum in data_set:
-#         if datum.data_type not in project['data_sets']:
-#             project['data_sets'][datum.data_type] = []
-#         project['data_sets'][datum.data_type].append(datum.value)
-#     json_data = json.dumps(project)
-#     return json_data
-
-def edit_meta_data(request):
-    project_id = int(request.form.get('project_id'))
-    msg = ''
-    # pmd = ProjectMetaData.query.filter_by(id=project_id)
-    # if(pmd == []):
-    #     return 'no project with id ' + str(project_id)
-    # pmd = pmd[0]
-    pmd = {}
-    if(request.form.get('name')):
-        msg = 'replaced name of project ' + str(project_id) + ' with ' + request.form.get('name')
-        pmd.name = request.form.get('name')
-    elif(request.form.get('description')):
-        msg = 'replaced description of project ' + str(project_id) + ' with ' + request.form.get('description')
-        pmd.description = request.form.get('description')
-    elif(request.form.get('miscellaneous')):
-        msg = 'replaced miscellaneous field of project ' + str(project_id) + ' with ' + request.form.get('miscellaneous')
-        pmd.miscellaneous = request.form.get('miscellaneous')
-
-    # db.session.add(pmd)
-    # db.session.commit()
-    return msg
-
-def post_data_value(request):
-    data = DataStory(project_id=int(project_id), data_type=str(data_type), sensor_id=int(sensor_id), value=float(value))
-    db.session.add(data)
-    db.session.commit()
-    app.logger.warning("project_id: %s, data_type: %s, value: %s" \
-        % (str(project_id), str(data_type), str(value)))
-
-    # send_new_value(data);
-    # return "Thanks for posting! Your data has been added to https://wmsinh.org/data-story\n"
-    # return str(data.timestamp.timestamp());
-    return str(data.timestamp.strftime("%Y-%m-%d %H:%M:%S"));
-
-def get_project_data(request):
-    project_id = request.args.get('project_id')
-    data_type = request.args.get('data_type')
-    values = []
-
-    if data_type is None:
-        data_set = DataStory.query.filter(DataStory.project_id==int(project_id), DataStory.archived==False).all()
-        for datum in data_set:
-            values.append([datum.data_type, datum.value])
-    else:
-        data_set = DataStory.query.filter(DataStory.archived==False, DataStory.project_id==int(project_id), DataStory.data_type==str(data_type)).all()
-        for datum in data_set:
-            values.append(datum.value)
-    return jsonify(values)
 
 # def send_new_value(data):
 #     new_val = {}
