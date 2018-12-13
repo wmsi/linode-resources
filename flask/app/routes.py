@@ -365,7 +365,7 @@ def page_not_found(error):
 #     pmd = ProjectMetaData.query.filter_by(id=project_id).all()
 #     data_set = DataStory.query.filter(DataStory.project_id==int(project_id), DataStory.archived==False).all()
 #     if(pmd == []):
-#         pmd = ProjectMetaData(id=project_id, project_name='None')
+#         pmd = ProjectMetaData(id=project_id, project_name=str(project_id))
 #     else:
 #         pmd = pmd[0]
 #     project = {}
@@ -385,9 +385,10 @@ def edit_meta_data(request):
     project_id = int(request.form.get('project_id'))
     msg = ''
     # pmd = ProjectMetaData.query.filter_by(id=project_id)
-    if(pmd == []):
-        return 'no project with id ' + str(project_id)
-    pmd = pmd[0]
+    # if(pmd == []):
+    #     return 'no project with id ' + str(project_id)
+    # pmd = pmd[0]
+    pmd = {}
     if(requst.form.get('name')):
         msg = 'replaced name of project ' + str(project_id) + ' with ' + requst.form.get('name')
         pmd.name = requst.form.get('name')
