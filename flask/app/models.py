@@ -35,7 +35,7 @@ class User(UserMixin, db.Model):
 #	- Check for discrepancy between datetime.utcnow anc the datetime in data-story
 class DataStory(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
-	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+	timestamp = db.Column(db.datetime, index=True, default=datetime.utcnow)
 	project_id = db.Column(db.Integer, db.ForeignKey('project_meta_data.id'))
 	sensor_id = db.Column(db.Integer)
 	data_type = db.Column(db.String(64))
