@@ -403,6 +403,7 @@ def edit_meta_data(request):
     return msg
 
 def post_data_value(request):
+    app.logger.warning('proj id: ' + request.form.get('project_id'))
     project_id = int(request.form.get('project_id'))
     sensor_id = request.form.get('sensor_id')
     data_type = request.form.get('data_type')
