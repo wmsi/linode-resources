@@ -254,7 +254,7 @@ def scratchx():
         # add support for project meta data
         if(request.args.get('pmd')):
             sample_pmd = '{"name": "test", "id": 0, "description": "example project", "miscellaneous": "", "data_sets": {"tempF": [69.0], "tempC": [22.0, 30.0]}}'
-            return sample_pmd
+            # return sample_pmd
             return get_meta_data(request.args.get('project_id'))
         return get_project_data(request)
 
