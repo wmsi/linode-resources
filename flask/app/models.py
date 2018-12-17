@@ -36,7 +36,7 @@ class User(UserMixin, db.Model):
 class DataStory(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-	project_id = db.Column(db.Integer)#, db.ForeignKey('project_meta_data.id'))
+	project_id = db.Column(db.Integer, db.ForeignKey('project_meta_data.id'))
 	sensor_id = db.Column(db.Integer)
 	data_type = db.Column(db.String(64))
 	value = db.Column(db.Float)
@@ -48,16 +48,16 @@ class DataStory(db.Model):
 # Store meta data about each Data Story project in the database.
 # The goal is for larger data types (such as strings) associated with projects to be 
 # stored in this format
-# class ProjectMetaData(db.Model):
-# 	id = db.Column(db.Integer, primary_key=True) # db.ForeignKey('datastory.project_id'), 
-# 	# project_id = db.Column(db.Integer, db.ForeignKey(datastory.project_id))
-# 	project_name = db.Column(db.String(64))
-# 	description = db.Column(db.String(500))		# formal explanation of project abstract
-# 	miscellaneous = db.Column(db.String(160))	# this can be a place to write equipment used, classroom, data types, etc.
-# 	data = db.relationship('DataStory', backref='metadata', lazy='dynamic')
+class ProjectMetaData(db.Model):
+	id = db.Column(db.Integer, primary_key=True) # db.ForeignKey('datastory.project_id'), 
+	# project_id = db.Column(db.Integer, db.ForeignKey(datastory.project_id))
+	project_name = db.Column(db.String(64))
+	description = db.Column(db.String(500))		# formal explanation of project abstract
+	miscellaneous = db.Column(db.String(160))	# this can be a place to write equipment used, classroom, data types, etc.
+	data = db.relationship('DataStory', backref='metadata', lazy='dynamic')
 
-# 	def __repr__(self):
-# 		return '<ProjectMetaData %s, %s>' % (str(self.id), str(self.project_name))
+	def __repr__(self):
+		return '<ProjectMetaData %s, %s>' % (str(self.id), str(self.project_name))
 
 
 # create a class for Posts in the database. Posts are always attahed to a User

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 from flask import Flask, request, render_template, send_file, redirect, url_for, flash, jsonify, Response
 from app import app, forms, db#, socketio
-from app.models import User, Post, DataStory#, ProjectMetaData
+from app.models import User, Post, DataStory, ProjectMetaData
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 # from flask_socketio import emit, send
@@ -255,7 +255,7 @@ def scratchx():
         if(request.args.get('pmd')):
             sample_pmd = '{"name": "test", "id": 0, "description": "example project", "miscellaneous": "", "data_sets": {"tempF": [69.0], "tempC": [22.0, 30.0]}}'
             return sample_pmd
-            # return get_meta_data(request.args.get('project_id'))
+            return get_meta_data(request.args.get('project_id'))
         return get_project_data(request)
 
 @app.route('/scratch-gui')
@@ -361,33 +361,33 @@ def status():
 def page_not_found(error):
     return render_template('page_not_found.html'), 404
 
-# def get_meta_data(project_id):
-#     pmd = ProjectMetaData.query.filter_by(id=project_id).all()
-#     data_set = DataStory.query.filter(DataStory.project_id==int(project_id), DataStory.archived==False).all()
-#     if(pmd == []):
-#         pmd = ProjectMetaData(id=project_id, project_name=str(project_id))
-#     else:
-#         pmd = pmd[0]
-#     project = {}
-#     project['name'] = pmd.project_name
-#     project['id'] = pmd.id
-#     project['description'] = pmd.description
-#     project['miscellaneous'] = pmd.miscellaneous
-#     project['data_sets'] = {}
-#     for datum in data_set:
-#         if datum.data_type not in project['data_sets']:
-#             project['data_sets'][datum.data_type] = []
-#         project['data_sets'][datum.data_type].append(datum.value)
-#     json_data = json.dumps(project)
-#     return json_data
+def get_meta_data(project_id):
+    pmd = ProjectMetaData.query.filter_by(id=project_id).all()
+    data_set = DataStory.query.filter(DataStory.project_id==int(project_id), DataStory.archived==False).all()
+    if(pmd == []):
+        pmd = ProjectMetaData(id=project_id, project_name=str(project_id))
+    else:
+        pmd = pmd[0]
+    project = {}
+    project['name'] = pmd.project_name
+    project['id'] = pmd.id
+    project['description'] = pmd.description
+    project['miscellaneous'] = pmd.miscellaneous
+    project['data_sets'] = {}
+    for datum in data_set:
+        if datum.data_type not in project['data_sets']:
+            project['data_sets'][datum.data_type] = []
+        project['data_sets'][datum.data_type].append(datum.value)
+    json_data = json.dumps(project)
+    return json_data
 
 def edit_meta_data(request):
     project_id = int(request.form.get('project_id'))
     msg = ''
-    # pmd = ProjectMetaData.query.filter_by(id=project_id)
-    # if(pmd == []):
-    #     return 'no project with id ' + str(project_id)
-    # pmd = pmd[0]
+    pmd = ProjectMetaData.query.filter_by(id=project_id)
+    if(pmd == []):
+        return 'no project with id ' + str(project_id)
+    pmd = pmd[0]
     if(request.form.get('name')):
         msg = 'replaced name of project ' + str(project_id) + ' with ' + request.form.get('name')
         # pmd.name = request.form.get('name')
@@ -398,8 +398,8 @@ def edit_meta_data(request):
         msg = 'replaced miscellaneous field of project ' + str(project_id) + ' with ' + request.form.get('miscellaneous')
         # pmd.miscellaneous = request.form.get('miscellaneous')
 
-    # db.session.add(pmd)
-    # db.session.commit()
+    db.session.add(pmd)
+    db.session.commit()
     return msg
 
 def post_data_value(request):
