@@ -413,7 +413,7 @@ def post_data_value(request):
     pmd = ProjectMetaData.query.filter_by(id=project_id).all()
     if(pmd == []):
         project_name = 'project' + str(project_id)
-        pmd = ProjectMetaData(id=project_id, name=project_name)
+        pmd = ProjectMetaData(id=project_id, project_name=project_name)
         db.session.add(pmd)
     db.session.add(data)
     db.session.commit()
