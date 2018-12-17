@@ -238,10 +238,10 @@ def get_new_data():
 def scratchx():
     if request.method == 'POST':
     # add some validation/ security screening here
-        project_id = request.form.get('project_id')
-        sensor_id = request.form.get('sensor_id')
-        data_type = request.form.get('data_type')
-        value = request.form.get('value')
+        # project_id = request.form.get('project_id')
+        # sensor_id = request.form.get('sensor_id')
+        # data_type = request.form.get('data_type')
+        # value = request.form.get('value')
         if(request.form.get('pmd')):
             return edit_meta_data(request)
 
@@ -403,7 +403,17 @@ def edit_meta_data(request):
     return msg
 
 def post_data_value(request):
-    data = DataStory(project_id=int(project_id), data_type=str(data_type), sensor_id=int(sensor_id), value=float(value))
+    project_id = int(request.form.get('project_id'))
+    sensor_id = request.form.get('sensor_id')
+    data_type = request.form.get('data_type')
+    value = request.form.get('value')
+
+    data = DataStory(project_id=project_id, data_type=str(data_type), sensor_id=int(sensor_id), value=float(value))
+    pmd = ProjectMetaData.query.filter_by(id=project_id).all()
+    if(pmd == []):
+        project_name = 'project' + str(project_id)
+        pmd = ProjectMetaData(id=project_id, name=project_name)
+        db.session.add(pmd)
     db.session.add(data)
     db.session.commit()
     app.logger.warning("project_id: %s, data_type: %s, value: %s" \
