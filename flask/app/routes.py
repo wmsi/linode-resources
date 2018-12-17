@@ -390,13 +390,13 @@ def edit_meta_data(request):
     pmd = pmd[0]
     if(request.form.get('name')):
         msg = 'replaced name of project ' + str(project_id) + ' with ' + request.form.get('name')
-        # pmd.name = request.form.get('name')
+        pmd.name = request.form.get('name')
     elif(request.form.get('description')):
         msg = 'replaced description of project ' + str(project_id) + ' with ' + request.form.get('description')
-        # pmd.description = request.form.get('description')
+        pmd.description = request.form.get('description')
     elif(request.form.get('miscellaneous')):
         msg = 'replaced miscellaneous field of project ' + str(project_id) + ' with ' + request.form.get('miscellaneous')
-        # pmd.miscellaneous = request.form.get('miscellaneous')
+        pmd.miscellaneous = request.form.get('miscellaneous')
 
     db.session.add(pmd)
     db.session.commit()
