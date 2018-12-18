@@ -418,7 +418,7 @@ def post_data_value(request):
     db.session.add(data)
     db.session.commit()
     # app.logger.warning("project_id: %s, data_type: %s, value: %s" \
-        % (str(project_id), str(data_type), str(value)))
+        # % (str(project_id), str(data_type), str(value)))
 
     # send_new_value(data);
     # return "Thanks for posting! Your data has been added to https://wmsinh.org/data-story\n"
