@@ -74,11 +74,11 @@
             <!-- <a href='#' class='form-control btn' onclick='renderChart()'>Update Chart</a> -->
             <a href='#' class='form-control btn' onclick='refreshData()'>Refresh Data</a>
         </div>
-        <div class="col-md-2">
+        <!-- <div class="col-md-2">
             <div class="auto_refresh">
                 Get Live Updates: <input type="checkbox" id="auto_refresh">
             </div>
-        </div>
+        </div> -->
         <div class="col-md-3">
             <div class="text-left">
                 <!-- Export CSV of data table -->
@@ -86,6 +86,20 @@
                 <button id="submit" class="form-control btn">Export .csv File</button>
             </div>
         </div>
+        <!-- <div class="col-md-4">
+            <div class="text-left">
+                <button class="form-control btn" onclick="openMetadataForm()">Edit Metadata</button>
+                <div class="form-popup" id="metadataForm">
+                    <h1>Select Project</h1>
+
+                    <label for="archive_project_id"><b>Project Id</b></label>
+                    <select class="form-control form-control-lg" id="archive_project_id"> 
+                        <option value="">Select Project ID</option>
+                    </select>
+
+                </div>
+            </div>
+        </div> -->
         <div class="col-md-4">
             <div class="text-left">
                 <button class="form-control btn" onclick="openForm()">Archive a Project</button>

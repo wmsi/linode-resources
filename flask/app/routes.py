@@ -403,7 +403,7 @@ def edit_meta_data(request):
     return msg
 
 def post_data_value(request):
-    app.logger.warning('proj id: ' + request.form.get('project_id'))
+    # app.logger.warning('proj id: ' + request.form.get('project_id'))
     project_id = int(request.form.get('project_id'))
     sensor_id = request.form.get('sensor_id')
     data_type = request.form.get('data_type')
@@ -417,7 +417,7 @@ def post_data_value(request):
         db.session.add(pmd)
     db.session.add(data)
     db.session.commit()
-    app.logger.warning("project_id: %s, data_type: %s, value: %s" \
+    # app.logger.warning("project_id: %s, data_type: %s, value: %s" \
         % (str(project_id), str(data_type), str(value)))
 
     # send_new_value(data);
