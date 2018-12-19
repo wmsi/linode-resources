@@ -451,6 +451,7 @@
             if($("#project_miscellaneous").val() != "")
                     edit_data.append('miscellaneous', $('#project_miscellaneous').val());
             edit_data.append('pmd', true);
+            
             $.ajax({
                 url: 'https://wmsinh.org/scratchx',
                 data: edit_data,
