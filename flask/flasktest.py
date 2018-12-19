@@ -8,6 +8,7 @@ from include.utils import *
 from include.school_subdomains import *
 
 app.jinja_env.filters['datetime'] = format_datetime
+# app.jinja.filters['datetime'] = format_datetime
 
 # add the database instance and models to the shell context. This allows
 # you to work directly with the databalse by running "flask shell" from
