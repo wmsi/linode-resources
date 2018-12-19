@@ -93,7 +93,7 @@
                     <!-- <h1>Select Project</h1> -->
 
                     <label for="metadataForm_project_id"><b>Project Id</b></label>
-                    <select class="form-control form-control-lg" id="metadataForm_project_id"> 
+                    <select class="form-control form-control-lg" id="metadataForm_project_id" onchange="getMetaData()"> 
                         <option value="">Select Project ID</option>
                     </select>
                     <p>
@@ -428,6 +428,28 @@
                 success: function(data){
                     alert(data);
                     closeForm();
+                }
+            });
+        }
+
+        function getMetaData() {
+            var project_id = $('#metadataForm_project_id').val();
+            if(project_id == '') {
+                return;
+            }
+            var query_string = 'https://wmsinh.org/scratchx?project_id=' + String(project_id) + '&pmd=true';
+
+            $.ajax({
+                url: query_string,
+                dataType: 'json',
+                // processData: false,
+                // contentType: false,
+                // type: 'GET',
+                success: function(data) {
+                    console.log(JSON.stringify(data));
+                    $('#project_name').val(data.name);
+                    $('#project_description').val(data.description);
+                    $('#project_miscellaneous').val(data.miscellaneous);
                 }
             });
         }
