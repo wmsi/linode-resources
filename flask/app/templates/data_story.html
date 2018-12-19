@@ -412,7 +412,7 @@
         */
         function archiveData() {
             var project_id = document.getElementById('archiveForm_project_id').value;
-            if(project_id == 'Select Project ID') {
+            if(project_id == '') {
                 alert('Please select a project to archive');
                 return;
             }
@@ -438,7 +438,7 @@
         function editMetadata() {
             var edit_data = new FormData();
             var project_id = $('#metadataForm_project_id').val();
-            if(project_id == 'Select Project ID') {
+            if(project_id == '') {
                 alert('Please select a project to edit');
                 return;
             }
@@ -451,7 +451,7 @@
             if($("#project_miscellaneous").val() != "")
                     edit_data.append('miscellaneous', $('#project_miscellaneous').val());
             edit_data.append('pmd', true);
-            
+
             $.ajax({
                 url: 'https://wmsinh.org/scratchx',
                 data: edit_data,
