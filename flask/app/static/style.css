@@ -2,6 +2,10 @@
  * forbetterweb.com - Classic Cover – One Page Websites (html, bootstrap)
  */
 
+textarea {
+  color: black;
+}
+
 /* Popup Form 
    Source can be found at https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form
    Implemented on data-stroy page to archive data
@@ -61,7 +65,7 @@ a:hover {
 }
 
 .btn {
-  padding: 14px 24px;
+  padding: auto; /*14px 24px;*/
   font-weight: 900;
   letter-spacing: 1px;
   /*text-transform: uppercase;*/

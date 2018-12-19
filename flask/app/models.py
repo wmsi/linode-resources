@@ -37,7 +37,7 @@ class DataStory(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 	project_id = db.Column(db.Integer, db.ForeignKey('project_meta_data.id'))
-	sensor_id = db.Column(db.Integer)
+	sensor_id = db.Column(db.Integer, default=0)
 	data_type = db.Column(db.String(64))
 	value = db.Column(db.Float)
 	archived = db.Column(db.Boolean, default=False)
