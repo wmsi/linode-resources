@@ -260,7 +260,8 @@ def scratchx():
 
 @app.route('/scratch-gui')
 def scratch_gui():
-    return render_template('scratch-build/index.html')
+    return render_template('scratch_gui.html')
+    # return render_template('scratch-build/index.html')
 
 @app.route('/static/assets/<path:path>')
 def send_assets(path):
