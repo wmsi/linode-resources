@@ -276,6 +276,7 @@ small {
 @media (min-width: 768px) {
   .masthead {
     position: fixed;
+    z-index: 9;
     top: 0;
   }
   .mastfoot {

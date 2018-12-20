@@ -192,7 +192,7 @@
         {% for data in datastory %}
             // create a temp timestamp to adjust for timezone
             // timestamp_temp = moment("{{ data.timestamp }}");
-            raw_data.push({
+            raw_data.unshift({
                 "project_id":{{ data.project_id }}, 
                 "sensor_id":{{ data.sensor_id }},
                 // "timestamp":moment("{{ data.timestamp }}"),
@@ -229,7 +229,7 @@
                         console.log('new timestamp: ' + new_data[i].timestamp);
                         new_data[i].timestamp = moment(new_data[i].timestamp); //_formatTimestamp(moment(new_data[i].timestamp));
                         // console.log(JSON.stringify(new_data[i]));
-                        raw_data.push(new_data[i]);
+                        raw_data.unshift(new_data[i]);
                     }
                     last_pull = moment(); //.subtract(moment().utcOffset(), 'minutes');
                     // console.log('new since: ' + last_pull);
