@@ -73,6 +73,9 @@
             <!-- <div class="sensor_id"></div> -->
             <!-- <a href='#' class='form-control btn' onclick='renderChart()'>Update Chart</a> -->
             <a href='#' class='form-control btn' onclick='refreshData()'>Refresh Data</a>
+            <div class="show-chart">
+                Show Chart: <input type="checkbox" id="show-chart">
+            </div>
         </div>
         <!-- <div class="col-md-2">
             <div class="auto_refresh">
@@ -93,24 +96,24 @@
                     <!-- <h1>Select Project</h1> -->
 
                     <label for="metadataForm_project_id"><b>Project Id</b></label>
-                    <select class="form-control form-control-lg" id="metadataForm_project_id" onchange="getMetaData()"> 
+                    <select class="form-control form-control-lg popup-btn" id="metadataForm_project_id" onchange="getMetaData()"> 
                         <option value="">Select Project ID</option>
                     </select>
                     <p>
-                        <input type="text" id="project_name" placeholder="Project Name" maxlength="64"/>
+                        <input type="text" class="popup-input" id="project_name" placeholder="Project Name" maxlength="64" />
                     </p>
                     <p>
-                        <textarea id="project_description" rows="5" columns="50" maxlength="500" placeholder="Project Description"></textarea>
+                        <textarea class="form-control popup-btn" id="project_description" rows="5" columns="50" maxlength="500" placeholder="Project Description"></textarea>
                     </p>
                     <p>
-                        <textarea id="project_miscellaneous" rows="3" columns="50" maxlength="160" placeholder="Miscellaneous Information"></textarea>
+                        <textarea class="form-control popup-btn" id="project_miscellaneous" rows="3" columns="50" maxlength="160" placeholder="Miscellaneous Information"></textarea>
                     </p>
                     <button type="button" class="form-control popup-btn btn" onclick="editMetadata()">Save Changes</button>
                     <button type="button" class="form-control popup-btn btn" onclick="closeForm('metadataForm')">Close</button>
                 </div>
             </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
             <div class="text-left">
                 <button class="form-control btn" onclick="openForm('archiveForm')">Archive a Project</button>
                 <div class="form-popup" id="archiveForm">
@@ -118,7 +121,7 @@
                     <!-- <h1>Select Data</h1> -->
 
                     <label for="archiveForm_project_id"><b>Project Id</b></label>
-                    <select class="form-control form-control-lg" id="archiveForm_project_id"> <!-- onchange="renderDataTypes('archive_')" -->
+                    <select class="form-control form-control-lg popup-btn" id="archiveForm_project_id"> <!-- onchange="renderDataTypes('archive_')" -->
                         <option value="">Select Project ID</option>
                     </select>
 
@@ -134,6 +137,11 @@
                 <!-- <button id="submit" class="form-control btn">Archive Data</button> -->
             </div>
         </div>
+        <!-- <div class="col-md-2">
+            <div class="show-chart">
+                Show Chart: <input type="checkbox" id="show-chart">
+            </div>
+        </div> -->
     </div>
     <br>
 

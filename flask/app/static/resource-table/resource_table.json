@@ -1,0 +1,1843 @@
+{
+  "Activities": [
+    {
+      "Activity Name": "Grid Coding",
+      "Activity Link": "https://sites.tufts.edu/stompactivitydatabase/a17-grid-coding/",
+      "Duration": "1h00",
+      "Grade Level": "K-12",
+      "Subject": "Computer Science",
+      "Tech Required": "None",
+      "Author": "Tufts STOMP",
+      "Author Link": "http://sites.tufts.edu/stomp/",
+      "Tags": [
+        "unplugged",
+        "intro",
+        "STOMP"
+      ],
+      "Additional Info": "",
+      "Description": "Students learn basic coding concepts bymovingthemselves through a grid"
+    },
+    {
+      "Activity Name": "Human Robot",
+      "Activity Link": "https://sites.tufts.edu/stompactivitydatabase/a17-human-robot/",
+      "Duration": "1h00",
+      "Grade Level": "3-8",
+      "Subject": "Computer Science",
+      "Tech Required": "None",
+      "Author": "Tufts STOMP",
+      "Author Link": "http://sites.tufts.edu/stomp/",
+      "Tags": [
+        "unplugged",
+        "intro",
+        "STOMP",
+        "introduction to programming",
+        "loops",
+        "program",
+        "instructions",
+        "coding",
+        "code"
+      ],
+      "Additional Info": "",
+      "Description": "Students program a teacher to complete a task"
+    },
+    {
+      "Activity Name": "Intro to Scratch",
+      "Activity Link": "https://sites.tufts.edu/stompactivitydatabase/a17-introduction-to-scratch/",
+      "Duration": "1h00",
+      "Grade Level": "3-9",
+      "Subject": "Computer Science",
+      "Tech Required": "Computers",
+      "Author": "Tufts STOMP",
+      "Author Link": "http://sites.tufts.edu/stomp/",
+      "Tags": [
+        "Scratch animation",
+        "scratch",
+        "programming",
+        "STOMP"
+      ],
+      "Additional Info": "",
+      "Description": "Students learn basic programming concepts with Scratch"
+    },
+    {
+      "Activity Name": "Rube Goldberg machines",
+      "Activity Link": "https://sites.tufts.edu/stompactivitydatabase/rube_goldberg_machines/",
+      "Duration": "4h00",
+      "Grade Level": "5-8",
+      "Subject": [
+        "Physics",
+        "Computer Science"
+      ],
+      "Tech Required": [
+        "Computers",
+        "Lego Robotics Kits"
+      ],
+      "Author": "Tufts STOMP",
+      "Author Link": "http://sites.tufts.edu/stomp/",
+      "Tags": [
+        "simple machines",
+        "Lego",
+        "Robotics",
+        "programming",
+        "physics"
+      ],
+      "Additional Info": "",
+      "Description": "Students use simple machines and Lego programming to build a Rube Goldberg machine"
+    },
+    {
+      "Activity Name": "Silly Walks",
+      "Activity Link": "https://sites.tufts.edu/stompactivitydatabase/a17_silly_walks/",
+      "Duration": "1h00",
+      "Grade Level": "4-9",
+      "Subject": "Computer Science",
+      "Tech Required": "Lego Robotics",
+      "Author": "Tufts STOMP",
+      "Author Link": "http://sites.tufts.edu/stomp/",
+      "Tags": [
+        "programming",
+        "on-brick programming",
+        "intro"
+      ],
+      "Additional Info": "",
+      "Description": "Students build and program a robot that uses something other than wheels to move"
+    },
+    {
+      "Activity Name": "TinkerCAD Nametags",
+      "Activity Link": "https://sites.tufts.edu/stompactivitydatabase/a17-tinkercad-nametags/",
+      "Duration": "4h00",
+      "Grade Level": "5-12",
+      "Subject": "Computer Science",
+      "Tech Required": [
+        "Computers",
+        "laser cutter OR 3D printer"
+      ],
+      "Author": "Tufts STOMP",
+      "Author Link": "http://sites.tufts.edu/stomp/",
+      "Tags": [
+        "CAD",
+        "rapid prototyping",
+        "3d printing",
+        "laser cutting",
+        "modeling"
+      ],
+      "Additional Info": "",
+      "Description": "Students design and fabricate their own name tag"
+    },
+    {
+      "Activity Name": "Binary Numbers",
+      "Activity Link": "https://classic.csunplugged.org/wp-content/uploads/2014/12/unplugged-01-binary_numbers.pdf",
+      "Duration": "~1h00",
+      "Grade Level": "1+",
+      "Subject": [
+        "Math",
+        "Computer Science"
+      ],
+      "Tech Required": "None",
+      "Author": "CS Unplugged",
+      "Author Link": "https://classic.csunplugged.org/",
+      "Tags": [
+        "unplugged",
+        "binary",
+        "intro",
+        "math"
+      ],
+      "Additional Info": "https://classic.csunplugged.org/binary-numbers/",
+      "Description": "Data in computers is stored and transmitted as a series of zeros and ones. How can we represent words and numbers using just these two symbols?"
+    },
+    {
+      "Activity Name": "Databases Unplugged",
+      "Activity Link": "https://classic.csunplugged.org/wp-content/uploads/2014/12/DatabasesUnplugged-Version2.pdf",
+      "Duration": "~1h00",
+      "Grade Level": "2+",
+      "Subject": "Computer Science",
+      "Tech Required": "None",
+      "Author": "CS Unplugged",
+      "Author Link": "https://classic.csunplugged.org/",
+      "Tags": [
+        "databases",
+        "unplugged",
+        "math"
+      ],
+      "Additional Info": "https://classic.csunplugged.org/databases/",
+      "Description": "Teacher asks students a series of questions about their physical differences to help them form a \"Human Tree Diagram\""
+    },
+    {
+      "Activity Name": "Programming Languages",
+      "Activity Link": "https://classic.csunplugged.org/wp-content/uploads/2014/12/unplugged-12-programming_languages.pdf",
+      "Duration": "~1h00",
+      "Grade Level": "1+",
+      "Subject": "Computer Science",
+      "Tech Required": "None",
+      "Author": "CS Unplugged",
+      "Author Link": "https://classic.csunplugged.org/",
+      "Tags": [
+        "programming",
+        "intro",
+        "instructions",
+        "unplugged"
+      ],
+      "Additional Info": "https://classic.csunplugged.org/programming-languages/",
+      "Description": "Students experience the specific/ literal nature of programming languages"
+    },
+    {
+      "Activity Name": "Human Interface Design",
+      "Activity Link": "https://classic.csunplugged.org/wp-content/uploads/2014/12/unplugged-19-human_interface_design_0.pdf",
+      "Duration": "1h00+",
+      "Grade Level": "3+",
+      "Subject": "Computer Science",
+      "Tech Required": "None",
+      "Author": "CS Unplugged",
+      "Author Link": "https://classic.csunplugged.org/",
+      "Tags": [
+        "design",
+        "reasoning",
+        "unplugged",
+        "human factors",
+        ""
+      ],
+      "Additional Info": "https://classic.csunplugged.org/human-interface-design/",
+      "Description": "Raise awareness of human interface design issues by having students design a chocolate factory"
+    },
+    {
+      "Activity Name": "Intelligent Paper",
+      "Activity Link": "https://classic.csunplugged.org/wp-content/uploads/2014/12/intelligentpaper.pdf",
+      "Duration": "0h15",
+      "Grade Level": "3+",
+      "Subject": "Computer Science",
+      "Tech Required": "None",
+      "Author": "CS Unplugged",
+      "Author Link": "https://classic.csunplugged.org/",
+      "Tags": [
+        "artificial intelligence",
+        "intro",
+        "programming",
+        "instructions"
+      ],
+      "Additional Info": "https://classic.csunplugged.org/artificial-intelligence/",
+      "Description": "Hold a competition between a human and a programmed piece of paper"
+    },
+    {
+      "Activity Name": "The Turing Test",
+      "Activity Link": "https://classic.csunplugged.org/wp-content/uploads/2014/12/unplugged-20-the_turing_test_0.pdf",
+      "Duration": "0h20",
+      "Grade Level": "3+",
+      "Subject": "Computer Science",
+      "Tech Required": "None",
+      "Author": "CS Unplugged",
+      "Author Link": "https://classic.csunplugged.org/",
+      "Tags": [
+        "artificial intelligence",
+        "intro",
+        "programming",
+        "instructions",
+        "Turing test",
+        "story generation"
+      ],
+      "Additional Info": "https://classic.csunplugged.org/the-turing-test/",
+      "Description": [
+        "This activity aims to stimulate discussion on the question of whether computers can exhibit “intelligence",
+        "” or are ever likely to do so in the future."
+      ]
+    },
+    {
+      "Activity Name": "Divide and Conquer",
+      "Activity Link": "https://classic.csunplugged.org/divideandconquer/",
+      "Duration": "~0h30",
+      "Grade Level": "4+",
+      "Subject": [
+        "Computer Science",
+        "Math"
+      ],
+      "Tech Required": "None",
+      "Author": "CS Unplugged",
+      "Author Link": "https://classic.csunplugged.org/",
+      "Tags": [
+        "sorting",
+        "math",
+        "unplugged",
+        "algorithms"
+      ],
+      "Additional Info": "",
+      "Description": "Use a story and fictitious problem to introduce the need for a sorting algorithm"
+    },
+    {
+      "Activity Name": "Scout Patrol (Encryption)",
+      "Activity Link": "https://classic.csunplugged.org/scout-patrol-encryption/",
+      "Duration": "~0h45",
+      "Grade Level": "4+",
+      "Subject": "Computer Science",
+      "Tech Required": "None",
+      "Author": "CS Unplugged",
+      "Author Link": "https://classic.csunplugged.org/",
+      "Tags": [
+        "encryption",
+        "cipher",
+        "security",
+        "programming",
+        "unplugged",
+        "algorithms",
+        "data",
+        "symmetric encryption"
+      ],
+      "Additional Info": "",
+      "Description": "Learn about encryption in a historical context and practice encoding a message"
+    },
+    {
+      "Activity Name": "Sharing Secrets",
+      "Activity Link": "https://classic.csunplugged.org/wp-content/uploads/2014/12/unplugged-16-information_hiding_0.pdf",
+      "Duration": "~0h45",
+      "Grade Level": "4+",
+      "Subject": [
+        "Computer Science",
+        "Math"
+      ],
+      "Tech Required": "None",
+      "Author": "CS Unplugged",
+      "Author Link": "https://classic.csunplugged.org/",
+      "Tags": [
+        "encryption",
+        "information",
+        "cryptography",
+        "security",
+        "math"
+      ],
+      "Additional Info": "https://classic.csunplugged.org/information-hiding/",
+      "Description": "This activity illustrates a situation in which information is shared without personal information being revealed"
+    },
+    {
+      "Activity Name": "Image Representation",
+      "Activity Link": "https://classic.csunplugged.org/wp-content/uploads/2014/12/unplugged-02-image_representation.pdf",
+      "Duration": "~0h30",
+      "Grade Level": "5+",
+      "Subject": [
+        "Computer Science",
+        "Math"
+      ],
+      "Tech Required": "None",
+      "Author": "CS Unplugged",
+      "Author Link": "https://classic.csunplugged.org/",
+      "Tags": [
+        "data representation",
+        "geometry",
+        "math",
+        "shapes",
+        "data storage"
+      ],
+      "Additional Info": "https://classic.csunplugged.org/image-representation/",
+      "Description": "Demonstrates how computers store pictures using numbers"
+    },
+    {
+      "Activity Name": "Error Detection",
+      "Activity Link": "https://classic.csunplugged.org/wp-content/uploads/2014/12/unplugged-04-error_detection.pdf",
+      "Duration": "~0h45",
+      "Grade Level": "3+",
+      "Subject": [
+        "Computer Science",
+        "Math"
+      ],
+      "Tech Required": "None",
+      "Author": "CS Unplugged",
+      "Author Link": "https://classic.csunplugged.org/",
+      "Tags": [
+        "data representation",
+        "math",
+        "algebra",
+        "unplugged",
+        "data storage",
+        "corruption"
+      ],
+      "Additional Info": "https://classic.csunplugged.org/error-detection/",
+      "Description": "Use a magic trick to show to detect and correct data corruption"
+    },
+    {
+      "Activity Name": "Information Theory",
+      "Activity Link": "https://classic.csunplugged.org/wp-content/uploads/2014/12/unplugged-05-information_theory.pdf",
+      "Duration": "~1h00",
+      "Grade Level": "4+",
+      "Subject": [
+        "Computer Science",
+        "Math",
+        "English"
+      ],
+      "Tech Required": "None",
+      "Author": "CS Unplugged",
+      "Author Link": "https://classic.csunplugged.org/",
+      "Tags": [
+        "information",
+        "unplugged",
+        "data storage",
+        "algebra",
+        "math",
+        "english",
+        "comparisons"
+      ],
+      "Additional Info": "https://classic.csunplugged.org/information-theory/",
+      "Description": "This activity introduces a way of measuring information content"
+    },
+    {
+      "Activity Name": "Text Compression",
+      "Activity Link": "https://classic.csunplugged.org/wp-content/uploads/2014/12/unplugged-03-text_compression.pdf",
+      "Duration": "~0h45",
+      "Grade Level": "3+",
+      "Subject": [
+        "Computer Science",
+        "English"
+      ],
+      "Tech Required": "None",
+      "Author": "CS Unplugged",
+      "Author Link": "https://classic.csunplugged.org/",
+      "Tags": [
+        "information",
+        "unplugged",
+        "data storage",
+        "english",
+        "data encoding",
+        "text compression"
+      ],
+      "Additional Info": "https://classic.csunplugged.org/text-compression/",
+      "Description": "This activity demonstrates how computers store text-based information"
+    },
+    {
+      "Activity Name": "Dice Race",
+      "Activity Link": "https://studio.code.org/s/coursee-2017/stage/10/puzzle/1",
+      "Duration": "1h00",
+      "Grade Level": "4+",
+      "Subject": [
+        "Computer Science",
+        "Math"
+      ],
+      "Tech Required": "None",
+      "Author": "Code.org Unplugged",
+      "Author Link": "https://code.org/curriculum/unplugged",
+      "Tags": [
+        "algorithms",
+        "unplugged",
+        "game"
+      ],
+      "Additional Info": "Course D Lesson 1",
+      "Description": "Relate the concepts of algorithms to real-life activities"
+    },
+    {
+      "Activity Name": "Graph Paper Programming",
+      "Activity Link": "https://studio.code.org/s/coursed-2018/stage/1/puzzle/1",
+      "Duration": "1h05",
+      "Grade Level": "3+",
+      "Subject": "Computer Science",
+      "Tech Required": "None",
+      "Author": "Code.org Unplugged",
+      "Author Link": "https://code.org/curriculum/unplugged",
+      "Tags": [
+        "programming",
+        "intro",
+        "drawing",
+        "graph paper",
+        "sequencing",
+        "algorithms"
+      ],
+      "Additional Info": "** Many other code.org activities like these can be found in Curricula > CS Fundamentals",
+      "Description": "Build critical thinking skills and excitement for programming"
+    },
+    {
+      "Activity Name": "Shield Design Showdown",
+      "Activity Link": "https://hourofcode.com/cashield",
+      "Duration": "1h00+",
+      "Grade Level": "2-8",
+      "Subject": [
+        "Social Studies",
+        "Language Arts"
+      ],
+      "Tech Required": "Device w/ Browser",
+      "Author": "Code Avengers",
+      "Author Link": "https://www.codeavengers.com/",
+      "Tags": [
+        "design",
+        "blockly",
+        "sequencing",
+        "self-led",
+        "hourofcode"
+      ],
+      "Additional Info": "https://www.codeavengers.com/teacher/programming/300",
+      "Description": "Students sequency blocks to design the shield they want as part of a story"
+    },
+    {
+      "Activity Name": "Martin Luther King Jr. (Scratch)",
+      "Activity Link": "\thttps://hourofcode.com/bpmlkscratch",
+      "Duration": "1h00",
+      "Grade Level": "2-8",
+      "Subject": "Social Studies",
+      "Tech Required": "Device w/ Browser",
+      "Author": "Brainpop Educators",
+      "Author Link": "https://educators.brainpop.com/",
+      "Tags": [
+        "design",
+        "blockly",
+        "javascript",
+        "Scratch",
+        "self-led",
+        "history",
+        "hourofcode"
+      ],
+      "Additional Info": "https://educators.brainpop.com/creative-coding-teaching-resources/",
+      "Description": "Create a flag to show what you know about the marchon washington"
+    },
+    {
+      "Activity Name": "Digital Citizenship: Online Safety (Scratch)",
+      "Activity Link": "https://hourofcode.com/bpsafetyscratch",
+      "Duration": "1h00",
+      "Grade Level": "2-5",
+      "Subject": "Social Studies",
+      "Tech Required": "Device w/ Browser",
+      "Author": "Brainpop Educators",
+      "Author Link": "https://educators.brainpop.com/",
+      "Tags": [
+        "design",
+        "blockly",
+        "Scratch",
+        "self-led",
+        "hourofcode",
+        "safety",
+        "citizenship"
+      ],
+      "Additional Info": "https://educators.brainpop.com/creative-coding-teaching-resources/",
+      "Description": "Code a digital museum to show what you know about online safety."
+    },
+    {
+      "Activity Name": "Grace Hopper Debugging Activity",
+      "Activity Link": "https://csedweek.org/csteacher/gracehopperdebugging.pdf",
+      "Duration": "1h00",
+      "Grade Level": "3-8",
+      "Subject": [
+        "Social Studies",
+        "Language Arts"
+      ],
+      "Tech Required": "Device w/ Browser",
+      "Author": "CSEdWeek",
+      "Author Link": "https://csedweek.org/",
+      "Tags": [
+        "Scratch",
+        "history",
+        "women in CS",
+        "debugging",
+        "hourofcode"
+      ],
+      "Additional Info": "",
+      "Description": "Learn about Grace Hopper and her role in computer history"
+    },
+    {
+      "Activity Name": "Telling Stories: ELA + Coding",
+      "Activity Link": "https://hopscotch-hour-of-code.s3.amazonaws.com/Hopscotch-Hour-of-Code-ELA-Lesson-Plan.pdf",
+      "Duration": "1h00",
+      "Grade Level": "2-8",
+      "Subject": [
+        "Social Studies",
+        "Language Arts"
+      ],
+      "Tech Required": "iPad or iPhone w/ Hopscoth app",
+      "Author": "Hopscotch",
+      "Author Link": "https://www.gethopscotch.com/about/",
+      "Tags": [
+        "Hopscotch",
+        "story",
+        "storytelling",
+        "communication",
+        "hourofcode"
+      ],
+      "Additional Info": "https://www.gethopscotch.com/hour-of-code/stories",
+      "Description": [
+        "Students will practice identifying narrative elements while bringing their favorite story",
+        "poem or historical event to life."
+      ]
+    },
+    {
+      "Activity Name": "iLove Ada",
+      "Activity Link": "http://www.icompute-uk.com/hoc-2017-6/index.html",
+      "Duration": "1h00+",
+      "Grade Level": "2-5",
+      "Subject": "Social Studies",
+      "Tech Required": "Device w/ Browser",
+      "Author": "iCompute",
+      "Author Link": "http://www.icompute-uk.com/",
+      "Tags": [
+        "history",
+        "HTML",
+        "hourofcode",
+        "research",
+        "women in CS",
+        "web development"
+      ],
+      "Additional Info": "",
+      "Description": "This teacher-led lesson activity provides an opportunity to teach cross-curricular computing with history. Children research Ada Lovelace an important historical figure in computer science and the world's first computer programmer! They then use basic HTML to create a multimedia webpage showcasing their findings and skills as web masters."
+    },
+    {
+      "Activity Name": "Biographies w/ Scratch",
+      "Activity Link": "https://go.brainpop.com/scratch/biography",
+      "Duration": "1h00",
+      "Grade Level": "2-8",
+      "Subject": "Language Arts",
+      "Tech Required": "Device w/ Browser",
+      "Author": "Brainpop Educators (via HourOfCode)",
+      "Author Link": "https://educators.brainpop.com/",
+      "Tags": [
+        "Scratch",
+        "hourofcode",
+        "biography",
+        "blockly",
+        "english",
+        "self-led"
+      ],
+      "Additional Info": "https://educators.brainpop.com/creative-coding-teaching-resources/",
+      "Description": "Code a conversation between two characters to show what you know about biographies"
+    },
+    {
+      "Activity Name": "Biographies w/ Vidcode",
+      "Activity Link": "https://hourofcode.com/bpenglishvid",
+      "Duration": "1h00",
+      "Grade Level": "2-8",
+      "Subject": "Language Arts",
+      "Tech Required": "Device w/ Browser",
+      "Author": "Brainpop Educators (via HourOfCode)",
+      "Author Link": "https://educators.brainpop.com/",
+      "Tags": [
+        "Vidcode",
+        "hourofcode",
+        "biography",
+        "blockly",
+        "english",
+        "self-led"
+      ],
+      "Additional Info": "https://educators.brainpop.com/creative-coding-teaching-resources/",
+      "Description": "Code a conversation between two characters to show what you know about biographies"
+    },
+    {
+      "Activity Name": "Choose Your Own (Fuzzy) Adventure!",
+      "Activity Link": "https://dashboard.kodable.com/#/kcurriculum/lesson/104/",
+      "Duration": "1h00",
+      "Grade Level": "2-5",
+      "Subject": "Language Arts",
+      "Tech Required": "None",
+      "Author": "Kodable",
+      "Author Link": "https://www.kodable.com/",
+      "Tags": [
+        "sequencing",
+        "conditionals",
+        "story",
+        "storytelling",
+        "unplugged",
+        "hourofcode"
+      ],
+      "Additional Info": "",
+      "Description": [
+        "Choose your own adventure! Through a series of  If statements",
+        "students will alter the storyline and ending to a narrative they write."
+      ]
+    },
+    {
+      "Activity Name": "Adventure on the High Seas",
+      "Activity Link": "https://hourofcode.com/highseas",
+      "Duration": "1h00",
+      "Grade Level": "2-8",
+      "Subject": "Language Arts",
+      "Tech Required": "Device w/ Browser",
+      "Author": "CSFirst with Google",
+      "Author Link": "https://csfirst.withgoogle.com/s/en/home",
+      "Tags": [
+        "blockly",
+        "Scratch",
+        "story",
+        "storytelling",
+        "hourofcode",
+        "self-led"
+      ],
+      "Additional Info": "https://csfirst.withgoogle.com/c/cs-first/en/high-seas-activity/materials.html",
+      "Description": [
+        "Animate an ocean wave to create a setting",
+        "then tell a story that takes place on the high seas."
+      ]
+    },
+    {
+      "Activity Name": "Animate Your Name with Scratch",
+      "Activity Link": "https://hourofcode.com/scratchanim",
+      "Duration": "1h00",
+      "Grade Level": "2-8",
+      "Subject": [
+        "Language Arts",
+        "Art",
+        "Music"
+      ],
+      "Tech Required": "Device w/ Browser",
+      "Author": "Scratch",
+      "Author Link": "scratch.mit.edu",
+      "Tags": [
+        "blockly",
+        "Scratch",
+        "animation",
+        "self-led",
+        "hourofcode",
+        "media",
+        "multilingual"
+      ],
+      "Additional Info": "https://resources.scratch.mit.edu/www/guides/en/NameGuide.pdf",
+      "Description": [
+        "Animate the letters of your name",
+        "initials",
+        "or a favorite word."
+      ]
+    },
+    {
+      "Activity Name": "Bitt Bott Explores Earth",
+      "Activity Link": "https://n2ypublish.azureedge.net/documents/SSXSupportedMaterials/3_Publish/5/n2y_coding_activity.pdf",
+      "Duration": "1h00",
+      "Grade Level": "K+",
+      "Subject": [
+        "Language Arts",
+        "Math"
+      ],
+      "Tech Required": "None",
+      "Author": "N2Y",
+      "Author Link": "https://www.n2y.com/blog/hour-of-code-with-n2y/",
+      "Tags": [
+        "unplugged",
+        "hourofcode",
+        "programming",
+        "concepts",
+        "self-led"
+      ],
+      "Additional Info": "",
+      "Description": [
+        "In these printable activities",
+        "students can help a little robot named Bitt Bott explore different landforms on Earth."
+      ]
+    },
+    {
+      "Activity Name": "Trinket's Hour of Python",
+      "Activity Link": "\thttps://hourofcode.com/trinket",
+      "Duration": "1h00",
+      "Grade Level": "2+",
+      "Subject": [
+        "Language Arts",
+        "Math"
+      ],
+      "Tech Required": "Device w/ Browser",
+      "Author": "Trinket",
+      "Author Link": "https://trinket.io/",
+      "Tags": [
+        "blockly",
+        "Kano Code",
+        "Python",
+        "multilingual",
+        "self-led",
+        "hourofcode"
+      ],
+      "Additional Info": "",
+      "Description": [
+        "Choose from lessons",
+        "challenges",
+        "and tutorials about the Python programming language. Make turtle-based animations and solve puzzles",
+        "all while learning the basics of this powerful language. Activities range from block-based programming to real Python code",
+        "with activities appropriate for most age levels."
+      ]
+    },
+    {
+      "Activity Name": "iJournalist",
+      "Activity Link": "http://www.icompute-uk.com/hoc-2016-1/",
+      "Duration": "~3h00",
+      "Grade Level": "2-8",
+      "Subject": [
+        "Computer Science",
+        "Language Arts"
+      ],
+      "Tech Required": "Device w/ Browser",
+      "Author": "iCompute",
+      "Author Link": "http://www.icompute-uk.com/",
+      "Tags": [
+        "HTML",
+        "CSS",
+        "hourofcode",
+        "english",
+        "storytelling",
+        "journalism",
+        "hourofcode"
+      ],
+      "Additional Info": "",
+      "Description": "Students begin to develop a journalistic style that considers the interest of the reader and presentation of information for an online news story.  Students use basic HTML and CSS to create and present an online news story about a fictional school robbery."
+    },
+    {
+      "Activity Name": "Writing and Coding: ELA Integration with Common Core Standards",
+      "Activity Link": "https://www.kodable.com/hour-of-code#ela-intro",
+      "Duration": "1h00",
+      "Grade Level": "K-5",
+      "Subject": "Language Arts",
+      "Tech Required": [
+        "None",
+        "Device w/ Browser"
+      ],
+      "Author": "Kodable",
+      "Author Link": "https://www.kodable.com/",
+      "Tags": [
+        "unplugged",
+        "sequencing",
+        "storytelling",
+        "reading",
+        "writing",
+        "hourofcode"
+      ],
+      "Additional Info": "http://resources.kodable.com/public/2016_3rd_grade_hour_of_code_ela_materials.pdf",
+      "Description": "Students will examine the concept of sequence in the context of reading and writing."
+    },
+    {
+      "Activity Name": "Introduction to Programming",
+      "Activity Link": "https://www.kodable.com/hour-of-code#coding",
+      "Duration": "1h00",
+      "Grade Level": "K-5",
+      "Subject": "Computer Science",
+      "Tech Required": "Device w/ Browser",
+      "Author": "Kodable",
+      "Author Link": "https://www.kodable.com/",
+      "Tags": [
+        "intro",
+        "programming",
+        "sequencing",
+        "loops",
+        "math",
+        "hourofcode"
+      ],
+      "Additional Info": "https://www.kodable.com/download",
+      "Description": [
+        "Start by coding a  robot  together off screen",
+        "then learn about sequencing with the fuzzFamily!"
+      ]
+    },
+    {
+      "Activity Name": "Writing and Interpreting Events",
+      "Activity Link": "https://www.flocabulary.com/lesson/Coding-Events/",
+      "Duration": "1h00",
+      "Grade Level": "2-8",
+      "Subject": [
+        "Language Arts",
+        "Science"
+      ],
+      "Tech Required": "None",
+      "Author": "Flocabulary",
+      "Author Link": "https://www.flocabulary.com/",
+      "Tags": [
+        "events",
+        "hourofcode",
+        "event handlers",
+        "unplugged"
+      ],
+      "Additional Info": "",
+      "Description": [
+        "In this lesson",
+        "students will explore events",
+        "a concept used in programming that allows programs to respond to specific stimuli",
+        "letting the user control the actions in the program"
+      ]
+    },
+    {
+      "Activity Name": "Compression Code Puzzles",
+      "Activity Link": "https://teachinglondoncomputing.org/compression-code-puzzles/",
+      "Duration": "1h00",
+      "Grade Level": "2-8",
+      "Subject": "Language Arts",
+      "Tech Required": "None",
+      "Author": "Teaching London Computing",
+      "Author Link": "https://teachinglondoncomputing.org/",
+      "Tags": [
+        "compression",
+        "data",
+        "storage",
+        "data representation",
+        "unplugged",
+        "hourofcode",
+        "puzzles",
+        "problem-solving"
+      ],
+      "Additional Info": "",
+      "Description": "Students practice problem-solving with data compression puzzles. The idea with compression is that we use an algorithm to change the way the information is represented so that fewer characters are needed to store exactly the same information."
+    },
+    {
+      "Activity Name": "The Emotion Machine",
+      "Activity Link": "https://teachinglondoncomputing.org/resources/inspiring-unplugged-classroom-activities/the-emotion-machine-activity/",
+      "Duration": "1h00",
+      "Grade Level": "2-8",
+      "Subject": [
+        "Language Arts",
+        "Art",
+        "Music"
+      ],
+      "Tech Required": "None",
+      "Author": "Teaching London Computing",
+      "Author Link": "https://teachinglondoncomputing.org/",
+      "Tags": [
+        "programming",
+        "sequencing",
+        "abstraction",
+        "algorithms",
+        "computational thinking",
+        "hourofcode",
+        "unplugged"
+      ],
+      "Additional Info": "https://teachinglondoncomputing.files.wordpress.com/2015/03/activity-emotionmachine.pdf",
+      "Description": "The class programs a card robot face to show different emotions one after another."
+    },
+    {
+      "Activity Name": "Kriss-Kross Puzzles",
+      "Activity Link": "https://teachinglondoncomputing.org/kriss-kross-puzzles/",
+      "Duration": "1h00",
+      "Grade Level": "2-5",
+      "Subject": "Language Arts",
+      "Tech Required": "None",
+      "Author": "Teaching London Computing",
+      "Author Link": "https://teachinglondoncomputing.org/",
+      "Tags": [
+        "logical thinking",
+        "pattern matching",
+        "computational thinking",
+        "hourofcode",
+        "unplugged"
+      ],
+      "Additional Info": "",
+      "Description": [
+        "Students solve word puzzles as a way to develop logical thinking and pattern matching skills needed to enjoy both computing and maths",
+        "while practicing reading",
+        "writing and spelling."
+      ]
+    },
+    {
+      "Activity Name": "Design a Robot",
+      "Activity Link": "https://www.flocabulary.com/lesson/Robots/",
+      "Duration": "1h00",
+      "Grade Level": "2-8",
+      "Subject": [
+        "Language Arts",
+        "Science"
+      ],
+      "Tech Required": "None",
+      "Author": "Flocabulary",
+      "Author Link": "https://www.flocabulary.com/",
+      "Tags": [
+        "robotics",
+        "reading",
+        "unplugged",
+        "hourofcode",
+        "design"
+      ],
+      "Additional Info": [
+        "Students will build their literacy skills while diving into the field of robotics. They'll learn what a robot is and see examples of familiar robots used in daily life. They'll close-read short passages about robots",
+        "discuss tasks that robots are well suited for and finish the lesson by designing their own robot to solve a specific problem."
+      ],
+      "Description": ""
+    },
+    {
+      "Activity Name": "Health: DNA w/ Scratch",
+      "Activity Link": "https://hourofcode.com/bphealthscratch",
+      "Duration": "1h00",
+      "Grade Level": "2-8",
+      "Subject": "Science",
+      "Tech Required": "Device w/ Browser",
+      "Author": "Brainpop Educators",
+      "Author Link": "https://educators.brainpop.com/",
+      "Tags": [
+        "Scratch",
+        "DNA",
+        "health",
+        "self-led",
+        "hourofcode",
+        "blockly"
+      ],
+      "Additional Info": "https://educators.brainpop.com/creative-coding-teaching-resources/",
+      "Description": "Code a sorting game to show what you know about DNA."
+    },
+    {
+      "Activity Name": "Sea Creature Sequences",
+      "Activity Link": "https://hourofcode.com/casea",
+      "Duration": "1h00+",
+      "Grade Level": "2-5",
+      "Subject": "Science",
+      "Tech Required": [
+        "None",
+        "Device w/ Browser"
+      ],
+      "Author": "Code Avengers",
+      "Author Link": "https://www.codeavengers.com/",
+      "Tags": [
+        "blockly",
+        "self-led",
+        "hourofcode",
+        "unplugged",
+        "sequencing",
+        "pre-reader"
+      ],
+      "Additional Info": "https://www.codeavengers.com/teacher/programming/100",
+      "Description": "Help Alex and Lonnie sort the sequences into order and debug by spotting and fixing the mistakes. Customize your own ocean scene and bring your characters to life by adding interactivity."
+    },
+    {
+      "Activity Name": "Stormy Science",
+      "Activity Link": "https://hourofcode.com/washustorm",
+      "Duration": "1h00+",
+      "Grade Level": "2-5",
+      "Subject": "Science",
+      "Tech Required": "Device w/ Browser",
+      "Author": "Washington University in St. Louis",
+      "Author Link": "https://wustl.edu/",
+      "Tags": [
+        "self-led",
+        "hourofcode",
+        "Scratch",
+        "blockly",
+        "weather",
+        "programming"
+      ],
+      "Additional Info": "",
+      "Description": "Watch a video to learn about computer science in meteorology and then learn how to program an incoming storm."
+    },
+    {
+      "Activity Name": "Robot Rattle",
+      "Activity Link": "https://class42.com/robotrattle.html",
+      "Duration": "1h00",
+      "Grade Level": "2-8",
+      "Subject": [
+        "Science",
+        "Math"
+      ],
+      "Tech Required": "Computer w/ Browser",
+      "Author": "CoSpaces.io",
+      "Author Link": "https://cospaces.io/",
+      "Tags": [
+        "self-led",
+        "hourofcode",
+        "class42",
+        "blockly",
+        "robotics",
+        ""
+      ],
+      "Additional Info": "",
+      "Description": "Robot Rattle teaches students to operate a fully physically simulated robot with the help of a visual coding language by easily dragging & dropping blocks to write code instructions. "
+    },
+    {
+      "Activity Name": "Food Chains w/ Scratch",
+      "Activity Link": "https://hourofcode.com/bpsciencescratch",
+      "Duration": "1h00",
+      "Grade Level": "2-5",
+      "Subject": "Science",
+      "Tech Required": "Device w/ Browser",
+      "Author": "Brainpop Educators",
+      "Author Link": "https://educators.brainpop.com/",
+      "Tags": [
+        "Scratch",
+        "food chains",
+        "biology",
+        "self-led",
+        "hourofcode",
+        "blockly"
+      ],
+      "Additional Info": "https://educators.brainpop.com/creative-coding-teaching-resources/",
+      "Description": "Code a conversation to show what you know about food chains."
+    },
+    {
+      "Activity Name": "Solar System STEM Kit",
+      "Activity Link": "https://hourofcode.com/tynkersol",
+      "Duration": "1h00",
+      "Grade Level": "2+",
+      "Subject": "Science",
+      "Tech Required": "Device w/ Browser",
+      "Author": "Tynker",
+      "Author Link": "https://www.tynker.com/?t=reset",
+      "Tags": [
+        "solar system",
+        "self-led",
+        "hourofcode",
+        "blockly",
+        "astronomy",
+        "programming"
+      ],
+      "Additional Info": "https://www.tynker.com/hour-of-code/tynker-stem-teacher-guide.pdf",
+      "Description": "Program an interactive model of our Solar System. This STEM coding activity guides you through creating a simulation with planets orbiting the Sun."
+    },
+    {
+      "Activity Name": "Ecological Pyramid STEM Kit",
+      "Activity Link": "\thttps://hourofcode.com/tynkereco",
+      "Duration": "1h00",
+      "Grade Level": "2-8",
+      "Subject": "Science",
+      "Tech Required": "Device w/ Browser",
+      "Author": "Tynker",
+      "Author Link": "https://www.tynker.com/?t=reset",
+      "Tags": [
+        "ecology",
+        "biology",
+        "hourofcode",
+        "self-led",
+        "energy"
+      ],
+      "Additional Info": "https://www.tynker.com/hour-of-code/tynker-stem-teacher-guide.pdf",
+      "Description": "Create an interactive ecological pyramid to track how energy flows through an ecosystem! This project comes with step-by-step instructions that guide you through creating an ecological pyramid for any ecosystem with animals and plants that glide to the proper location in the pyramid when clicked."
+    },
+    {
+      "Activity Name": "Make Interactive Science Models on Your iPad/iPhone!",
+      "Activity Link": "https://www.gethopscotch.com/hour-of-code/water-cycle",
+      "Duration": "1h00+",
+      "Grade Level": "2-8",
+      "Subject": [
+        "Science",
+        "Math"
+      ],
+      "Tech Required": "iPad or iPhone w/ Hopscoth app",
+      "Author": "Hopscotch",
+      "Author Link": "https://www.gethopscotch.com/about/",
+      "Tags": [
+        "modeling",
+        "water cycle",
+        "ecology",
+        "hourofcode"
+      ],
+      "Additional Info": "https://www.gethopscotch.com/hour-of-code/stories",
+      "Description": "This hour-long lesson plan uses the water cycle as an example for building an interactive computer model using an iPad-based kid's programming tool called Hopscotch. You can adapt it to simulate any dynamic system being studied. No prior experience required!"
+    },
+    {
+      "Activity Name": [
+        "If Flash",
+        "Then Clap!"
+      ],
+      "Activity Link": "https://dashboard.kodable.com/#/kcurriculum/lesson/97/",
+      "Duration": "1h00",
+      "Grade Level": "K-3",
+      "Subject": [
+        "Science",
+        "Math"
+      ],
+      "Tech Required": "None",
+      "Author": "Kodable",
+      "Author Link": "https://www.kodable.com/",
+      "Tags": [
+        "pre-reader",
+        "hourofcode",
+        "unplugged",
+        "conditionals",
+        "weather"
+      ],
+      "Additional Info": "http://resources.kodable.com/public/if_flash__then_clap_.pdf",
+      "Description": [
+        "If there is lightning",
+        "then thunder will follow! Students explore conditional statements in a hands-on science activity."
+      ]
+    },
+    {
+      "Activity Name": "Team Hardware vs. Team Software",
+      "Activity Link": "https://drive.google.com/file/d/1x9tR6TdbHUBpJFR51QZ3k5mcJSykq7nu/view",
+      "Duration": "1h00",
+      "Grade Level": "K-5",
+      "Subject": "Science",
+      "Tech Required": "None",
+      "Author": "Codespeak Labs",
+      "Author Link": "www.codespeaklabs.com/",
+      "Tags": [
+        "pre-reader",
+        "hardware",
+        "software",
+        "computers",
+        "unplugged",
+        "hourofcode",
+        "story"
+      ],
+      "Additional Info": "",
+      "Description": [
+        "Through an illustrated children's story and worksheets",
+        "your students will learn the differences between hardware and software."
+      ]
+    },
+    {
+      "Activity Name": "BlocksCAD Robot",
+      "Activity Link": "https://www.blockscad3d.com/hourofcoderobot",
+      "Duration": "1h00",
+      "Grade Level": "2-8",
+      "Subject": [
+        "Science",
+        "Art",
+        "Math"
+      ],
+      "Tech Required": "Computer w/ Browser",
+      "Author": "BlocksCAD",
+      "Author Link": "https://www.blockscad3d.com/",
+      "Tags": [
+        "CAD",
+        "robotics",
+        "design",
+        "geometry",
+        "hourofcode"
+      ],
+      "Additional Info": "https://www.blockscad3d.com/edu/hourofcode/Hour_of_Code_Shapes_Translation_Lesson_Plan-Robot.pdf",
+      "Description": [
+        "Using BlocksCAD",
+        "a free online software designed to teach students coding and Computer Aided Design",
+        "students will design a 3D Robot. Using shapes",
+        "translate",
+        "and rotate blocks",
+        "students will be exposed to computational thinking to construct something they can 3D print!"
+      ]
+    },
+    {
+      "Activity Name": "iGuess Beasts: QR Code Activity",
+      "Activity Link": "http://www.icompute-uk.com/hoc-2018-5/",
+      "Duration": "1h00",
+      "Grade Level": "K-5",
+      "Subject": "Science",
+      "Tech Required": "Device w/ Browser",
+      "Author": "iCompute",
+      "Author Link": "http://www.icompute-uk.com/",
+      "Tags": [
+        "pre-reader",
+        "hourofcode",
+        "QR"
+      ],
+      "Additional Info": "",
+      "Description": "Introducing Quick Response codes to children aged 3-5. Use tablets to scan QR codes and guess the mini-beast from a given habitat."
+    },
+    {
+      "Activity Name": "Code with Anna and Elsa",
+      "Activity Link": "\thttps://hourofcode.com/frzn",
+      "Duration": "1h00+",
+      "Grade Level": "2+",
+      "Subject": [
+        "Math",
+        "Art"
+      ],
+      "Tech Required": "Device w/ Browser",
+      "Author": "code.org",
+      "Author Link": "",
+      "Tags": [
+        "blockly",
+        "hourofcode",
+        "frozen",
+        "multilingual",
+        "self-led"
+      ],
+      "Additional Info": "https://code.org/hourofcode/frozen",
+      "Description": "Let's use code to join Anna and Elsa as they explore the magic and beauty of ice. You will create snowflakes and patterns as you ice-skate and make a winter wonderland that you can then share with your friends!"
+    },
+    {
+      "Activity Name": "Multiplication w/ Scratch",
+      "Activity Link": "\thttps://hourofcode.com/bpmathscratch",
+      "Duration": "1h00",
+      "Grade Level": "2-5",
+      "Subject": "Math",
+      "Tech Required": "Device w/ Browser",
+      "Author": "Brainpop Educators",
+      "Author Link": "https://educators.brainpop.com/",
+      "Tags": [
+        "blockly",
+        "multiplication",
+        "hourofcode",
+        "self-led"
+      ],
+      "Additional Info": "https://educators.brainpop.com/creative-coding-teaching-resources/",
+      "Description": "Code math problems that use multiplication"
+    },
+    {
+      "Activity Name": "Make Pizza with JavaScript",
+      "Activity Link": "\thttps://hourofcode.com/codemojipizza",
+      "Duration": "1h00",
+      "Grade Level": "2-8",
+      "Subject": "Math",
+      "Tech Required": "Device w/ Browser",
+      "Author": "Codemoji",
+      "Author Link": "https://codemoji.com/",
+      "Tags": [
+        "javascript",
+        "self-led",
+        "hourofcode",
+        "objects",
+        "variables",
+        "boolean",
+        "data storage",
+        "data types"
+      ],
+      "Additional Info": "https://docs.google.com/document/d/1nLdeOH1J9cYTZ90XQjigoQ_cDXqX1pTnz-sxdhkXs80/edit",
+      "Description": [
+        "This course is designed to teach students the fundamentals of JavaScript objects. Students will learn the basic types of data that can be stored in variables",
+        "from their first boolean all the way to creating their own objects with multiple properties. The activity makes complex concepts easy to understand by using everyone's favourite food: Pizza!"
+      ]
+    },
+    {
+      "Activity Name": "Robo-restaurant puzzler",
+      "Activity Link": "https://www.codeavengers.com/algorithms/0",
+      "Duration": "1h00+",
+      "Grade Level": "2-8",
+      "Subject": "Math",
+      "Tech Required": "Computer w/ Browser",
+      "Author": "Code Avengers",
+      "Author Link": "https://www.codeavengers.com/",
+      "Tags": [
+        "computational thinking",
+        "problem solving",
+        "hourofcode",
+        "self-led"
+      ],
+      "Additional Info": "",
+      "Description": "Join Ross at the Food Avengers restaurant. Use your computational thinking skills to help Ross solve problems and serve dinner to 8 excited kids."
+    },
+    {
+      "Activity Name": "Street Artist",
+      "Activity Link": "https://hourofcode.com/kanostreet",
+      "Duration": "1h00+",
+      "Grade Level": "2-5",
+      "Subject": [
+        "Math",
+        "Art"
+      ],
+      "Tech Required": "Device w/ Browser",
+      "Author": "Kano Code",
+      "Author Link": "https://world.kano.me/coding-challenges/training",
+      "Tags": [
+        "art",
+        "technology",
+        "self-led",
+        "hourofcode",
+        "blockly"
+      ],
+      "Additional Info": "https://kano.me/educators/hour-of-code",
+      "Description": [
+        "Art and technology unite! With Kano's Street Art Hour of Code challenges",
+        "creative minds of all abilities will code with a paintbrush",
+        "making beautiful",
+        "unique artwork. Along the way",
+        "makers will learn computer science principles while using a real programming language in an intuitive and engaging way. With our teacher resources and guided content",
+        "everyone can get in on the fun."
+      ]
+    },
+    {
+      "Activity Name": "ITCH Bouncing Ball w/ Scratch",
+      "Activity Link": "https://hourofcode.com/itchbounceball",
+      "Duration": "1h00",
+      "Grade Level": "2-8",
+      "Subject": "Math",
+      "Tech Required": "Device w/ Browser",
+      "Author": "UCodemy",
+      "Author Link": "http://hoc.ucodemy.com/v2/",
+      "Tags": [
+        "blockly",
+        "scratch",
+        "hourofcode",
+        "self-led"
+      ],
+      "Additional Info": "",
+      "Description": [
+        "We take you through an introduction to Itch",
+        "utilizing the Scratch visual programming language. This lesson provides a video and text directions for the code students need to add to get a ball bouncing zanily around the screen. Once students complete this activity there is an opportunity to explore with ideas for other changes and activities that can be made."
+      ]
+    },
+    {
+      "Activity Name": "Python Lab",
+      "Activity Link": "\thttps://hourofcode.com/codemojipy",
+      "Duration": "1h00",
+      "Grade Level": "2-5",
+      "Subject": "Math",
+      "Tech Required": "iPad or iPhone",
+      "Author": "Codemoji",
+      "Author Link": "https://codemoji.com/",
+      "Tags": [
+        "python",
+        "programming",
+        "self-led",
+        "mobile app",
+        "hourofcode"
+      ],
+      "Additional Info": "",
+      "Description": [
+        "Python Lab is an IOS based activity that teaches the basics of the programming language python. Users will learn about loops",
+        "arrays",
+        "booleans and much more."
+      ]
+    },
+    {
+      "Activity Name": "Artist",
+      "Activity Link": "\thttps://hourofcode.com/art",
+      "Duration": "1h00+",
+      "Grade Level": "2+",
+      "Subject": [
+        "Math",
+        "Art"
+      ],
+      "Tech Required": "Device w/ Browser",
+      "Author": "code.org",
+      "Author Link": "https://code.org/",
+      "Tags": [
+        "blockly",
+        "art",
+        "hourofcode",
+        "self-led",
+        "multilingual"
+      ],
+      "Additional Info": "",
+      "Description": "Use block-based programming to draw cool pictures and designs with the Artist."
+    },
+    {
+      "Activity Name": "Multiplication Escape STEM Kit",
+      "Activity Link": "https://hourofcode.com/tynkermult",
+      "Duration": "1h00",
+      "Grade Level": "2-8",
+      "Subject": "Math",
+      "Tech Required": "Device w/ Browser",
+      "Author": "Tynker",
+      "Author Link": "https://www.tynker.com/?t=reset",
+      "Tags": [
+        "multiplication",
+        "blockly",
+        "self-led",
+        "game",
+        "hourofcode"
+      ],
+      "Additional Info": "https://www.tynker.com/hour-of-code/tynker-stem-teacher-guide.pdf",
+      "Description": "Code your own math game! Your character needs to escape the cave without getting hit by falling boulders. But the only way the character can run forward is by correctly answering math questions! You'll follow step-by-step instructions to program this fun multiplication quiz game."
+    },
+    {
+      "Activity Name": "Geometry Jumper",
+      "Activity Link": "\thttps://hourofcode.com/hopgeo",
+      "Duration": "1h00",
+      "Grade Level": "2-8",
+      "Subject": [
+        "Math",
+        "Art"
+      ],
+      "Tech Required": "iPad or iPhone w/ Hopscoth app",
+      "Author": "Hopscotch",
+      "Author Link": "https://www.gethopscotch.com/about/",
+      "Tags": [
+        "geometry",
+        "mobile app",
+        "iOS",
+        "hourofcode",
+        "self-led",
+        "Scratch"
+      ],
+      "Additional Info": "http://hopscotch-hour-of-code.s3.amazonaws.com/Hopscotch-Hour-of-Code-Speed-Jumper-Notes.pdf",
+      "Description": [
+        "Create your own version of the highly-engaging Geometry Jumper game in Hopscotch's open-ended programming environment! Along the way",
+        "you'll gain hands-on experience with concepts like sequence",
+        "loops",
+        "variables",
+        "and debugging. No prior experience is needed to complete or facilitate this activity; it includes a fun in-app video tutorial and a step-by-step facilitation guide."
+      ]
+    },
+    {
+      "Activity Name": "Can I Make the Sun Set? w/ ScratchJr",
+      "Activity Link": "https://code.org/files/scratchjr_sunset.pdf",
+      "Duration": "1h00",
+      "Grade Level": "K-5",
+      "Subject": [
+        "Math",
+        "Art"
+      ],
+      "Tech Required": "iPad w/ ScratchJr",
+      "Author": "DevTech Research Group at Tufts",
+      "Author Link": "http://sites.tufts.edu/devtech/",
+      "Tags": [
+        "blockly",
+        "pre-reader",
+        "hourofcode",
+        "programming",
+        "intro",
+        "storytelling"
+      ],
+      "Additional Info": "https://www.scratchjr.org/hoc.html",
+      "Description": [
+        "Can I Make the Sun Set?  is an introductory activity meant for children in kindergarten through second grade with little to no programming experience to learn the basic features of ScratchJr and the elementary concepts of coding. Through this activity and continued time with ScratchJr",
+        "students will have the opportunity to think creatively",
+        "become storytellers",
+        "and improve upon mathematical reasoning and sequencing skills. Later",
+        "children can use the skills they have learned to create their own unique projects."
+      ]
+    },
+    {
+      "Activity Name": "Bar Graphs",
+      "Activity Link": "https://www.blockscad3d.com/hourofcodebargraphs",
+      "Duration": "1h00",
+      "Grade Level": "2-5",
+      "Subject": "Math",
+      "Tech Required": "Computer w/ Browser",
+      "Author": "BlocksCAD",
+      "Author Link": "https://www.blockscad3d.com/",
+      "Tags": [
+        "CAD",
+        "design",
+        "graphing",
+        "hourofcode",
+        "multilingual",
+        "data representation"
+      ],
+      "Additional Info": "",
+      "Description": "Students will examine pre-built bar graphs on BlocksCAD and interpret the data presented. They will expand and edit code and adjust existing variables to create their own graphs. Students will create new variables for the height of each bar and incorporate them into their code so that their entire bar graph is quickly customizable."
+    },
+    {
+      "Activity Name": "Dinner Robot",
+      "Activity Link": "https://www.blockscad3d.com/hourofcodedinnerrobot",
+      "Duration": "1h00",
+      "Grade Level": "2-5",
+      "Subject": "Math",
+      "Tech Required": "Computer w/ Browser",
+      "Author": "BlocksCAD",
+      "Author Link": "https://www.blockscad3d.com/",
+      "Tags": [
+        "CAD",
+        "design",
+        "Cartesian",
+        "coordinate system",
+        "hourofcode",
+        "programming",
+        "variables"
+      ],
+      "Additional Info": "",
+      "Description": "In this exploration students will set dinner tables by building and moving plates around using a first-quadrant 2D coordinate system. They will understand that translations from the origin define the x- and y-positions of a point in the plane. Students will create modules that allow them to quickly tell a “robot” where they would like a plate set so they can get out of doing the chore themselves!"
+    },
+    {
+      "Activity Name": "Birdhouses",
+      "Activity Link": "https://www.blockscad3d.com/hourofcodebirdhouses",
+      "Duration": "1h00",
+      "Grade Level": "2-5",
+      "Subject": "Math",
+      "Tech Required": "Computer w/ Browser",
+      "Author": "BlocksCAD",
+      "Author Link": "https://www.blockscad3d.com/",
+      "Tags": [
+        "CAD",
+        "design",
+        "hourofcode",
+        "multilingual",
+        "data representation",
+        "variables",
+        "data manipulation"
+      ],
+      "Additional Info": "",
+      "Description": [
+        "Students will run a birdhouse-building company",
+        "converting units",
+        "calculating dimensions",
+        "and using variables to scale their products."
+      ]
+    },
+    {
+      "Activity Name": "Tour Guide Activity",
+      "Activity Link": "https://teachinglondoncomputing.org/the-tour-guide-activity/",
+      "Duration": "1h00",
+      "Grade Level": "2+",
+      "Subject": "Math",
+      "Tech Required": "None",
+      "Author": "Teaching London Computing",
+      "Author Link": "https://teachinglondoncomputing.org/",
+      "Tags": [
+        "abstraction",
+        "data representation",
+        "sequencing",
+        "graphs",
+        "algorithms",
+        "computational thinking",
+        "hourofcode",
+        "unplugged"
+      ],
+      "Additional Info": "",
+      "Description": [
+        "This activity is an example of creating an algorithm that is a simple sequence of instructions to do in order. It shows that if we have written down a solution to the problem in the form of an algorithm then we are able to do tours in future just by following the steps",
+        "without having to work it out from scratch again. Also if we write down the algorithm we can check that it definitely works by following it step by step on paper."
+      ]
+    },
+    {
+      "Activity Name": "Knight's Tour Activity",
+      "Activity Link": "https://teachinglondoncomputing.org/resources/inspiring-unplugged-classroom-activities/the-knights-tour-activity/",
+      "Duration": "1h00",
+      "Grade Level": "2+",
+      "Subject": "Math",
+      "Tech Required": "None",
+      "Author": "Teaching London Computing",
+      "Author Link": "https://teachinglondoncomputing.org/",
+      "Tags": [
+        "abstraction",
+        "data representation",
+        "sequencing",
+        "pattern matching",
+        "algorithms",
+        "computational thinking",
+        "hourofcode",
+        "unplugged"
+      ],
+      "Additional Info": "https://teachinglondoncomputing.files.wordpress.com/2014/12/activity-knightstour.pdf",
+      "Description": [
+        "This activity involves trying to solve a puzzle using two different representations. To start with it is fairly hard",
+        "but when the representation of the board and moves is changed it becomes really easy. Create graphs to represent the problem. See the power of using abstraction and how the choice of representation can make a problem much easier."
+      ]
+    },
+    {
+      "Activity Name": [
+        "Input and Output",
+        "Math Activity"
+      ],
+      "Activity Link": "https://app.vidcode.io/doc/unplugged-activity-math.pdf",
+      "Duration": "1h00+",
+      "Grade Level": "2+",
+      "Subject": "Math",
+      "Tech Required": "None",
+      "Author": "Vidcode",
+      "Author Link": "https://www.vidcode.com/",
+      "Tags": [
+        "computational thinking",
+        "algebra",
+        "unplugged",
+        "hourofcode",
+        "abstraction",
+        "problem-solving",
+        ""
+      ],
+      "Additional Info": "",
+      "Description": [
+        "In this exercise",
+        "you'll walk through with your students how programming with functions relates to what they already know about math by solving a math equation with programming."
+      ]
+    },
+    {
+      "Activity Name": "Invisible Palming Activity",
+      "Activity Link": "https://teachinglondoncomputing.org/resources/inspiring-unplugged-classroom-activities/the-invisible-palming-activity/",
+      "Duration": "1h00",
+      "Grade Level": "2+",
+      "Subject": "Math",
+      "Tech Required": "None",
+      "Author": "Teaching London Computing",
+      "Author Link": "https://teachinglondoncomputing.org/",
+      "Tags": [
+        "algorithms",
+        "computational thinking",
+        "unplugged",
+        "hourofcode",
+        "human-computer interation"
+      ],
+      "Additional Info": "https://teachinglondoncomputing.files.wordpress.com/2014/01/activity-magic-invisiblepalming.pdf",
+      "Description": "This introduces what an algorithms is and what a computer program is. It can also be used to explore human computer interaction and the importance of feedback and building a correct mental model."
+    },
+    {
+      "Activity Name": "Algortihmic Doodle Art",
+      "Activity Link": "https://teachinglondoncomputing.org/algorithmic-doodle-art/",
+      "Duration": "1h00",
+      "Grade Level": "2-8",
+      "Subject": [
+        "Math",
+        "Art"
+      ],
+      "Tech Required": "None",
+      "Author": "Teaching London Computing",
+      "Author Link": "https://teachinglondoncomputing.org/",
+      "Tags": [
+        "algorithms",
+        "computational thinking",
+        "unplugged",
+        "hourofcode",
+        "modeling",
+        "recursion",
+        "fractions"
+      ],
+      "Additional Info": "",
+      "Description": [
+        "Scenery in films is often computer generated. Ever wondered how they do it? Next time you find yourself drawing doodles",
+        "draw an algorithmic doodle and explore algorithms for drawing nature. The algorithms are recursive: that is they describe one step and then tell you just to draw the next step in the same way",
+        "following the algorithm from the start."
+      ]
+    },
+    {
+      "Activity Name": "The Teleporting Robot Activity",
+      "Activity Link": "https://teachinglondoncomputing.org/resources/inspiring-unplugged-classroom-activities/the-teleporting-robot-activity/",
+      "Duration": "1h00",
+      "Grade Level": "2+",
+      "Subject": "Math",
+      "Tech Required": "None",
+      "Author": "Teaching London Computing",
+      "Author Link": "https://teachinglondoncomputing.org/",
+      "Tags": [
+        "human-computer interaction",
+        "design",
+        "computational thinking",
+        "usability",
+        "hourofcode",
+        "unplugged"
+      ],
+      "Additional Info": "https://teachinglondoncomputing.files.wordpress.com/2014/03/activity-teleportingrobot.pdf",
+      "Description": [
+        "This trick illustrates how apparently simple things can be too complex for our brains to take in. An important design principle is that interfaces should be clear and simple",
+        "not cluttered. It also illustrates aspects of computational thinking such as simplifying the problem and the importance of understanding people."
+      ]
+    }
+  ],
+  "Curricula": [
+    {
+      "Resource Name": "Exploring Computer Science",
+      "Grade Level": "High School",
+      "Subject": "Computer Science",
+      "Description": "Yearlong course of 6 units with daily lesson plans to provide an intro to computational thinking"
+    },
+    {
+      "Resource Name": "Khan Academy Programming Curriculum",
+      "Grade Level": "K-12",
+      "Subject": "Computer Science",
+      "Description": "Guide to teaching program and many JS-based lessons"
+    },
+    {
+      "Resource Name": "Computer Science Fundamentals Curriculum Guide",
+      "Grade Level": "K-5",
+      "Subject": "Computer Science",
+      "Description": [
+        "Contains 6 courses designed for K through 5th grade",
+        "respectively. Ranges from 12 to 20 lessons per course. Contains lesson overview for each course."
+      ]
+    },
+    {
+      "Resource Name": "CS Fundamentals Course A",
+      "Grade Level": "K",
+      "Subject": "Computer Science",
+      "Description": "14 lesson course for beginning readers in the Kindergarten age range. \"Course A offers computer science curriculum for beginning readers around the kindergarten age range. Students will learn to program using commands like loops and events. The lessons featured in this course also teach students to collaborate with others meaningfully, investigate different problem-solving techniques, persist in the face of difficult tasks, and learn about internet safety. By the end of this course, students create their very own custom game or story from Play Lab that they can share.\""
+    },
+    {
+      "Resource Name": "CS Fundamentals Course B",
+      "Grade Level": 1,
+      "Subject": "Computer Science",
+      "Description": [
+        "Course B is a 13-lesson curriculum developed with first graders in mind. Tailored to a novice reading level",
+        "this course also assumes limited knowledge of shapes and numbers. At the moment",
+        "Course B closely parallels Course A",
+        "but provides more complex unplugged activities and more variety in puzzles. Students will learn the basics of programming",
+        "collaboration techniques",
+        "investigation and critical thinking skills",
+        "persistence in the face of difficulty",
+        "and internet safety. At the end of this course students will create their very own custom game from Play Lab that they can share with a link."
+      ]
+    },
+    {
+      "Resource Name": "CS Fundamentals Course C",
+      "Grade Level": 2,
+      "Subject": "Computer Science",
+      "Description": [
+        "Course C is a 16-lesson course developed for students in and around the second grade. It uses a limited understanding of shapes and elementary math concepts. Students will create programs with loops",
+        "events",
+        "and conditionals. They will translate their initials into binary",
+        "investigate different problem-solving techniques",
+        "and discuss how to respond to cyberbullying. By the end of the course",
+        "students will create interactive games that they can share. Each concept in Course C is taught from the beginning",
+        "graduating toward experiences that allow for growth and creativity to provide all students a rich and novel programming experience."
+      ]
+    },
+    {
+      "Resource Name": "CS Fundamentals Course D",
+      "Grade Level": 3,
+      "Subject": "Computer Science",
+      "Description": [
+        "Course D is a 19-lesson course created for students who read at roughly a third grade level. Angles and mathematical concepts are introduced with helpful videos and hints. The course begins with a review of the concepts found in Courses A",
+        "B",
+        "and C. This review helps introduce or refresh basic ideas such as repeat loops and events. Students will develop their understanding of algorithms",
+        "nested loops",
+        "while loops",
+        "conditionals",
+        "and events. Lessons on digital citizenship are also included. This course is crafted to build a strong foundation of basic concepts before opening up to a wide range of new and exciting topics."
+      ]
+    },
+    {
+      "Resource Name": "CS Fundamentals Course E",
+      "Grade Level": 4,
+      "Subject": "Computer Science",
+      "Description": [
+        "Course E is a 28-lesson course created with fourth grade students in mind",
+        "this course begins with a brief review of concepts previously taught in courses C and D. This introduction is intended to inspire beginners and remind the experts of the wonders of computer science. Students will practice coding with algorithms",
+        "loops",
+        "conditionals",
+        "and events before they are introduced to functions. At the end of the course",
+        "students will have the opportunity to create a capstone project that they can proudly share with peers and loved ones."
+      ]
+    },
+    {
+      "Resource Name": "CS Fundamentals Course F",
+      "Grade Level": 5,
+      "Subject": "Computer Science",
+      "Description": [
+        "The 28-lesson last course in CS Fundamentals was tailored to the needs of students in the fifth grade. In these lessons",
+        "students will create programs with different kinds of loops",
+        "events",
+        "functions",
+        "and conditionals. They will also investigate different problem-solving techniques and discuss societal impacts of computing and the internet. By the end of the curriculum",
+        "students create interactive stories and games that they can share with their friends and family."
+      ]
+    },
+    {
+      "Resource Name": "CS Fundamentals Express",
+      "Grade Level": "K-5",
+      "Subject": "Computer Science",
+      "Description": [
+        "CS Fundamentals Express combines the best of Courses A-F into a single condensed course. We recommend Courses A-F for most classrooms",
+        "but if your school only offers one computer science course or you want to have your students work through multiple courses in a single year",
+        "the Express course is a better choice."
+      ]
+    },
+    {
+      "Resource Name": "Women in Tech",
+      "Grade Level": "2018-02-08T08:00:00.000Z",
+      "Subject": "Social Studies",
+      "Description": [
+        "This 3-part unit explores gender inequality and engages students in activities and discussions around different experiences and perspectives. Highlighting influential women in the history of tech",
+        "students learn about past pioneers and form their own opinions on equality in the tech field. At the end of the unit",
+        "students express their opinions in writing to effect change in their school community."
+      ]
+    },
+    {
+      "Resource Name": "Hopscotch Game Design Workshop",
+      "Grade Level": "2018-02-08T08:00:00.000Z",
+      "Subject": [
+        "Computer Science",
+        "Math"
+      ],
+      "Description": [
+        "Keep the fun going! Use this project-based guide to facilitate a game design workshop",
+        "hackathon",
+        "or in-class series. Make: 1. Cross the Road 2. Geometry Jumper 3. Quiz Creator 4. Falling Bird 5. Subway Skaters 6. Escape the Room Each includes discussion questions",
+        "differentiation",
+        "and a video tutorial. Students can build off your instructions to customize their games. No prior experience required."
+      ]
+    },
+    {
+      "Resource Name": "Pizza Party!",
+      "Grade Level": "2018-02-05T08:00:00.000Z",
+      "Subject": [
+        "Math",
+        "Computer Science"
+      ],
+      "Description": [
+        "In a 3-part unit",
+        "students will connect math and programming to develop solutions for a restaurant's mobile ordering app. Dominic's Pizza restaurant is creating an algorithm for their new app and it's up to students to help calculate pizza costs. At the end of the unit",
+        "students will make and deliver their  pizza  after calculating the cost of the order."
+      ]
+    }
+  ],
+  "Background Info": [
+    {
+      "Resource Name": "Mike Carmon's Video Assets",
+      "Type": "Table of Links",
+      "Description": "Youtube videos for interested teachers in all subject areas"
+    },
+    {
+      "Resource Name": "K-12 Computer Science Framework",
+      "Type": "Website",
+      "Description": "guidelines for computer science education at all grade levels"
+    },
+    {
+      "Resource Name": "CS Policy in NH Slides",
+      "Type": "Slideshow",
+      "Description": "Policy overview for NH educators"
+    },
+    {
+      "Resource Name": "Article on Computational Thinking",
+      "Type": "Article",
+      "Description": "Outlines what students should gain from successful CS Ed"
+    },
+    {
+      "Resource Name": "Coding Beyond Computers",
+      "Type": "Article",
+      "Description": "Highlights across-the-board benefits of CS Education"
+    },
+    {
+      "Resource Name": "Starting from Scratch",
+      "Type": "Article",
+      "Description": "Developing a Pre-Service Teacher Training Program in Computational Thinking"
+    }
+  ]
+}

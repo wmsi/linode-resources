@@ -263,6 +263,10 @@ def scratch_gui():
     return render_template('scratch_gui.html')
     # return render_template('scratch-build/index.html')
 
+@app.route('/resource-table')
+def resource_tabl():
+    return send_from_directory(app.config["RESOURCE_TABLE"], "resource_table.json")
+
 @app.route('/static/assets/<path:path>')
 def send_assets(path):
     return send_from_directory(app.config["SCRATCH_ASSETS"], path)
