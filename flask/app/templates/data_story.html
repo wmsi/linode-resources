@@ -61,20 +61,14 @@
     </form>
 
 
-    <!--
-        This div contains the Chart object.
-        Charts are rendered using the chart.js library from https://www.chartjs.org/
-    -->
+    <!-- This div contains options to edit data in the table and show or hide the chart -->
     <div class="row">
-        <!-- <div class="col-md-8">
-            <canvas id="chartCanvas" width="400" height="400"></canvas>
-        </div> -->
         <div class="col-md-2">
             <!-- <div class="sensor_id"></div> -->
             <!-- <a href='#' class='form-control btn' onclick='renderChart()'>Update Chart</a> -->
             <a href='#' class='form-control btn' onclick='refreshData()'>Refresh Data</a>
             <div class="show-chart">
-                Show Chart: <input type="checkbox" id="show-chart">
+                Show Chart: <input type="checkbox" id="show-chart" onchange="showChart()">
             </div>
         </div>
         <!-- <div class="col-md-2">
@@ -100,7 +94,8 @@
                         <option value="">Select Project ID</option>
                     </select>
                     <p>
-                        <input type="text" class="popup-input" id="project_name" placeholder="Project Name" maxlength="64" />
+                        <!-- <input type="text" class="form-control popup-btn" id="project_name" placeholder="Project Name" maxlength="64" /> -->
+                        <textarea class="form-control popup-btn" id="project_name" rows="1" columns="50" maxlength="64" placeholder="Project Name"></textarea>
                     </p>
                     <p>
                         <textarea class="form-control popup-btn" id="project_description" rows="5" columns="50" maxlength="500" placeholder="Project Description"></textarea>
@@ -142,6 +137,15 @@
                 Show Chart: <input type="checkbox" id="show-chart">
             </div>
         </div> -->
+    </div>
+    <!--
+        This div contains the Chart object.
+        Charts are rendered using the chart.js library from https://www.chartjs.org/
+    -->
+    <div class="row">
+        <div class="col-md-8">
+            <canvas id="chartCanvas" width="640" height="480" style="display: none"></canvas> <!--  style="display: none" --> 
+        </div>
     </div>
     <br>
 
@@ -185,7 +189,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
     <script src="{{ url_for('static', filename='js/papaparse.min.js') }}"></script>
-    <!-- script src="{{ url_for('static', filename='js/render_chart.js') }}"></script -->
+    <script src="{{ url_for('static', filename='js/render_chart.js') }}"></script>
 
     <script>
         /*
@@ -276,12 +280,14 @@
             //     $.map(id_options, function(item, index) {
             //         return '<option value="' + item + '">' + item + '</option>';
 
-            var type_options = $.unique(raw_data.map(function (d) {return d.data_type}));
+            var value = $('#' + prefix + 'data_type').val()
+            var data_types = $.unique(raw_data.map(function (d) {return d.data_type}));
             _resetOptions(prefix + 'data_type');
             $('#' + prefix + 'data_type').append(
-                $.map(type_options, function(item, index) {
+                $.map(data_types, function(item, index) {
                     return '<option value="' + item + '">' + item + '</option>';
-                }).join());      
+                }).join());    
+            if(data_types.includes(value)) $('#' + prefix + 'data_type').val(value);     
         }
 
 
@@ -301,12 +307,13 @@
                     // return el.project_id == filter_id;
                 });
 
+                var value = $('#' + prefix + 'data_type').val()
                 _resetOptions(prefix + 'data_type');
-                console.log('appending data types ' + data_types)
                 $('#' + prefix + 'data_type').append(
                     $.map(data_types, function(item, index) {
                         return '<option value="' + item + '">' + item + '</option>';
                     }).join());
+                if(data_types.includes(value)) $('#' + prefix + 'data_type').val(value);
             } else {
                 renderSelects();
             }
@@ -324,6 +331,8 @@
                 $.map(render_data, function(item, index) {
                     return '<tr><td>' + item.project_id + '</td><td>' + item.timestamp.format('MMMM Do YYYY, h:mm:ss a') + '</td><td>' + item.value + '</td><td>' + item.data_type + '</td></tr>';
                 }).join());
+
+            renderChart();
 
             // var sensor_options = $.unique(render_data.map(function (d) {return d.sensor_id}));
             // $('#sensor_id').append(
@@ -494,6 +503,16 @@
                     closeForm('metadataForm');
                 }
             });
+        }
+
+        function showChart() {
+            console.log('setting view to ' + $('#show-chart').is(":checked"));
+            if($('#show-chart').is(":checked")) {
+                $('#chartCanvas').show();
+                renderChart();
+            } else {
+                $('#chartCanvas').hide();
+            }
         }
 
 

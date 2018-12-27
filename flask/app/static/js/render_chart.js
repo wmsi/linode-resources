@@ -12,16 +12,21 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 function renderChart() {
     render_data = filterData();
+    console.log("checking data...");
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'white';
+    // if(document.getElementById('project_id').value == "Select Project ID") {
+    //     console.log("please choose a project");
+    //     ctx.font = "36px Roboto";
+    //     ctx.fillText("Please select a Project ID",10,50);
+    //     ctx.fillText(" to render a chart",10,90);
+    //     return;
+    // }
     if(!singleType(render_data)) {
         ctx.font = "36px Roboto";
         ctx.fillText("Please select a single Data Type",10,50);
-        cts.fillTexct(" to render a chart",10,70);
-        return;
-    }
-    if(document.getElementById('project_id').value == "Select Project ID") {
-        ctx.font = "36px Roboto";
-        ctx.fillText("Please select a Project ID",10,50);
-        cts.fillTexct(" to render a chart",10,70);
+        ctx.fillText(" to render a chart",10,90);
         return;
     }
 
