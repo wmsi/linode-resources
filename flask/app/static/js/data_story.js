@@ -302,7 +302,7 @@
             console.log('setting view to ' + $('#show-chart').is(":checked"));
             if($('#show-chart').is(":checked")) {
                 $('#chart-container').show();
-                renderChart();
+                resizeChart();
             } else {
                 $('#chart-container').hide();
             }
