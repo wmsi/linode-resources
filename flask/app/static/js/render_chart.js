@@ -8,13 +8,13 @@ const canvas = document.getElementById('chartCanvas');
 const ctx = document.getElementById('chartCanvas').getContext('2d');
 ctx.fillStyle = 'black';
 ctx.fillRect(0, 0, canvas.width, canvas.height);
+var myChart;
 // window.onload = renderChart();
 
 function renderChart() {
     render_data = filterData();
-    console.log("checking data...");
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // ctx.fillStyle = 'black';
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = 'white';
     // if(document.getElementById('project_id').value == "Select Project ID") {
     //     console.log("please choose a project");
@@ -64,6 +64,7 @@ function renderChart() {
     });
 
     var options = {
+        maintainAspectRatio: false,
         type: 'line',
         data: data,
         options: {
@@ -91,7 +92,19 @@ function renderChart() {
             }
         }
     }
-    var myChart = new Chart(ctx, options);
+    if(myChart) {
+        console.log("updating chart");
+        myChart.data.labels = data.labels;
+        $.map(data.datasets, function(ds, i) {
+            myChart.data.datasets[i] = ds;
+        });
+        for(var i=data.datasets.length; i < myChart.data.datasets.length; i++) {
+            myChart.data.datasets.splice(i, 1);
+        }
+        myChart.update();
+    } else {
+        myChart = new Chart(ctx, options);
+    }
 }
 
 function singleType(data) {

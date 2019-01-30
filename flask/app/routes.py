@@ -172,6 +172,10 @@ def data_story():
     datastory = DataStory.query.filter(DataStory.archived!=True).all()
     return render_template('data_story.html', title='Digital Data Stories', datastory=datastory, bgcolor='black')
 
+# Serve static project pages for the public to access, 
+# without as many headers or options for editing data
+# @app.route('/data-story/project/')
+
 @app.route('/load-csv',methods=['POST','GET'])
 @login_required
 def load_csv():

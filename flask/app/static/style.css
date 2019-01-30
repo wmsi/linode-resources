@@ -6,6 +6,19 @@ textarea {
   color: black;
 }
 
+/* chart resize elements */
+#chart-width,
+#chart-height {
+  width: 3em;
+}
+
+#chart-container {
+  position: relative;
+  margin: auto;
+  height: 60vh;
+  width: 60vw;
+}
+
 /* Popup Form 
    Source can be found at https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup_form
    Implemented on data-stroy page to archive data
