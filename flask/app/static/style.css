@@ -15,8 +15,8 @@ textarea {
 #chart-container {
   position: relative;
   margin: auto;
-  height: 480px;
-  width: 640px;
+  height: 60vh;
+  width: 60vw;
 }
 
 /* Popup Form 

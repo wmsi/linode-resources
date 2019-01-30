@@ -24,7 +24,7 @@ function renderChart() {
     //     return;
     // }
     if(!singleType(render_data)) {
-        ctx.font = "36px Roboto";
+        ctx.font = "18px Roboto";
         ctx.fillText("Please select a single Data Type",10,50);
         ctx.fillText(" to render a chart",10,90);
         return;
