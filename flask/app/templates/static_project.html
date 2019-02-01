@@ -36,8 +36,13 @@
                             <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
                             <span></span> <b class="caret"></b>
                         </div>
+                        <span onClick="setTimes()">
+                            Start: <input type="time" class="time-range" id="start-time" onfocusout="setTimes()" /> 
+                            End: <input id="end-time" type="time" class="time-range" onfocusout="setTImes()" />
+                        </span>
                     </div>
                     <div class="col-md-2" style='bottom: 0'>
+                        <br />
                         <button type="button" class="form-control btn" id="show-chart" onClick="showChart()">Show Chart</button>
                     </div>
                 </div>

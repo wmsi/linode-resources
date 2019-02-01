@@ -10,8 +10,8 @@
 
         var last_pull = moment(); //.subtract(moment().utcOffset(), 'minutes');
         var render_data = raw_data;
-        var start_date;// = getFirstDate(raw_data); // = new Date();
-        var end_date;// = getLastDate(raw_data); // = raw_data Date();
+        var start_date;// = _getFirstDate(raw_data); // = new Date();
+        var end_date;// = _getLastDate(raw_data); // = raw_data Date();
 
         // pull new data from the server every 5 seconds 
         // save the timestamp of the most recent post for comparison on the server
@@ -123,18 +123,12 @@
                 }).join());
 
             renderChart();
-
-            // var sensor_options = $.unique(render_data.map(function (d) {return d.sensor_id}));
-            // $('#sensor_id').append(
-            //     $.map(type_options, function(item, index) {
-            //         return '<input type="checkbox" value="Sensor ' + item + '"><label>Sensor ' + item + '</label><br>';
-            //     }).join()); 
         }
 
         /*
             Start with the set of all data and only keep data points that match the 
             options selected with the dropdowns. When the argument set_dates is passed
-            as true this function calls autoSetDates to find the first and last date 
+            as true this function calls _autoSetDates to find the first and last date 
             in the new data set (stored in render_data). If the start and end dates 
             have already been set    
         */
@@ -149,14 +143,6 @@
                     });
             }
 
-            // filter by sensor ID
-            // filter_id = document.getElementById("sensor_id").value;
-            // if (filter_id != "Select Sensor ID" && sensor_id != "") {
-            //     render_data = render_data.filter(function (el) {
-            //             return el.sensor_id == filter_id;
-            //         });
-            // }
-
             // filter by data type
             var filter_type = document.getElementById("data_type").value;
             if (filter_type != "Select Data Type" && filter_type != "") {
@@ -166,7 +152,7 @@
             }
 
             if(set_dates) {
-                autoSetDates(render_data);
+                _autoSetDates(render_data);
             }
 
             // filter by date
@@ -324,10 +310,21 @@
             renderChart();
         }
 
+        /*
+            set start and end date times based on use input
+        */
+        function setTimes() {
+            start_date.hour($('#start-time').val().split(':')[0]);
+            start_date.minute($('#start-time').val().split(':')[1]);
+            end_date.hour($('#end-time').val().split(':')[0]);
+            end_date.minute($('#end-time').val().split(':')[1]);
+            renderTable();
+        }
+
         /* 
             Find the earliest timestamp in a data set.
         */
-        function getFirstDate(data_array) {
+        function _getFirstDate(data_array) {
             var first_date = moment(data_array[0].timestamp);
             for(i=1; i<data_array.length; i++) {
                 if(moment(data_array[i].timestamp).isBefore(first_date)) {
@@ -341,7 +338,7 @@
         /* 
             Find the last timestamp in a data set.
         */
-        function getLastDate(data_array) {
+        function _getLastDate(data_array) {
             var last_date = moment(data_array[0].timestamp);
             for(i=1; i<data_array.length; i++) {
                 if(moment(data_array[i].timestamp).isAfter(last_date)) {
@@ -372,44 +369,37 @@
             // }
         }
         
-       
-
-        /*
-            Deprecated- works better as part of filterData
-        */
-        // function filterDate(render_data) {
-        //     render_data = render_data.filter(function (el) {
-        //         // timestamp = new Date(el.timestamp);
-        //         timestamp = moment(el.timestamp);
-        //         return (timestamp.isAfter(start_date-1) && timestamp.isBefore(end_date+1));
-        //         // return (timestamp >= start_date && timestamp <= end_date);
-        //     });
-        //     return render_data;
-        // }
-
         /*
             Set the start_date and end_date variables with the first and last dates
             in the data set. Usually this gets called after the data has already been
             filtered based on the dropdown options
         */
-        function autoSetDates(render_data) {
-            start_date = getFirstDate(render_data);
-            end_date = getLastDate(render_data);
+        function _autoSetDates(render_data) {
+            start_date = _getFirstDate(render_data);
+            end_date = _getLastDate(render_data);
             $('#datepicker span').html(start_date.format('MMMM D, YYYY') + ' - ' + end_date.format('MMMM D, YYYY'));
+            $('#start-time').val(start_date.format("HH:mm"));
+            $('#end-time').val(end_date.format("HH:mm"));
         }
 
         /* 
             Configure the datarangepicker object using start_date and end_date
-            This variables can be set manually or by calling autoSetDates()
-            date range picker config from www.daterangepicker.com 
+            These variables can be set manually or by calling _autoSetDates()
+            Ref: www.daterangepicker.com 
         */
         $(function() {
-            var start = start_date ? start_date : getFirstDate(raw_data); //moment().subtract(29, 'days');
-            var end = end_date ? end_date : getLastDate(raw_data); ; //moment();
+            var start = start_date ? start_date : _getFirstDate(raw_data); //moment().subtract(29, 'days');
+            var end = end_date ? end_date : _getLastDate(raw_data); ; //moment();
+            $('#start-time').val(start.format("HH:mm"));
+            $('#end-time').val(end.format("HH:mm"));
 
             function cb(start, end) {
+                start.hour($('#start-time').val().split(':')[0]);
+                start.minute($('#start-time').val().split(':')[1]);
+                end.hour($('#end-time').val().split(':')[0]);
+                end.minute($('#end-time').val().split(':')[1]);
                 $('#datepicker span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-                // console.log("A new date range was chosen: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                console.log("A new date range was chosen: " + start.format('YYYY-MM-DD HH:mm') + ' to ' + end.format('YYYY-MM-DD HH:mm'));
                 // filterDate(start, end);
                 start_date = start;
                 end_date = end;
@@ -435,9 +425,6 @@
     // does this need to be called after the function is defined?
     window.onload = renderSelects();
 
-    // JQuery for to unparse data table
-    var inputType
-
     $('#submit').click(function() {
         var config = buildConfig();
         // var print_data = render_data;    
@@ -461,8 +448,8 @@
         link.click();
     });
 
-    function buildConfig()
-    {
+    /* Config and callback function for export CSV Parse */
+    function buildConfig() {
         return {
             // delimiter: $('#delimiter').val(),
             // header: $('#header').prop('checked'),
@@ -479,8 +466,7 @@
         };
     }
 
-    function completeFn(results)
-    {
+    function completeFn(results) {
         // var end = now();
 
         if (results && results.errors)
