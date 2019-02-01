@@ -19,12 +19,6 @@
             <div class="col main-panel">
                 <div class="row">
                     <div class="col-md-3">
-                        <label>Select your Project ID</label>
-                        <select class="form-control form-control-lg" id="project_id" onchange="renderTable(true)">
-                            <option value="">Select Project ID</option>
-                        </select>
-                    </div>
-                    <div class="col-md-3">
                         <label>Select your Data Type</label>
                         <select class="form-control form-control-lg" id="data_type" onchange="renderTable()">
                             <option value="">Select Data Type</option>
@@ -36,6 +30,9 @@
                             <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
                             <span></span> <b class="caret"></b>
                         </div>
+                    </div>
+                    <div class="col-md-2" style='bottom: 0'>
+                        <button type="button" class="form-control btn" id="show-chart" onClick="showChart()">Show Chart</button>
                     </div>
                 </div>
             </div>
@@ -64,10 +61,6 @@
         Charts are rendered using the chart.js library from https://www.chartjs.org/
     -->
     <div class="row">
-        <div class="col-md-2">
-            <button type="button" class="form-control btn" id="show-chart" onClick="showChart()" href='#'>Show Chart</button>
-            <!-- Show Chart: <input type="checkbox" id="show-chart" onchange="showChart()"> -->
-        </div>
         <div class='col-md-8' id="chart-container" style="display: none"><!-- class="col-md-8" -->
             <canvas id="chartCanvas"></canvas> <!--  style="display: none" --> 
         </div>
