@@ -11,8 +11,8 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 var myChart;
 // window.onload = renderChart();
 
-function renderChart() {
-    render_data = filterData();
+function renderChart(render_data) {
+    // render_data = filterData();
     // ctx.fillStyle = 'black';
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = 'white';

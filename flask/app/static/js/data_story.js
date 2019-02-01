@@ -122,7 +122,7 @@
                     return '<tr><td>' + item.project_id + '</td><td>' + item.timestamp.format('MMMM Do YYYY, h:mm:ss a') + '</td><td>' + item.value + '</td><td>' + item.data_type + '</td></tr>';
                 }).join());
 
-            renderChart();
+            renderChart(render_data);
         }
 
         /*
