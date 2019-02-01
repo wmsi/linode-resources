@@ -43,8 +43,10 @@
                         <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
                         <span></span> <b class="caret"></b>
                     </div>
-
-                    <!-- <input class="form-control corm-control-lg" type="text" value="01/01/2018 - 03/31/2018" /> -->
+                    <span onClick="setTimes()">
+                        Start: <input type="time" class="time-range" id="start-time" onfocusout="setTimes()" /> 
+                        End: <input id="end-time" type="time" class="time-range" onfocusout="setTimes()" />
+                    </span>
                 </div>
             </div>
         </div>
@@ -63,12 +65,10 @@
 
     <!-- This div contains options to edit data in the table and show or hide the chart -->
     <div class="row">
-        <div class="col-md-2 align-middle">
-            <!-- <div class="sensor_id"></div> -->
-            <!-- <a href='#' class='form-control btn' onclick='renderChart()'>Update Chart</a> -->
-            <button type="button" class='form-control btn' onclick='refreshData()'>Refresh Data</button>
-                
-                <!-- Show Chart: <input type="checkbox" id="show-chart" onchange="showChart()"> -->
+        <div class="col-md-3">
+            Chart width: <input type="text" id="chart-width" onChange="resizeChart()" value="60" maxLength="4" /> %
+            <button type="button" class="form-control btn" id="show-chart" onClick="showChart()">Show Chart</button>
+            <!-- <br />Chart height: <input type="text" id="chart-height" onChange="resizeChart()" value="40" maxLength="4"/>% -->
         </div>
         <!-- <div class="col-md-2">
             <div class="auto_refresh">
@@ -131,10 +131,9 @@
                 <!-- <button id="submit" class="form-control btn">Archive Data</button> -->
             </div>
         </div>
-        <div class="col-md-3">
-            Chart width: <input type="text" id="chart-width" onChange="resizeChart()" value="60" maxLength="4" /> %
-            <button type="button" class="form-control btn" id="show-chart" onClick="showChart()">Show Chart</button>
-            <!-- <br />Chart height: <input type="text" id="chart-height" onChange="resizeChart()" value="40" maxLength="4"/>% -->
+        <div class="col-md-2 align-middle">
+            <button type="button" class='form-control btn' onclick='refreshData()'>Refresh Data</button>
+            <!-- Show Chart: <input type="checkbox" id="show-chart" onchange="showChart()"> -->
         </div>
     </div>
     <!--
