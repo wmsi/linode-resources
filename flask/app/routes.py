@@ -174,7 +174,13 @@ def data_story():
 
 # Serve static project pages for the public to access, 
 # without as many headers or options for editing data
-# @app.route('/data-story/project/')
+@app.route('/project/<int:project_id>')
+def static_project(project_id):
+    project_data = DataStory.query.filter_by(project_id=project_id).all()
+    app.logger.warning('renering project with ' + str(len(project_data)) + ' data points')
+    if len(project_data) == 0:
+        return render_template('page_not_found.html')
+    return render_template('static_project.html', title='Project Page', datastory=project_data, bgcolor='black', project_id=project_id)
 
 @app.route('/load-csv',methods=['POST','GET'])
 @login_required

@@ -63,13 +63,12 @@
 
     <!-- This div contains options to edit data in the table and show or hide the chart -->
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-2 align-middle">
             <!-- <div class="sensor_id"></div> -->
             <!-- <a href='#' class='form-control btn' onclick='renderChart()'>Update Chart</a> -->
-            <a href='#' class='form-control btn' onclick='refreshData()' style='padding: 10px'>Refresh Data</a>
-            <div class="show-chart">
-                Show Chart: <input type="checkbox" id="show-chart" onchange="showChart()">
-            </div>
+            <button type="button" class='form-control btn' onclick='refreshData()'>Refresh Data</button>
+                
+                <!-- Show Chart: <input type="checkbox" id="show-chart" onchange="showChart()"> -->
         </div>
         <!-- <div class="col-md-2">
             <div class="auto_refresh">
@@ -133,7 +132,8 @@
             </div>
         </div>
         <div class="col-md-3">
-            Chart width: <input type="text" id="chart-width" onChange="resizeChart()" value="60" maxLength="4" />%
+            Chart width: <input type="text" id="chart-width" onChange="resizeChart()" value="60" maxLength="4" /> %
+            <button type="button" class="form-control btn" id="show-chart" onClick="showChart()">Show Chart</button>
             <!-- <br />Chart height: <input type="text" id="chart-height" onChange="resizeChart()" value="40" maxLength="4"/>% -->
         </div>
     </div>

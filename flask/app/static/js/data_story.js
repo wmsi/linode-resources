@@ -299,13 +299,17 @@
             Show or hide the chart based on user input
         */
         function showChart() {
-            console.log('setting view to ' + $('#show-chart').is(":checked"));
-            if($('#show-chart').is(":checked")) {
+            // console.log('setting view to ' + $('#show-chart').is(":checked"));
+            // if($('#show-chart').is(":checked")) {
+            if($('#chart-container').css('display') == 'none') {
                 $('#chart-container').show();
+                $('#show-chart').html('Hide Chart');
                 resizeChart();
             } else {
                 $('#chart-container').hide();
+                $('#show-chart').html('Show Chart');
             }
+            console.log('setting view to ' + $('#chart-container').css("display"));
         }
 
         /* 
