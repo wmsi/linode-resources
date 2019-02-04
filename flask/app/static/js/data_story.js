@@ -425,9 +425,22 @@
     // does this need to be called after the function is defined?
     window.onload = renderSelects();
 
-    $('#submit').click(function() {
+    /*
+        
+    */
+    $('#csv-action').click(function() {
         var config = buildConfig();
-        // var print_data = render_data;    
+        // var print_data = render_data; 
+        if($('#csv-action').html().split(' ')[0] == 'Import') {
+            console.log('import file');
+            var contents = Papa.parse($('#file-select').prop('files')[0], {
+                complete: function(results) {
+                    console.log(results);
+                    return results;
+                }
+            });
+            return;
+        }   
         $.map(render_data, function(item, index) {
             item.timestamp = item.timestamp.format();
         });
@@ -446,6 +459,16 @@
         link.setAttribute('href', data);
         link.setAttribute('download', 'export.csv');
         link.click();
+    });
+
+    $('#file-select').change(function() {
+        var button_text = $('#csv-action').val();
+        var file_val = $('#file-select').val();
+        console.log('focus out with file val ' + file_val);
+        if(file_val != "" && button_text != "Import .csv File")
+            $('#csv-action').html("Import .csv File");
+        else if(file_val == "" && button_text != "Export .csv File")
+            $('#csv-action').html("Export .csv File");
     });
 
     /* Config and callback function for export CSV Parse */
