@@ -255,7 +255,7 @@ def crop_project():
     for datum in data:
         ds.data_type = datum["data_type"]
         ds.value = datum["value"]
-        ds.timestamp = datum["timestamp"]
+        ds.timestamp =  dateutil.parser.parse(datum['timestamp'])
         db.session.add(ds)
         db.session.commit()
 
