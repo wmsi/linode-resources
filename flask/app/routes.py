@@ -243,7 +243,7 @@ def get_new_data():
 def crop_project():
     new_id = len(ProjectMetaData.query.all())
     project_name = request.form.get('name')
-    if(project_name is None or project_name != ""):
+    if(project_name is None or project_name == ""):
         project_name = 'Project ' + str(new_id)
     app.logger.warning('new project name ' + project_name)
     pmd = ProjectMetaData(id=new_id, project_name=project_name, description=request.form.get('desc'), miscellaneous=request.form.get('misc'))
@@ -259,7 +259,7 @@ def crop_project():
         db.session.add(ds)
         db.session.commit()
 
-    return 'created cropped project with id ' + str(new_id)
+    return 'created cropped project with id ' + str(new_id) + ' and name ' + project_name
 
 # Handle all HTTP requests from Scratch.
 # As of now the only working blocks exist as a ScratchX extension]
