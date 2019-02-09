@@ -5,7 +5,9 @@
             them in start_date and end_date. These variables will continue to be updated as new 
             data is fetched from the server.
         */
+        const URL_STRING = 'https://wmsinh.org/scratchx';
         var raw_data = [];
+        var project_names = [];
         // var timestamp_temp;
 
         var last_pull = moment(); //.subtract(moment().utcOffset(), 'minutes');
@@ -53,22 +55,18 @@
         */
         function renderSelects(prefix='') {
             // var id_options = $.unique(raw_data.map(function (d) {return d.project_id}));
-            var id_options = [];
-            $.each(raw_data, function(i, el) {
-                if($.inArray(el.project_id, id_options) === -1) id_options.push(el.project_id);
-            });
-            id_options = id_options.sort((a, b) => a - b);
+            // var id_options = [];
+            // var project_names = _getProjectNames();
+            // $.each(raw_data, function(i, el) {
+            //     if($.inArray(el.project_id, id_options) === -1) id_options.push(el.project_id);
+            // });
+            // id_options = id_options.sort((a, b) => a - b);
 
-            _resetOptions(prefix + 'project_id');
-            $('#' + prefix + 'project_id').append(
-                $.map(id_options, function(item, index) {
+            _resetOptions(prefix + 'project_name');
+            $('#' + prefix + 'project_name').append(
+                $.map(project_names, function(item, index) {
                     return '<option value="' + item + '">' + item + '</option>';
                 }).join());
-
-            // id_options = $.unique(raw_data.map(function (d) {return d.sensor_id}));
-            // $('#project_id').append(
-            //     $.map(id_options, function(item, index) {
-            //         return '<option value="' + item + '">' + item + '</option>';
 
             var value = $('#' + prefix + 'data_type').val()
             var data_types = $.unique(raw_data.map(function (d) {return d.data_type}));
@@ -85,11 +83,11 @@
             Render only the data types that exist in the selected project
         */
         function renderDataTypes(prefix='') {
-            var project_id = document.getElementById(prefix + "project_id").value;
+            var project_id = project_names.indexOf($('#' + prefix + 'project_name').val());//document.getElementById(prefix + "project_id").value;
             var render_data = raw_data;
             var data_types = [];
 
-            if (project_id != "Select Project ID" && project_id != "") {
+            if (project_id != -1) {//"Select Project ID" && project_id != "") {
                 render_data.filter(function (el) {
                     if(el.project_id == project_id && !data_types.includes(el.data_type)) {
                         data_types.push(el.data_type);
@@ -136,8 +134,8 @@
             render_data = raw_data;
 
             // filter by project ID
-            var filter_id = document.getElementById("project_id").value;
-            if (filter_id != "Select Project ID" && filter_id != "") {
+            var filter_id = project_names.indexOf($('#project_name').val());//document.getElementById("project_name").value;
+            if (filter_id != "Select Project ID" && filter_id != -1) {
                 render_data = render_data.filter(function (el) {
                         return el.project_id == filter_id;
                     });
@@ -177,17 +175,19 @@
                 return;
             }
 
-            var id_options = [];
-            // var id_select = show_form.childNodes.getElementsByTagName("select")[0];
-            $.each(raw_data, function(i, el) {
-                if($.inArray(el.project_id, id_options) === -1) id_options.push(el.project_id);
-            });
-
-            _resetOptions(form_name + '_project_id');
-            $("#" + form_name + "_project_id").append(
-                $.map(id_options, function(item, index) {
-                    return '<option value="' + item + '">' + item + '</option>';
-                }).join());
+            if(form_name == "cropForm") {
+                if($('#project_name').val() == "") {
+                    alert('Please select a project to crop');
+                    return;
+                }
+                _fillCropFields();
+            } else {
+                _resetOptions(form_name + '_project_name');
+                $("#" + form_name + "_project_name").append(
+                    $.map(project_names, function(item, index) {
+                        return '<option value="' + item + '">' + item + '</option>';
+                    }).join());
+            }
             show_form.style.display = "block";
         }
 
@@ -205,8 +205,8 @@
             users can continue to add new values to the project and only the new values will appear on the page
         */
         function archiveData() {
-            var project_id = document.getElementById('archiveForm_project_id').value;
-            if(project_id == '') {
+            var project_id = project_names.indexOf($('#archiveForm_project_name').val());//document.getElementById('archiveForm_project_id').value;
+            if(project_id == -1) {
                 alert('Please select a project to archive');
                 return;
             }
@@ -227,11 +227,11 @@
         }
 
         function getMetaData() {
-            var project_id = $('#metadataForm_project_id').val();
-            if(project_id == '') {
+            var project_id = project_names.indexOf($('#metadataForm_project_name').val());//$('#metadataForm_project_id').val();
+            if(project_id == -1) {
                 return;
             }
-            var query_string = 'https://wmsinh.org/scratchx?project_id=' + String(project_id) + '&pmd=true';
+            var query_string = URL_STRING + '?project_id=' + String(project_id) + '&pmd=true&data=false';
 
             $.ajax({
                 url: query_string,
@@ -241,7 +241,7 @@
                 // type: 'GET',
                 success: function(data) {
                     console.log(JSON.stringify(data));
-                    $('#project_name').val(data.name);
+                    $('#edit_project_name').val(data.name);
                     $('#project_description').val(data.description);
                     $('#project_miscellaneous').val(data.miscellaneous);
                 }
@@ -269,7 +269,7 @@
             edit_data.append('pmd', true);
 
             $.ajax({
-                url: 'https://wmsinh.org/scratchx',
+                url: URL_STRING,
                 data: edit_data,
                 processData: false,
                 contentType: false,
@@ -279,6 +279,45 @@
                     closeForm('metadataForm');
                 }
             });
+        }
+
+        function cropProject() {
+            crop_project = new FormData();
+            // if($('#crop_project_name').val())
+            crop_project.append('name', $('#crop_project_name').val());
+            crop_project.append('desc', $('#crop_project_description').val());
+            crop_project.append('misc', $('#crop_project_miscellaneous').val());
+            crop_project.append('data', JSON.stringify(filterData()))
+
+            $.ajax({
+                url: URL_STRING,
+                data: crop_project,
+                processData: false,
+                contentType: false,
+                type: 'POST',
+                success: function(data){
+                    alert(data);
+                    closeForm('cropForm');
+                }
+            });
+        }
+
+        function _fillCropFields() {
+            var og_name = $('#project_name').val();
+            var project_id = project_names.indexOf(og_name);
+            var crop_type = $('#data_type').val();
+            var crop_string = 'Cropped project ' + og_name;
+            $('#crop_project_name').val(crop_string)
+
+            if(crop_type != "")
+                crop_string += ' with data type ' + crop_type;
+
+            crop_string += ' starting on ' + start_date.format('YYYY-MM-DD') + ' at ' + start_date.format('HH:mm');
+            crop_string += ' and ending on ' + end_date.format('YYYY-MM-DD') + ' at ' + end_date.format('HH:mm');
+
+            $('#cropForm_project_name').append(og_name);
+            $('#crop_project_description').val('Cropped View of project ' + og_name + ' taken on ' + moment().format('YYYY-MM-DD'));
+            $('#crop_project_miscellaneous').val(crop_string);
         }
 
         /*
@@ -319,6 +358,25 @@
             end_date.hour($('#end-time').val().split(':')[0]);
             end_date.minute($('#end-time').val().split(':')[1]);
             renderTable();
+        }
+
+        /*
+            Get a list of all project names from the database
+        */
+        function _getProjectNames() {
+            var query_string = URL_STRING + '?project_names=true';
+
+            $.ajax({
+                url: query_string,
+                dataType: 'json',
+                // processData: false,
+                // contentType: false,
+                // type: 'GET',
+                success: function(data) {
+                    console.log('project_names: ' + JSON.stringify(data));
+                }
+            });
+
         }
 
         /* 
@@ -421,9 +479,6 @@
 
             cb(start, end);
         });
-
-    // does this need to be called after the function is defined?
-    window.onload = renderSelects();
 
     /*
         

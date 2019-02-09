@@ -170,7 +170,7 @@ def data_story():
         return str('project ' + project_id + ' has been archived. To revive this project contact a system administrator')
 
     datastory = DataStory.query.filter(DataStory.archived!=True).all()
-    return render_template('data_story.html', title='Digital Data Stories', datastory=datastory, bgcolor='black')
+    return render_template('data_story.html', title='Digital Data Stories', datastory=datastory, project_names=get_project_names(), bgcolor='black')
 
 # Serve static project pages for the public to access, 
 # without as many headers or options for editing data
@@ -236,8 +236,30 @@ def get_new_data():
             })
             # app.logger.warning('new data found at ' + str(d.timestamp.timestamp()))
 
-
     return jsonify(new_data)
+
+# Crop some values from an existing project in the database into a new project
+@app.route('/crop-project', methods=['POST'])
+def crop_project():
+    new_id = len(ProjectMetaData.query.all())
+    project_name = request.form.get('name')
+    if(project_name is None or project_name != ""):
+        project_name = 'Project ' + str(new_id)
+    app.logger.warning('new project name ' + project_name)
+    pmd = ProjectMetaData(project_name=project_name, description=request.form.get('desc'), miscellaneous=request.form.get('misc'))
+    db.session.add(pmd)
+    db.session.commit()
+
+    data = request.form.get('data')
+    ds = DataStory(project_id=new_id)
+    for datum in data:
+        ds.data_type = datum["data_type"]
+        ds.value = datum["value"]
+        ds.timeStamp = datum["timestamp"]
+        db.session.add(ds)
+        db.session.commit()
+
+    return 'created cropped project with data ' + str(data)
 
 # Handle all HTTP requests from Scratch.
 # As of now the only working blocks exist as a ScratchX extension]
@@ -263,10 +285,13 @@ def scratchx():
 
         # add support for project meta data
         if(request.args.get('pmd')):
-            sample_pmd = '{"name": "test", "id": 0, "description": "example project", "miscellaneous": "", "data_sets": {"tempF": [69.0], "tempC": [22.0, 30.0]}}'
+            # sample_pmd = '{"name": "test", "id": 0, "description": "example project", "miscellaneous": "", "data_sets": {"tempF": [69.0], "tempC": [22.0, 30.0]}}'
             # return sample_pmd
-            return get_meta_data(request.args.get('project_id'))
+            return get_meta_data(request.args.get('project_id'), request.args.get('data'))
+        if(request.args.get('project_names')):
+            return get_project_names()
         return get_project_data(request)
+
 
 @app.route('/scratch-gui')
 def scratch_gui():
@@ -376,7 +401,7 @@ def status():
 def page_not_found(error):
     return render_template('page_not_found.html'), 404
 
-def get_meta_data(project_id):
+def get_meta_data(project_id, data=True):
     pmd = ProjectMetaData.query.filter_by(id=project_id).all()
     data_set = DataStory.query.filter(DataStory.project_id==int(project_id), DataStory.archived==False).all()
     if(pmd == []):
@@ -389,10 +414,11 @@ def get_meta_data(project_id):
     project['description'] = pmd.description
     project['miscellaneous'] = pmd.miscellaneous
     project['data_sets'] = {}
-    for datum in data_set:
-        if datum.data_type not in project['data_sets']:
-            project['data_sets'][datum.data_type] = []
-        project['data_sets'][datum.data_type].append(datum.value)
+    if data:
+        for datum in data_set:
+            if datum.data_type not in project['data_sets']:
+                project['data_sets'][datum.data_type] = []
+            project['data_sets'][datum.data_type].append(datum.value)
     json_data = json.dumps(project)
     return json_data
 
@@ -454,6 +480,14 @@ def get_project_data(request):
         for datum in data_set:
             values.append(datum.value)
     return jsonify(values)
+
+def get_project_names():
+    pmd = ProjectMetaData.query.all()
+    project_names = []
+    for project in pmd:
+        project_names.append(project.project_name)
+    # project_names = json.dumps(project_names)
+    return project_names
 
 # def send_new_value(data):
 #     new_val = {}

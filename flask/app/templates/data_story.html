@@ -20,13 +20,13 @@
         <div class="col main-panel">
             <div class="row">
                 <div class="col-md-4">
-                    <label>Select your Project ID</label>
-                    <select class="form-control form-control-lg" id="project_id" onchange="renderTable(true)">
-                        <option value="">Select Project ID</option>
+                    <!-- <label>Select your Project ID</label> -->
+                    <select class="form-control form-control-lg" id="project_name" onchange="renderTable(true)">
+                        <option value="">Select Project Name</option>
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <label>Select your Data Type</label>
+                    <!-- <label>Select your Data Type</label> -->
                     <select class="form-control form-control-lg" id="data_type" onchange="renderTable()">
                         <option value="">Select Data Type</option>
                     </select>
@@ -38,13 +38,13 @@
                     </select>
                 </div> -->
                 <div class="col-md-4 form-group">
-                    <label>Choose a Date Range</label><br>
+                    <!-- <label>Choose a Date Range</label><br> -->
                     <div id="datepicker" class="pull-right datepicker form-control form-control-lg">
                         <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
                         <span></span> <b class="caret"></b>
                     </div>
                     <span onClick="setTimes()">
-                        Start: <input type="time" class="time-range" id="start-time" onfocusout="setTimes()" /> 
+                        Start: <input type="time" class="time-range" id="start-time" onfocusout="setTimes()" /><br />
                         End: <input id="end-time" type="time" class="time-range" onfocusout="setTimes()" />
                     </span>
                 </div>
@@ -82,13 +82,13 @@
                 <div class="form-popup" id="metadataForm">
                     <!-- <h1>Select Project</h1> -->
 
-                    <label for="metadataForm_project_id"><b>Project Id</b></label>
-                    <select class="form-control form-control-lg popup-btn" id="metadataForm_project_id" onchange="getMetaData()"> 
-                        <option value="">Select Project ID</option>
+                    <!-- <label for="metadataForm_project_id"><b>Project Id</b></label> -->
+                    <select class="form-control form-control-lg popup-btn" id="metadataForm_project_name" onchange="getMetaData()"> 
+                        <option value="">Select Project Name</option>
                     </select>
                     <p>
                         <!-- <input type="text" class="form-control popup-btn" id="project_name" placeholder="Project Name" maxlength="64" /> -->
-                        <textarea class="form-control popup-btn" id="project_name" rows="1" columns="50" maxlength="64" placeholder="Project Name"></textarea>
+                        <textarea class="form-control popup-btn" id="edit_project_name" rows="1" columns="50" maxlength="64" placeholder="Project Name"></textarea>
                     </p>
                     <p>
                         <textarea class="form-control popup-btn" id="project_description" rows="5" columns="50" maxlength="500" placeholder="Project Description"></textarea>
@@ -100,6 +100,26 @@
                     <button type="button" class="form-control popup-btn btn" onclick="closeForm('metadataForm')">Close</button>
                 </div>
             </div>
+            <div class="text-left">
+                <button class="form-control btn" onclick="openForm('cropForm')">Crop Current View</button>
+                <div class="form-popup" id="cropForm">
+                    <!-- <h1>Select Project</h1> -->
+
+                    <span id="cropForm_project_name" style="padding: 10px">Crop Project Name: </span>
+                    <p>
+                        <!-- <input type="text" class="form-control popup-btn" id="project_name" placeholder="Project Name" maxlength="64" /> -->
+                        <textarea class="form-control popup-btn" id="crop_project_name" rows="1" columns="50" maxlength="64" placeholder="New Project Name"></textarea>
+                    </p>
+                    <p>
+                        <textarea class="form-control popup-btn" id="crop_project_description" rows="5" columns="50" maxlength="500" placeholder="Project Description"></textarea>
+                    </p>
+                    <p>
+                        <textarea class="form-control popup-btn" id="crop_project_miscellaneous" rows="3" columns="50" maxlength="160" placeholder="Miscellaneous Information"></textarea>
+                    </p>
+                    <button type="button" class="form-control popup-btn btn" onclick="cropProject()">Crop Into New Project</button>
+                    <button type="button" class="form-control popup-btn btn" onclick="closeForm('metadataForm')">Close</button>
+                </div>
+            </div>
         </div>
         <div class="col-md-3">
             <div class="text-left">
@@ -108,9 +128,9 @@
                     <!-- <form action="/action_page.php" class="form-container"> -->
                     <!-- <h1>Select Data</h1> -->
 
-                    <label for="archiveForm_project_id"><b>Project Id</b></label>
-                    <select class="form-control form-control-lg popup-btn" id="archiveForm_project_id"> <!-- onchange="renderDataTypes('archive_')" -->
-                        <option value="">Select Project ID</option>
+                    <!-- <label for="archiveForm_project_name"><b>Project Name</b></label> -->
+                    <select class="form-control form-control-lg popup-btn" id="archiveForm_project_name"> <!-- onchange="renderDataTypes('archive_')" -->
+                        <option value="">Select Project Name</option>
                     </select>
 
                     <!-- <label for="archive_data_type"><b>Data Type</b></label>
@@ -193,5 +213,11 @@
                 "data_type":"{{ data.data_type }}"
             });
         {% endfor %}
+        {% for project in project_names %}
+            project_names.push("{{ project }}");
+        {% endfor %}
+
+        window.onload = renderSelects();
+        // project_names = {{ project_names }};
     </script>
 {% endblock %}
