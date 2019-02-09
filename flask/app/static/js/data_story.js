@@ -290,7 +290,7 @@
             crop_project.append('data', JSON.stringify(filterData()))
 
             $.ajax({
-                url: URL_STRING,
+                url: 'https://wmsinh.org/crop-project',
                 data: crop_project,
                 processData: false,
                 contentType: false,
