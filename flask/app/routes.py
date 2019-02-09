@@ -245,7 +245,7 @@ def crop_project():
     project_name = request.form.get('name')
     if(project_name is None or project_name == ""):
         project_name = 'Project ' + str(new_id)
-    app.logger.warning('new project name ' + project_name)
+    # app.logger.warning('new project name ' + project_name)
     pmd = ProjectMetaData(id=new_id, project_name=project_name, description=request.form.get('desc'), miscellaneous=request.form.get('misc'))
     db.session.add(pmd)
     db.session.commit()
@@ -490,7 +490,7 @@ def get_project_names():
         info['name'] = project.project_name
         project_names.append(info)
     # project_names = json.dumps(project_names)
-    app.logger.warning('returning project names: ' + str(project_names))
+    # app.logger.warning('returning project names: ' + str(project_names))
     return project_names
 
 # def send_new_value(data):
