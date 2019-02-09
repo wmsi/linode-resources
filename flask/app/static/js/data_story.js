@@ -65,7 +65,7 @@
             _resetOptions(prefix + 'project_name');
             $('#' + prefix + 'project_name').append(
                 $.map(project_names, function(item, index) {
-                    return '<option value="' + item + '">' + item + '</option>';
+                    return '<option value="' + item.id + '">' + item.id + ", " + item.name + '</option>';
                 }).join());
 
             var value = $('#' + prefix + 'data_type').val()
@@ -83,7 +83,7 @@
             Render only the data types that exist in the selected project
         */
         function renderDataTypes(prefix='') {
-            var project_id = project_names.indexOf($('#' + prefix + 'project_name').val());//document.getElementById(prefix + "project_id").value;
+            var project_id = $('#' + prefix + 'project_name').val().split(",")[0]; //document.getElementById(prefix + "project_id").value;
             var render_data = raw_data;
             var data_types = [];
 
@@ -134,7 +134,7 @@
             render_data = raw_data;
 
             // filter by project ID
-            var filter_id = project_names.indexOf($('#project_name').val());//document.getElementById("project_name").value;
+            var filter_id = $('#project_name').val().split(",")[0];
             if (filter_id != "Select Project ID" && filter_id != -1) {
                 render_data = render_data.filter(function (el) {
                         return el.project_id == filter_id;
@@ -205,7 +205,7 @@
             users can continue to add new values to the project and only the new values will appear on the page
         */
         function archiveData() {
-            var project_id = project_names.indexOf($('#archiveForm_project_name').val());//document.getElementById('archiveForm_project_id').value;
+            var project_id = $('#' + prefix + 'project_name').val().split(",")[0];
             if(project_id == -1) {
                 alert('Please select a project to archive');
                 return;
@@ -227,7 +227,7 @@
         }
 
         function getMetaData() {
-            var project_id = project_names.indexOf($('#metadataForm_project_name').val());//$('#metadataForm_project_id').val();
+            var project_id = $('#' + prefix + 'project_name').val().split(",")[0];
             if(project_id == -1) {
                 return;
             }

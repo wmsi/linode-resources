@@ -22,7 +22,7 @@
                 <div class="col-md-4">
                     <!-- <label>Select your Project ID</label> -->
                     <select class="form-control form-control-lg" id="project_name" onchange="renderTable(true)">
-                        <option value="">Select Project Name</option>
+                        <option value="">Select Project</option>
                     </select>
                 </div>
                 <div class="col-md-4">
@@ -214,7 +214,9 @@
             });
         {% endfor %}
         {% for project in project_names %}
-            project_names.push("{{ project }}");
+            project_names.push({ "id": {{ project.id }},
+                "name": "{{ project.name }}" 
+            });
         {% endfor %}
 
         window.onload = renderSelects();

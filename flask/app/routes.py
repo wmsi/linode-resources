@@ -246,7 +246,7 @@ def crop_project():
     if(project_name is None or project_name != ""):
         project_name = 'Project ' + str(new_id)
     app.logger.warning('new project name ' + project_name)
-    pmd = ProjectMetaData(project_name=project_name, description=request.form.get('desc'), miscellaneous=request.form.get('misc'))
+    pmd = ProjectMetaData(id=new_id, project_name=project_name, description=request.form.get('desc'), miscellaneous=request.form.get('misc'))
     db.session.add(pmd)
     db.session.commit()
 
@@ -255,11 +255,11 @@ def crop_project():
     for datum in data:
         ds.data_type = datum["data_type"]
         ds.value = datum["value"]
-        ds.timeStamp = datum["timestamp"]
+        ds.timestamp = datum["timestamp"]
         db.session.add(ds)
         db.session.commit()
 
-    return 'created cropped project with data ' + str(data)
+    return 'created cropped project with id ' + str(new_id)
 
 # Handle all HTTP requests from Scratch.
 # As of now the only working blocks exist as a ScratchX extension]
@@ -485,8 +485,12 @@ def get_project_names():
     pmd = ProjectMetaData.query.all()
     project_names = []
     for project in pmd:
-        project_names.append(project.project_name)
+        info = {}
+        info['id'] = project.id
+        info['name'] = project.project_name
+        project_names.append(info)
     # project_names = json.dumps(project_names)
+    app.logger.warning('returning project names: ' + str(project_names))
     return project_names
 
 # def send_new_value(data):
