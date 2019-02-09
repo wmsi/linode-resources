@@ -241,12 +241,13 @@ def get_new_data():
 # Crop some values from an existing project in the database into a new project
 @app.route('/crop-project', methods=['POST'])
 def crop_project():
-    new_id = len(ProjectMetaData.query.all())
+    pmd = ProjectMetaData.query.all()
+    new_id = pmd[len(pmd)-1].id+1
     project_name = request.form.get('name')
     if(project_name is None or project_name == ""):
         project_name = 'Project ' + str(new_id)
     # app.logger.warning('new project name ' + project_name)
-    pmd = ProjectMetaData(id=new_id, project_name=project_name, description=request.form.get('desc'), miscellaneous=request.form.get('misc'))
+    pmd = ProjectMetaData(project_name=project_name, description=request.form.get('desc'), miscellaneous=request.form.get('misc'))
     db.session.add(pmd)
     db.session.commit()
 
@@ -453,7 +454,7 @@ def post_data_value(request):
     data = DataStory(project_id=project_id, data_type=str(data_type), sensor_id=int(sensor_id), value=float(value))
     pmd = ProjectMetaData.query.filter_by(id=project_id).all()
     if(pmd == []):
-        project_name = 'project' + str(project_id)
+        project_name = 'Project ' + str(project_id)
         pmd = ProjectMetaData(id=project_id, project_name=project_name)
         db.session.add(pmd)
     db.session.add(data)
