@@ -251,8 +251,8 @@ def crop_project():
     db.session.commit()
 
     data = json.loads(request.form.get('data'))
-    ds = DataStory(project_id=new_id)
     for datum in data:
+        ds = DataStory(project_id=new_id)
         ds.data_type = datum["data_type"]
         ds.value = datum["value"]
         ds.timestamp =  dateutil.parser.parse(datum['timestamp'])
