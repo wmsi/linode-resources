@@ -250,7 +250,7 @@ def crop_project():
     db.session.add(pmd)
     db.session.commit()
 
-    data = request.form.get('data')
+    data = json.loads(request.form.get('data'))
     ds = DataStory(project_id=new_id)
     for datum in data:
         ds.data_type = datum["data_type"]
