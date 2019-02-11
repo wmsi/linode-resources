@@ -185,24 +185,29 @@ def static_project(project_id):
 @app.route('/load-csv',methods=['POST','GET'])
 @login_required
 def load_csv():
+    pmd = ProjectMetaData.query.all()
+    new_id = pmd[len(pmd)-1].id+1
     if request.method == 'POST':
         if request.is_json:
             content = request.get_json()
+            project_id = int(content[0]['project_id']) if 'project_id' in content[0] else new_id
             for item in content:
-                project_id = int(item['project_id'])
                 data_type = str(item['data_type'])
                 sensor_id = int(item['sensor_id'])
                 timestamp = dateutil.parser.parse(item['timestamp'])
                 value = float(item['value'])
                 data = DataStory(timestamp=timestamp, project_id=project_id, data_type=data_type, sensor_id=sensor_id, value=value)
                 db.session.add(data)
-                print(data)
+                # print(data)
             
-            db.session.commit()
+            # db.session.commit()
             # print(request.get_json())
-            return 'got some data!'
+            project_str = 'new project' if project_id == new_id else 'project'
+            return 'loaded ' + str(len(content)) + ' values to a ' + project_str + ' with id ' + str(project_id)
         else:
             return 'something went wrong :('
+    if request.args.get('next_id'):
+        return str(new_id)
     if request.method == 'GET':
         return render_template('load_csv.html', title='Load CSV File', bgcolor='black')
 
@@ -241,8 +246,6 @@ def get_new_data():
 # Crop some values from an existing project in the database into a new project
 @app.route('/crop-project', methods=['POST'])
 def crop_project():
-    pmd = ProjectMetaData.query.all()
-    new_id = pmd[len(pmd)-1].id+1
     project_name = request.form.get('name')
     if(project_name is None or project_name == ""):
         project_name = 'Project ' + str(new_id)

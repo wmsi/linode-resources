@@ -275,11 +275,20 @@ $('#submit').click(function() {
     // var results = Papa.parse()
 });
 
+$('#clear').click(function() {
+    raw_data = [];
+    renderTable();
+    $('#data-types').html('Rename Data Types?');
+    $('#meta-form').hide();
+});
+
 $('#upload').click(function() {
-    $.map(raw_data, function(item, index) {
-        item.timestamp = item.timestamp.format();
-    });
-    $.ajax("{{ url_for('load_csv') }}", {
+    if(moment.isMoment(raw_data[0].timestamp)) {
+        $.map(raw_data, function(item, index) {
+            item.timestamp = item.timestamp.format();
+        });
+    }
+    $.ajax(POST_DATA_URL, {
         dataType: 'text',
         data: JSON.stringify(raw_data),
         contentType: 'application/json',
@@ -311,7 +320,7 @@ function buildConfig() {
     };
 }
 
-function completeFn(results) {
+function completeFn(results, next_id) {
     // var end = now();
     var data_types = [];
     if($('#no_nan').prop('checked')) {
@@ -333,6 +342,8 @@ function completeFn(results) {
         if (results.data && results.data.length > 0)
             rowCount = results.data.length;
     }
+    if(raw_data[0].project_id == undefined)
+        _getNextID();
 
     console.log("Parse complete");
     console.log("    Results:", results);
@@ -364,9 +375,9 @@ function _deleteNan(results) {
     });
 }
 
-function _parseEv3(results) {
+function _parseEv3(results, next_id) {
     var data_types = [];
-    var project_id = prompt("Please choose a Project ID for this data set","0");
+    var project_id = next_id;//prompt("Please choose a Project ID for this data set","0");
     var sensor_id = 0; // if we start using this field we can prompt("Please choose a Sensor ID for this data set","1");
     var format = '';
     if($('#exp_time').prop('checked')) {
@@ -388,6 +399,8 @@ function _parseEv3(results) {
             // delete item;
         });
     }
+
+    // $('#project-id').attr('placeholder', next_id + ' (New Project)');
     return data_types;
 }
 
@@ -409,6 +422,14 @@ function _parseDDS(results) {
         // delete item;
     });
     return data_types;
+}
+
+function _getNextID() {
+    $.get(GET_ID_URL, function(next_id, textStatus) {
+        console.log('next id: ' + next_id);
+        $('#project-id').attr('placeholder', next_id + ' (New Project)');
+        return next_id;
+    });
 }
 
 // function errorFn(results) {
