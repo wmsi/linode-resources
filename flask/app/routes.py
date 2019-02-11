@@ -200,7 +200,7 @@ def load_csv():
                 db.session.add(data)
                 # print(data)
             
-            # db.session.commit()
+            db.session.commit()
             # print(request.get_json())
             project_str = 'new project' if project_id == new_id else 'project'
             return 'loaded ' + str(len(content)) + ' values to a ' + project_str + ' with id ' + str(project_id)

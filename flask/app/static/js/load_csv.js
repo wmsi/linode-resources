@@ -47,10 +47,11 @@ function renderTable(set_dates=false) {
     $('#table-content').html(
         $.map(render_data, function(item, index) {
             if($('#exp_time').prop('checked')) {
-                time = item.timestamp.format('x')/1000;
-            } else {
+                time = item.timestamp;//.format('x')/1000;
+            } else if(moment.isMoment(item.timestamp)) {
                 time = item.timestamp.format('MMMM Do YYYY, h:mm:ss a');
-            }
+            } else
+                time = item.timestamp;
             return '<tr><td>' + item.project_id + '</td><td>' + time + '</td><td>' + item.value + '</td><td>' + item.data_type + '</td></tr>';
         }).join());
 
@@ -146,8 +147,8 @@ function _showMetaForm(data_types) {
     if(raw_data[0].timestamp == 0) {
         // if timestamps start at 0 find a start time such that the last sample was just taken
         var end_time = raw_data[raw_data.length -1].timestamp;
-        $('#start-date').val(moment().subtract(end_time.format('X'), 'seconds').format('YYYY-MM-DD'));
-        $('#start-time').val(moment().subtract(end_time.format('X'), 'seconds').format('HH:mm'));
+        $('#start-date').val(moment().subtract(end_time, 'seconds').format('YYYY-MM-DD'));
+        $('#start-time').val(moment().subtract(end_time, 'seconds').format('HH:mm'));
     } else {
         $('#start-date').val(raw_data[0].timestamp.format('YYYY-MM-DD'));   
         $('#start-time').val(raw_data[0].timestamp.format('HH:mm'));    
@@ -164,7 +165,7 @@ function _showMetaForm(data_types) {
     var path_parts = $('#file-select').val().split('\\');
     var file_name = path_parts[path_parts.length-1];
 
-    $('#project-name').val(file_name.split('.')[0]);
+    // $('#project-name').val(file_name.split('.')[0]);
 
     $('#meta-form').show();
 }
@@ -193,39 +194,9 @@ function changeTypes() {
 }
 
 /* 
-    Configure the datarangepicker object using start_date and end_date
-    This variables can be set manually or by calling autoSetDates()
-    date range picker config from www.daterangepicker.com 
+    JQuery event handlers below
+    Most deal with button clicks and input changes
 */
-$(function() {
-    var start = moment().subtract(29, 'days'); //start_date; 
-    var end = moment(); // end_date;
-
-    function cb(start, end) {
-        $('#datepicker span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-        // console.log("A new date range was chosen: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-        // filterDate(start, end);
-        start_date = start;
-        end_date = end;
-        renderTable();
-    }
-
-    $('#datepicker').daterangepicker({
-        startDate: start,
-        endDate: end,
-        ranges: {
-           'Today': [moment(), moment()],
-           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-           'This Month': [moment().startOf('month'), moment().endOf('month')],
-           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        }
-    }, cb);
-
-    cb(start, end);
-});
-
 $('#ev3_data').click(function() {
     if(!$('#exp_time').prop('checked') && $(this).prop('checked')) 
         $('#exp_time').click();
@@ -237,6 +208,20 @@ $('#exp_time').click(function() {
     } else {
         $('#time').html("Timestamp");
     }
+});
+
+$('#set-id').click(function() {
+    var new_id = $('#project-id').val();
+    if(new_id == "") {
+        alert('Please input a Project ID to set');
+        return;
+    } else
+        new_id = parseInt(new_id);
+
+    $.map(raw_data, function(item) {
+        item.project_id = new_id;
+    });
+    renderTable();
 });
 
 /* Parse .csv files using PapaParse
@@ -283,10 +268,19 @@ $('#clear').click(function() {
 });
 
 $('#upload').click(function() {
+    var start_moment = moment($('#start-date').val() + ' ' + $('#start-time').val());
+
     if(moment.isMoment(raw_data[0].timestamp)) {
         $.map(raw_data, function(item, index) {
             item.timestamp = item.timestamp.format();
         });
+    } else if($('#exp_time').prop('checked')) {
+        $.map(raw_data, function(item, index) {
+            item.timestamp = moment(parseInt(start_moment.format('X')) + item.timestamp, 'X').format();
+            // item.timestamp.add(item.timestamp,'seconds').format();
+        });
+        $('#exp_time').click();
+        renderTable();
     }
     $.ajax(POST_DATA_URL, {
         dataType: 'text',
@@ -302,6 +296,10 @@ $('#upload').click(function() {
         }
     });
 });
+
+/*
+    Data upload helper functions
+*/
 
 function buildConfig() {
     return {
@@ -344,6 +342,8 @@ function completeFn(results, next_id) {
     }
     if(raw_data[0].project_id == undefined)
         _getNextID();
+    else
+        $('#project-id').attr('placeholder', raw_data[0].project_id);
 
     console.log("Parse complete");
     console.log("    Results:", results);
@@ -390,7 +390,7 @@ function _parseEv3(results, next_id) {
             data_types.push(type);
         $.map(results.data, function(item, index) {
             var temp = {};
-            temp.timestamp = moment(item["Time"], format);
+            temp.timestamp = parseInt(item["Time"]);//moment(item["Time"], format);
             temp.value = item[type];
             temp.data_type = type;
             temp.project_id = project_id;
@@ -400,7 +400,6 @@ function _parseEv3(results, next_id) {
         });
     }
 
-    // $('#project-id').attr('placeholder', next_id + ' (New Project)');
     return data_types;
 }
 

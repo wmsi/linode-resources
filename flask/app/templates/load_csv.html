@@ -46,15 +46,16 @@
             </div>
             <br><br>
             <div class="row" style="display: none" id="meta-form">
-                <div class="col-md-5">
-                    <span>Project Name: <input type="text" id="project-name" style="width: 70%" /></span>
-                    <span>Project ID: <input type="text" id="project-id" style="width: 70%" /></span>
-
-                    <button type="button" id="upload" class="form-control form-control-lg">Upload Data to Server</button>
-                </div>
                 <div class="col-md-3">
+                    <!-- <span>Project Name: <input type="text" id="project-name" style="width: 70%" /></span> -->
+                    <span>Project ID: <input type="text" id="project-id" style="width: 70%" /></span>
+                    <button type="button" id="set-id" class="form-control form-control-lg">Set Project ID</button>
+                </div>
+                <div class="col-md-4">
                     Initial Date: <input class="time-range" type="date" id="start-date" /><br />
-                    Initial Time: <input class="time-range" type="time" id="start-time" />
+                    Initial Time: <input class="time-range" type="time" id="start-time" /><br />
+                    <small>Only applies to timestamps using 'seconds'</small><br /><br />
+                    <button type="button" id="upload" class="form-control form-control-lg">Upload Data to Server</button>
                 </div>
                 <div class="col-md-4">
                     <div id="data-types">Rename Data Type(s)?</div>
