@@ -461,7 +461,8 @@
                 // filterDate(start, end);
                 start_date = start;
                 end_date = end;
-                renderTable();
+                if(start_date < end_date)
+                    renderTable();
             }
 
             $('#datepicker').daterangepicker({
