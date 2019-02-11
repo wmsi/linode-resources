@@ -246,6 +246,8 @@ def get_new_data():
 # Crop some values from an existing project in the database into a new project
 @app.route('/crop-project', methods=['POST'])
 def crop_project():
+    pmd = ProjectMetaData.query.all()
+    new_id = pmd[len(pmd)-1].id+1
     project_name = request.form.get('name')
     if(project_name is None or project_name == ""):
         project_name = 'Project ' + str(new_id)
