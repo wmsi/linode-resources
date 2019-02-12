@@ -288,8 +288,8 @@ def scratchx():
     if request.method == 'GET':
         # project_id = request.args.get('project_id')
         # data_type = request.args.get('data_type')
-
         # add support for project meta data
+
         if(request.args.get('pmd')):
             # sample_pmd = '{"name": "test", "id": 0, "description": "example project", "miscellaneous": "", "data_sets": {"tempF": [69.0], "tempC": [22.0, 30.0]}}'
             # return sample_pmd
@@ -425,6 +425,7 @@ def get_meta_data(project_id, data=True):
             if datum.data_type not in project['data_sets']:
                 project['data_sets'][datum.data_type] = []
             project['data_sets'][datum.data_type].append(datum.value)
+    app.logger.warning('returning project ' + project_id + ' with data= ' + str(data) + ' and len ' + str(len(data)))
     json_data = json.dumps(project)
     return json_data
 
