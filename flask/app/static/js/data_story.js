@@ -53,11 +53,12 @@
             if($('#project_name').val() == "")
                 raw_data=[];
             else {
+                $('#load-div').show();
                 var project_id=parseInt($('#project_name').val().split()[0]);
                 var query = GET_DATA_URL + "?project_id=" + project_id;
                 $.get(query, function(data, textStatus) {
                     data = JSON.parse(data);
-                    console.log('got new values ' + JSON.stringify(data));
+                    console.log('got ' + data.length + ' new values ');
                     raw_data.length=0;
                     $.map(data, function(item) {
                         raw_data.unshift({
@@ -71,6 +72,7 @@
                     });
                     if(raw_data.length > 0)
                         renderTable(true);
+                    $('#load-div').hide();
                 });
             }
         }
@@ -145,6 +147,8 @@
 
             $('#table-content').html(
                 $.map(render_data, function(item, index) {
+                    if(index >= 100)
+                        return false;
                     return '<tr><td>' + item.project_id + '</td><td>' + item.timestamp.format('MMMM Do YYYY, h:mm:ss a') + '</td><td>' + item.value + '</td><td>' + item.data_type + '</td></tr>';
                 }).join());
             if(render_data.length > 0)
@@ -457,10 +461,6 @@
             var default_option = document.getElementById(id).options[0];
             $('#' + id + ' option').remove();
             $('#' + id).append(default_option);
-            // var select_options = document.getElementById(id);
-            // for(var i=1; i<select_options.options.length; i++) {
-            //     select_options.remove(i);
-            // }
         }
         
         /*

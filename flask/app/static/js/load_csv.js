@@ -274,7 +274,7 @@ $('#clear').click(function() {
 $('#upload').click(function() {
     var start_moment = moment($('#start-date').val() + ' ' + $('#start-time').val());
     // start_parse = moment();
-    $('#load-div').show()
+    $('#load-div').show();
 
     if(moment.isMoment(raw_data[0].timestamp)) {
         $.map(raw_data, function(item, index) {

@@ -212,8 +212,13 @@ def load_csv():
                 data = DataStory(timestamp=timestamp, project_id=project_id, data_type=data_type, sensor_id=sensor_id, value=value)
                 db.session.add(data)
                 # print(data)
-            
             db.session.commit()
+
+            pmd = ProjectMetaData.query.filter_by(id=project_id).all()
+            if(len(pmd) == 0):
+                pmd = ProjectMetaData(id=project_id, project_name=('Project ' + str(project_id)))
+                db.session.add(pmd)
+                db.session.commit()
             # print(request.get_json())
             project_str = 'new project' if project_id == new_id else 'project'
             return 'loaded ' + str(len(content)) + ' values to a ' + project_str + ' with id ' + str(project_id)
