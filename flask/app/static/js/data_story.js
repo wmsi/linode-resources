@@ -151,6 +151,11 @@
                         return false;
                     return '<tr><td>' + item.project_id + '</td><td>' + item.timestamp.format('MMMM Do YYYY, h:mm:ss a') + '</td><td>' + item.value + '</td><td>' + item.data_type + '</td></tr>';
                 }).join());
+
+            var num_items = raw_data.length > 100 ? 100 : raw_data.length;
+            var num_items_string = raw_data.length == 0 ? '' : ('Showing ' + num_items + ' of ' + raw_data.length + ' values');
+            $('#num-items').html(num_items_string);
+            
             if(render_data.length > 0)
                 renderChart(render_data);
         }
