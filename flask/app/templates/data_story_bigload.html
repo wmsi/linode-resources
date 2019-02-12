@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <!-- <label>Select your Project ID</label> -->
-                    <select class="form-control form-control-lg" id="project_name" onchange="getProject()"><!--renderTable(true)" -->
+                    <select class="form-control form-control-lg" id="project_name" onchange="renderTable(true)">
                         <option value="">Select Project</option>
                     </select>
                 </div>
@@ -202,14 +202,25 @@
     <script src="{{ url_for('static', filename='js/render_chart.js') }}"></script>
     <script src="{{ url_for('static', filename='js/data_story.js') }}"></script>
     <script type="text/javascript">
-        const GET_DATA_URL = "{{ url_for('data_story') }}";
+        {% for data in datastory %}
+            // create a temp timestamp to adjust for timezone
+            // timestamp_temp = moment("{{ data.timestamp }}");
+            raw_data.unshift({
+                "project_id":{{ data.project_id }}, 
+                "sensor_id":{{ data.sensor_id }},
+                // "timestamp":moment("{{ data.timestamp }}"),
+                "timestamp": _formatTimestamp(moment("{{ data.timestamp }}")), // timestamp_temp.add(timestamp_temp.utcOffset(), 'minutes')
+                "value":{{ data.value }},
+                "data_type":"{{ data.data_type }}"
+            });
+        {% endfor %}
         {% for project in project_names %}
             project_names.push({ "id": {{ project.id }},
                 "name": "{{ project.name }}" 
             });
         {% endfor %}
 
-        window.onload = renderSelects('', false);
+        window.onload = renderSelects();
         // project_names = {{ project_names }};
     </script>
 {% endblock %}

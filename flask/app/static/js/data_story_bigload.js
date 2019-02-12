@@ -49,37 +49,11 @@
             );
         }
 
-        function getProject() {
-            if($('#project_name').val() == "")
-                raw_data=[];
-            else {
-                var project_id=parseInt($('#project_name').val().split()[0]);
-                var query = GET_DATA_URL + "?project_id=" + project_id;
-                $.get(query, function(data, textStatus) {
-                    data = JSON.parse(data);
-                    console.log('got new values ' + JSON.stringify(data));
-                    raw_data.length=0;
-                    $.map(data, function(item) {
-                        raw_data.unshift({
-                            "project_id": item.project_id, 
-                            "sensor_id": item.sensor_id,
-                            // "timestamp":moment("{{ data.timestamp }}"),
-                            "timestamp": _formatTimestamp(moment(item.timestamp)), // timestamp_temp.add(timestamp_temp.utcOffset(), 'minutes')
-                            "value": item.value,
-                            "data_type": item.data_type
-                        });
-                    });
-                    if(raw_data.length > 0)
-                        renderTable(true);
-                });
-            }
-        }
-
         /*
             This function gets called with window.onload and populates the dropdowns
             with options. Consider calling this whenever new data is added to the database.
         */
-        function renderSelects(prefix='', data=false) {
+        function renderSelects(prefix='') {
             // var id_options = $.unique(raw_data.map(function (d) {return d.project_id}));
             // var id_options = [];
             // var project_names = _getProjectNames();
@@ -94,16 +68,14 @@
                     return '<option value="' + item.id + '">' + item.id + ", " + item.name + '</option>';
                 }).join());
 
-            if(data) {
-                var value = $('#' + prefix + 'data_type').val()
-                var data_types = $.unique(raw_data.map(function (d) {return d.data_type}));
-                _resetOptions(prefix + 'data_type');
-                $('#' + prefix + 'data_type').append(
-                    $.map(data_types, function(item, index) {
-                        return '<option value="' + item + '">' + item + '</option>';
-                    }).join());    
-                if(data_types.includes(value)) $('#' + prefix + 'data_type').val(value);     
-            }
+            var value = $('#' + prefix + 'data_type').val()
+            var data_types = $.unique(raw_data.map(function (d) {return d.data_type}));
+            _resetOptions(prefix + 'data_type');
+            $('#' + prefix + 'data_type').append(
+                $.map(data_types, function(item, index) {
+                    return '<option value="' + item + '">' + item + '</option>';
+                }).join());    
+            if(data_types.includes(value)) $('#' + prefix + 'data_type').val(value);     
         }
 
 
@@ -147,8 +119,8 @@
                 $.map(render_data, function(item, index) {
                     return '<tr><td>' + item.project_id + '</td><td>' + item.timestamp.format('MMMM Do YYYY, h:mm:ss a') + '</td><td>' + item.value + '</td><td>' + item.data_type + '</td></tr>';
                 }).join());
-            if(render_data.length > 0)
-                renderChart(render_data);
+
+            renderChart(render_data);
         }
 
         /*
@@ -411,16 +383,12 @@
             Find the earliest timestamp in a data set.
         */
         function _getFirstDate(data_array) {
-            var first_date;
-            if(data_array.length > 0) {
-                first_date = moment(data_array[0].timestamp);
-                for(i=1; i<data_array.length; i++) {
-                    if(moment(data_array[i].timestamp).isBefore(first_date)) {
-                        first_date = moment(data_array[i].timestamp);
-                    }
+            var first_date = moment(data_array[0].timestamp);
+            for(i=1; i<data_array.length; i++) {
+                if(moment(data_array[i].timestamp).isBefore(first_date)) {
+                    first_date = moment(data_array[i].timestamp);
                 }
-            } else
-                first_date = moment().subtract(14, 'days');
+            }
             return first_date;
         }
 
@@ -429,16 +397,12 @@
             Find the last timestamp in a data set.
         */
         function _getLastDate(data_array) {
-            var last_date;
-            if(data_array.length > 0) {
-                last_date = moment(data_array[0].timestamp);
-                for(i=1; i<data_array.length; i++) {
-                    if(moment(data_array[i].timestamp).isAfter(last_date)) {
-                        last_date = moment(data_array[i].timestamp);
-                    }
+            var last_date = moment(data_array[0].timestamp);
+            for(i=1; i<data_array.length; i++) {
+                if(moment(data_array[i].timestamp).isAfter(last_date)) {
+                    last_date = moment(data_array[i].timestamp);
                 }
-            } else
-                last_date = moment();
+            }
             return last_date;
         }
 
@@ -497,7 +461,7 @@
                 // filterDate(start, end);
                 start_date = start;
                 end_date = end;
-                if(start_date < end_date && raw_data.length > 0)
+                if(start_date < end_date)
                     renderTable();
             }
 

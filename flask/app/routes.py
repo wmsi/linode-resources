@@ -169,8 +169,21 @@ def data_story():
         db.session.commit()
         return str('project ' + project_id + ' has been archived. To revive this project contact a system administrator')
 
-    datastory = DataStory.query.filter(DataStory.archived!=True).all()
-    return render_template('data_story.html', title='Digital Data Stories', datastory=datastory, project_names=get_project_names(), bgcolor='black')
+    if request.args.get('project_id'):
+        project_id = request.args.get('project_id', type=int)
+        ds = DataStory.query.filter(DataStory.archived!=True, DataStory.project_id==project_id).all()
+        project = []
+        for d in ds:
+            data = {}
+            data['project_id']=project_id
+            data['data_type']=d.data_type
+            data['timestamp']=str(d.timestamp)
+            data['value']=d.value
+            project.append(data)
+
+        return json.dumps(project)
+    # datastory = DataStory.query.filter(DataStory.archived!=True).all()
+    return render_template('data_story.html', title='Digital Data Stories', project_names=get_project_names(), bgcolor='black')
 
 # Serve static project pages for the public to access, 
 # without as many headers or options for editing data
