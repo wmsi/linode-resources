@@ -510,10 +510,11 @@ def get_project_names():
     pmd = ProjectMetaData.query.all()
     project_names = []
     for project in pmd:
-        info = {}
-        info['id'] = project.id
-        info['name'] = project.project_name
-        project_names.append(info)
+        if(len(DataStory.query.filter_by(project_id=project.id).all()) > 0):
+            info = {}
+            info['id'] = project.id
+            info['name'] = project.project_name
+            project_names.append(info)
     # project_names = json.dumps(project_names)
     # app.logger.warning('returning project names: ' + str(project_names))
     return project_names
