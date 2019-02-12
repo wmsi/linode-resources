@@ -425,7 +425,7 @@ def get_meta_data(project_id, data=True):
             if datum.data_type not in project['data_sets']:
                 project['data_sets'][datum.data_type] = []
             project['data_sets'][datum.data_type].append(datum.value)
-    app.logger.warning('returning project ' + project_id + ' with data= ' + str(data) + ' and len ' + str(len(data)))
+    app.logger.warning('returning project ' + project_id + ' with data= ' + str(data) + ' and len ' + str(len(data_set)))
     json_data = json.dumps(project)
     return json_data
 
