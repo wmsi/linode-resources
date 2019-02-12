@@ -24,7 +24,7 @@
                     <input type="file" id="file-select" class="form-control form-control-lg" multiple>
                 </div>
                 <div class="col-md-3">
-                    <button id="submit" class="form-control form-control-lg">Parse Into Table</button>   
+                    <button id="parse" class="form-control form-control-lg">Parse Into Table</button>   
                 </div>
                 <div class="col-md-3">
                     <!-- Upload data to server -->
@@ -85,6 +85,11 @@
                         </div>
                     </div>
                 </form>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="load-div" style="display: none">
+                    <div id="loader"></div>
+                </div>
             </div>
         </div>
     </div>

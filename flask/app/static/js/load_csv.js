@@ -228,8 +228,12 @@ $('#set-id').click(function() {
     Import a local file, check its contents, and add them to raw_data
     Full doc at: https://www.papaparse.com/docs
 */
-$('#submit').click(function() {
+var start_parse;
+$('#parse').click(function() {
     var config = buildConfig();
+    // start_parse = moment();
+    $('#load-div').show();
+
     if (!$('#file-select')[0].files.length)
     {
         alert("Please choose at least one file to parse.");
@@ -269,6 +273,8 @@ $('#clear').click(function() {
 
 $('#upload').click(function() {
     var start_moment = moment($('#start-date').val() + ' ' + $('#start-time').val());
+    // start_parse = moment();
+    $('#load-div').show()
 
     if(moment.isMoment(raw_data[0].timestamp)) {
         $.map(raw_data, function(item, index) {
@@ -290,9 +296,12 @@ $('#upload').click(function() {
         processData: false,
         success: function( data, textStatus, jQxhr ){
             alert(data);
+            // var duration = moment.duration(moment().diff(start_parse)).asSeconds();
+            $('#load-div').hide();
         },
         error: function( jqXhr, textStatus, errorThrown ){
             console.log( errorThrown );
+            $('#load-div').hide();
         }
     });
 });
@@ -352,6 +361,9 @@ function completeFn(results, next_id) {
 
     var set_dates = !$('#exp_time').prop('checked');
     renderTable(set_dates);
+
+    $('#load-div').hide()
+    // var duration = moment.duration(moment().diff(start_parse)).asSeconds();
 }
 
 function _deleteNan(results) {
