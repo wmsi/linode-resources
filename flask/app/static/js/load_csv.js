@@ -42,7 +42,7 @@ function renderSelects() {
 function renderTable(set_dates=false) {
     var timestamp;
 
-    render_data = filterData(set_dates);
+    render_data = raw_data;//filterData(set_dates);
 
     $('#table-content').html(
         $.map(render_data, function(item, index) {
@@ -55,11 +55,10 @@ function renderTable(set_dates=false) {
             return '<tr><td>' + item.project_id + '</td><td>' + time + '</td><td>' + item.value + '</td><td>' + item.data_type + '</td></tr>';
         }).join());
 
-    // var sensor_options = $.unique(render_data.map(function (d) {return d.sensor_id}));
-    // $('#sensor_id').append(
-    //     $.map(type_options, function(item, index) {
-    //         return '<input type="checkbox" value="Sensor ' + item + '"><label>Sensor ' + item + '</label><br>';
-    //     }).join()); 
+    var num_items = raw_data.length;// > 100 ? 100 : raw_data.length;
+    var num_items_string = raw_data.length == 0 ? '' : ('Showing ' + num_items + ' of ' + raw_data.length + ' values');
+    $('#num-items').html(num_items_string);
+
     console.log("done rendering table");
 }
 
