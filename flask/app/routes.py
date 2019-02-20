@@ -171,8 +171,8 @@ def data_story():
 
     if request.args.get('project_id'):
         project_id = request.args.get('project_id', type=int)
-        ds = DataStory.query.filter(DataStory.archived!=True, DataStory.project_id==project_id).all()
         project = []
+        ds = DataStory.query.filter(DataStory.archived!=True, DataStory.project_id==project_id).all()
         for d in ds:
             data = {}
             data['project_id']=project_id
@@ -190,7 +190,7 @@ def data_story():
 @app.route('/project/<int:project_id>')
 def static_project(project_id):
     project_data = DataStory.query.filter_by(project_id=project_id).all()
-    app.logger.warning('renering project with ' + str(len(project_data)) + ' data points')
+    app.logger.warning('rendering project with ' + str(len(project_data)) + ' data points')
     if len(project_data) == 0:
         return render_template('page_not_found.html')
     return render_template('static_project.html', title='Project Page', datastory=project_data, bgcolor='black', project_id=project_id)
@@ -437,13 +437,13 @@ def get_meta_data(project_id, data=True):
     project['id'] = pmd.id
     project['description'] = pmd.description
     project['miscellaneous'] = pmd.miscellaneous
-    project['data_sets'] = {}
-    if data:
+    if data != 'false':
+        project['data_sets'] = {}
         for datum in data_set:
             if datum.data_type not in project['data_sets']:
                 project['data_sets'][datum.data_type] = []
             project['data_sets'][datum.data_type].append(datum.value)
-    app.logger.warning('returning project ' + project_id + ' with data= ' + str(data) + ' and len ' + str(len(data_set)))
+    app.logger.warning('returning project ' + project_id + ' with data=' + str(data) + ' and len ' + str(len(data_set)))
     json_data = json.dumps(project)
     return json_data
 

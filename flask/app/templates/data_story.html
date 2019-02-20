@@ -88,7 +88,7 @@
                     </select>
                     <p>
                         <!-- <input type="text" class="form-control popup-btn" id="project_name" placeholder="Project Name" maxlength="64" /> -->
-                        <textarea class="form-control popup-btn" id="edit_project_name" rows="1" columns="50" maxlength="64" placeholder="Project Name"></textarea>
+                        <textarea class="form-control popup-btn" id="edit_project_name" rows="1" columns="50" maxlength="64" placeholder="New Project Name"></textarea>
                     </p>
                     <p>
                         <textarea class="form-control popup-btn" id="project_description" rows="5" columns="50" maxlength="500" placeholder="Project Description"></textarea>
@@ -209,8 +209,10 @@
     <script src="{{ url_for('static', filename='js/data_story.js') }}"></script>
     <script type="text/javascript">
         const GET_DATA_URL = "{{ url_for('data_story') }}";
+        const GET_METADATA_URL = "{{ url_for('scratchx') }}";
         {% for project in project_names %}
-            project_names.push({ "id": {{ project.id }},
+            project_names.push({ 
+                "id": {{ project.id }},
                 "name": "{{ project.name }}" 
             });
         {% endfor %}

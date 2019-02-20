@@ -5,7 +5,7 @@
             them in start_date and end_date. These variables will continue to be updated as new 
             data is fetched from the server.
         */
-        const URL_STRING = 'https://wmsinh.org/scratchx';
+        // const URL_STRING = 'https://wmsinh.org/scratchx';
         var raw_data = [];
         var project_names = [];
         // var timestamp_temp;
@@ -82,6 +82,7 @@
             with options. Consider calling this whenever new data is added to the database.
         */
         function renderSelects(prefix='', data=false) {
+            // console.log('renderSelects called for form ' + prefix);
             // var id_options = $.unique(raw_data.map(function (d) {return d.project_id}));
             // var id_options = [];
             // var project_names = _getProjectNames();
@@ -205,7 +206,7 @@
             Toggle the Archive Project form between hidden and visible
         */
         function openForm(form_name) {
-            // renderSelects('archive_');
+            // renderSelects(form_name + '_');
             var show_form = document.getElementById(form_name);
             if(show_form.style.display == "block") {
                 show_form.style.display = "none";
@@ -219,11 +220,12 @@
                 }
                 _fillCropFields();
             } else {
-                _resetOptions(form_name + '_project_name');
-                $("#" + form_name + "_project_name").append(
-                    $.map(project_names, function(item, index) {
-                        return '<option value="' + item + '">' + item + '</option>';
-                    }).join());
+                // _resetOptions(form_name + '_project_name');
+                renderSelects(form_name + '_');
+                // $("#" + form_name + "_project_name").append(
+                //     $.map(project_names, function(item, index) {
+                //         return '<option value="' + item + '">' + item + '</option>';
+                //     }).join());
             }
             show_form.style.display = "block";
         }
@@ -264,11 +266,11 @@
         }
 
         function getMetaData() {
-            var project_id = $('#' + prefix + 'project_name').val().split(",")[0];
+            var project_id = $('#metadataForm_project_name').val().split(",")[0];
             if(project_id == -1) {
                 return;
             }
-            var query_string = URL_STRING + '?project_id=' + String(project_id) + '&pmd=true&data=false';
+            var query_string = GET_METADATA_URL + '?project_id=' + String(project_id) + '&pmd=true&data=false';
 
             $.ajax({
                 url: query_string,
@@ -290,7 +292,7 @@
         */
         function editMetadata() {
             var edit_data = new FormData();
-            var project_id = $('#metadataForm_project_id').val();
+            var project_id = $('#metadataForm_project_name').val().split(",")[0];
             if(project_id == '') {
                 alert('Please select a project to edit');
                 return;
@@ -306,7 +308,7 @@
             edit_data.append('pmd', true);
 
             $.ajax({
-                url: URL_STRING,
+                url: GET_METADATA_URL,
                 data: edit_data,
                 processData: false,
                 contentType: false,
@@ -401,7 +403,7 @@
             Get a list of all project names from the database
         */
         function _getProjectNames() {
-            var query_string = URL_STRING + '?project_names=true';
+            var query_string = GET_METADATA_URL + '?project_names=true';
 
             $.ajax({
                 url: query_string,
