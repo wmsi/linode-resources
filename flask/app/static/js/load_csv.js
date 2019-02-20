@@ -272,6 +272,8 @@ $('#clear').click(function() {
 
 $('#upload').click(function() {
     var start_moment = moment($('#start-date').val() + ' ' + $('#start-time').val());
+    // var name = $('#project-name').val();
+    // var query = "";
     // start_parse = moment();
     $('#load-div').show();
 
@@ -287,6 +289,9 @@ $('#upload').click(function() {
         $('#exp_time').click();
         renderTable();
     }
+    // if(name != "")
+    //     query = query.concat('?name="', name, '"');
+
     $.ajax(POST_DATA_URL, {
         dataType: 'text',
         data: JSON.stringify(raw_data),
