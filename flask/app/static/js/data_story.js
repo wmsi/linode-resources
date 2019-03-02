@@ -157,7 +157,7 @@
             var num_items_string = raw_data.length == 0 ? '' : ('Showing ' + num_items + ' of ' + raw_data.length + ' values');
             $('#num-items').html(num_items_string);
             
-            if(render_data.length > 0)
+            if(render_data.length > 0 && $('#chart-container').css('display') != 'none')
                 renderChart(render_data);
         }
 
@@ -363,8 +363,6 @@
             Show or hide the chart based on user input
         */
         function showChart() {
-            // console.log('setting view to ' + $('#show-chart').is(":checked"));
-            // if($('#show-chart').is(":checked")) {
             if($('#chart-container').css('display') == 'none') {
                 $('#chart-container').show();
                 $('#show-chart').html('Hide Chart');
@@ -373,7 +371,7 @@
                 $('#chart-container').hide();
                 $('#show-chart').html('Show Chart');
             }
-            console.log('setting view to ' + $('#chart-container').css("display"));
+            // console.log('setting view to ' + $('#chart-container').css("display"));
         }
 
         /* 
@@ -385,7 +383,9 @@
 
             $('#chart-container').css('width', width + 'vw');
             $('#chart-container').css('height', height + 'vh');
-            renderChart();
+            if(!renderChart(render_data)) {
+                showChart();
+            }
         }
 
         /*

@@ -23,11 +23,16 @@ function renderChart(render_data) {
     //     ctx.fillText(" to render a chart",10,90);
     //     return;
     // }
+    if(!render_data || render_data.length == 0) {
+        alert('Please select some data to view the chart');
+        return false;
+    }
     if(!singleType(render_data)) {
-        ctx.font = "18px Roboto";
-        ctx.fillText("Please select a single Data Type",10,50);
-        ctx.fillText(" to render a chart",10,90);
-        return;
+        alert('Please select a single data type to view the chart');
+        // ctx.font = "18px Roboto";
+        // ctx.fillText("Please select a single Data Type",10,50);
+        // ctx.fillText(" to render a chart",10,90);
+        return false;
     }
 
     // add data type error handling here
@@ -105,9 +110,11 @@ function renderChart(render_data) {
     } else {
         myChart = new Chart(ctx, options);
     }
+    return true;
 }
 
 function singleType(data) {
+    console.log('single type called with data length ' + data.length);
     var type = data[0].data_type;
     for(var i in data) {
         if(data[i].data_type != type) {
