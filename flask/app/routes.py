@@ -286,11 +286,13 @@ def crop_project():
     return 'created cropped project with id ' + str(new_id) + ' and name ' + project_name
 
 # Handle all HTTP requests from Scratch.
-# As of now the only working blocks exist as a ScratchX extension]
+# These blocks exist as part of the WMSI DBBlocks extensions for scratch3
+# available on our scratch-vm fork at:
+# https://github.com/wmsi/scratch-vm/tree/develop/src/extensions/scratch3_db_blocks
 # These blocks allow users to push new data to the database and
 # retrieve a list of all data that meet certain attributes (specified
 # in Scratch)
-@app.route('/scratchx', methods=['POST','GET'])
+@app.route('/scratch', methods=['POST','GET'])
 def scratchx():
     if request.method == 'POST':
     # add some validation/ security screening here

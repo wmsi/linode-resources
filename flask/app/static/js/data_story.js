@@ -5,7 +5,7 @@
             them in start_date and end_date. These variables will continue to be updated as new 
             data is fetched from the server.
         */
-        // const URL_STRING = 'https://wmsinh.org/scratchx';
+        // const URL_STRING = 'https://wmsinh.org/scratch';
         var raw_data = [];
         var project_names = [];
         // var timestamp_temp;

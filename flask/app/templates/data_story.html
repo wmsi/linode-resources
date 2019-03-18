@@ -209,7 +209,7 @@
     <script src="{{ url_for('static', filename='js/render_chart.js') }}"></script>
     <script type="text/javascript">
         const GET_DATA_URL = "{{ url_for('data_story') }}";
-        const GET_METADATA_URL = "{{ url_for('scratchx') }}";
+        const GET_METADATA_URL = "{{ url_for('scratch') }}";
         {% for project in project_names %}
             project_names.push({ 
                 "id": {{ project.id }},
