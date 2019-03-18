@@ -293,7 +293,7 @@ def crop_project():
 # retrieve a list of all data that meet certain attributes (specified
 # in Scratch)
 @app.route('/scratch', methods=['POST','GET'])
-def scratchx():
+def scratch():
     if request.method == 'POST':
     # add some validation/ security screening here
         # project_id = request.form.get('project_id')
