@@ -300,7 +300,7 @@
 
             edit_data.append('project_id', project_id);
             if($("#project_name").val() != "")
-                    edit_data.append('name', $('#project_name').val());
+                    edit_data.append('name', $('#edit_project_name').val());
             if($("#project_description").val() != "")
                     edit_data.append('description', $('#project_description').val());
             if($("#project_miscellaneous").val() != "")
