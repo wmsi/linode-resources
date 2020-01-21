@@ -6,6 +6,7 @@ from flask_login import LoginManager
 from flask_cors import CORS
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
+from airtable import Airtable
 # from flask_socketio import SocketIO, emit
 from config import Config
 from include.credentials import *
@@ -21,7 +22,7 @@ CORS(app)
 login = LoginManager(app)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
-# socketio = SocketIO(app)
+base = Airtable('app2FkHOwb0jN0G8v','Activities', api_key=AIRTABLE_API_KEY)
 
 login.login_view = 'login'
 handler = RotatingFileHandler('error.log', maxBytes=10000, backupCount=1)
@@ -32,5 +33,3 @@ DEFAULT_SUBDOMAIN = "www"
 
 from app import routes
 
-# if __name__ == '__main__':
-#     socketio.run(app)

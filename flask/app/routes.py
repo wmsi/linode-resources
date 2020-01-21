@@ -1,6 +1,6 @@
 #!/usr/bin/python
 from flask import Flask, request, render_template, send_file, redirect, url_for, flash, jsonify, Response
-from app import app, forms, db#, socketio
+from app import app, forms, db, base#, socketio
 from app.models import User, Post, DataStory, ProjectMetaData
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
@@ -16,6 +16,7 @@ from logging.handlers import RotatingFileHandler
 from include.utils import *
 from include.config import *
 from include.school_subdomains import *
+from include.credentials import AIRTABLE_API_KEY
 
 DEFAULT_SUBDOMAIN = "www"
 
@@ -420,6 +421,23 @@ def labview():
 @app.route("/iot/status")
 def status():
     return send_file(IOT_STATUS_FILE, cache_timeout=0.5) # disable caching (mostly)
+
+
+
+####################################### STEM Resource ROUTES #######################################
+# These routes were added starting 1/19/20 to handle secure Airtable API requests for the STEM resource site
+# These may eventually be moved to a different server 
+@app.route("/airtable", methods=['POST','GET'])
+def airtable():
+    if request.method == 'GET':
+        results = []
+        query = request.args.get('query')
+        # print('received query ' + query)
+        for record in base.get_all(formula=query):
+            results.append(record['fields'])
+        # print('returning ' + str(len(results)) + ' results')
+        return json.dumps(results)
+
 
 ### SPECIAL ###
 
