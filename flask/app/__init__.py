@@ -23,6 +23,8 @@ login = LoginManager(app)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 base = Airtable('app2FkHOwb0jN0G8v','Activities', api_key=AIRTABLE_API_KEY)
+base.get_all(view='Grid View', maxRecords=20)
+print('got some records')
 
 login.login_view = 'login'
 handler = RotatingFileHandler('error.log', maxBytes=10000, backupCount=1)
