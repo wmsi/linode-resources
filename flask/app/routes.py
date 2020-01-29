@@ -442,7 +442,7 @@ def airtable():
         record_id = request.form.get('id')
         fields = {'Rating': float(request.form.get('Rating')), 'Votes': int(request.form.get('Votes'))}
         print('updating ', str(record_id), ' with ', json.dumps(fields))
-        return base.update(record_id, fields)
+        return json.dumps(base.update(record_id, fields))
 
 
 
