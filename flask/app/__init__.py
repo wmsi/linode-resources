@@ -28,12 +28,6 @@ login.login_view = 'login'
 handler = RotatingFileHandler('error.log', maxBytes=10000, backupCount=1)
 handler.setLevel(logging.INFO)
 app.logger.addHandler(handler)
-app.logger.info('testing airtable get')
-try:	
-	base.get_all(view='Grid View', maxRecords=20)
-	print('got some records')
-except:
-	print('airtable test failed')
 
 DEFAULT_SUBDOMAIN = "www"
 
