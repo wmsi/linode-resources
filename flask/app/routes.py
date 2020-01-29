@@ -432,7 +432,7 @@ def airtable():
     if request.method == 'GET':
         results = []
         query = request.args.get('query')
-        # print('received query ' + query)
+        print('received query ' + query)
         for record in base.get_all(formula=query):
             results.append(record['fields'])
         # print('returning ' + str(len(results)) + ' results')
