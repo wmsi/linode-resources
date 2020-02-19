@@ -459,7 +459,17 @@ def airtable():
     if request.method == 'POST':
         print('resquest with args ', json.dumps(request.form))
         record_id = request.form.get('id')
-        fields = {'Rating': float(request.form.get('Rating')), 'Votes': int(request.form.get('Votes'))}
+        fields = {}
+        if request.form.get('Rating'):
+            fields = {'Rating': float(request.form.get('Rating')), 'Votes': int(request.form.get('Votes'))}
+        elif request.form.get('Comment'):
+            record = base.get(record_id)
+            if 'Comments' in record['fields']:
+                comments = record['fields']['Comments'] + ', '
+            else:
+                comments = ''
+            comments = comments + request.form.get('Comment')
+            fields = {'Comments': comments}
         print('updating ', str(record_id), ' with ', json.dumps(fields))
         return json.dumps(base.update(record_id, fields))
 
