@@ -457,11 +457,11 @@ def airtable():
                 comments = ''
             comments = comments + request.form.get('Comment')
             fields = {'Comments': comments}
-            
+
         # this may become the new default so we can review comments
         elif request.form.get('New Comment'):
             record = base.get(record_id)
-            if 'Comments' in record['fields']:
+            if 'New Comments' in record['fields']:
                 comments = record['fields']['New Comments'] + ', '
             else:
                 comments = ''
