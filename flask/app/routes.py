@@ -435,24 +435,11 @@ def airtable():
         query = request.args.get('query')
         # DEPRECATED: may eventually be adapted to return all pages one at a time if it helps page render speed
         if request.args.get('page_size'):
-            page_size = request.args.get('page_size')
-            page_num = 0 if request.args.get('page_num') is None else int(request.args.get('page_num'))
-            num_results = 0
-            print('querying base with page size ' + str(page_size) + ', page num ' + str(page_num))
-            base_iter = base.get_iter(formula=query, page_size=page_size)
-            for i, page in enumerate(base_iter):
-                num_results += len(page)
-                if i == page_num:
-                    for record in page:
-                        results.append(record['fields'])
-            resp = jsonify(results)#Response(jsonify(records))
-            resp.headers['num_results']= num_results 
-            resp.headers['Access-Control-Expose-Headers'] = 'num_results'
-            return resp
+            return get_page_resp(request)
         else:            
             for record in base.get_all(formula=query):
                 results.append(record['fields'])
-        # print('returning ' + str(len(results)) + ' results')
+            print('returning ' + str(len(results)) + ' results')
             return json.dumps(results)
         # return json.dumps(base.get_all(formula=query, page_size=page_size))
 
@@ -470,10 +457,35 @@ def airtable():
                 comments = ''
             comments = comments + request.form.get('Comment')
             fields = {'Comments': comments}
+            
+        # this may become the new default so we can review comments
+        elif request.form.get('New Comment'):
+            record = base.get(record_id)
+            if 'Comments' in record['fields']:
+                comments = record['fields']['New Comments'] + ', '
+            else:
+                comments = ''
+            comments = comments + request.form.get('New Comment')
+            fields = {'New Comments': comments}
         print('updating ', str(record_id), ' with ', json.dumps(fields))
         return json.dumps(base.update(record_id, fields))
 
-
+### TODO: add function descriptions ###
+def get_page_resp(request):
+    page_size = request.args.get('page_size')
+    page_num = 0 if request.args.get('page_num') is None else int(request.args.get('page_num'))
+    num_results = 0
+    print('querying base with page size ' + str(page_size) + ', page num ' + str(page_num))
+    base_iter = base.get_iter(formula=query, page_size=page_size)
+    for i, page in enumerate(base_iter):
+        num_results += len(page)
+        if i == page_num:
+            for record in page:
+                results.append(record['fields'])
+    resp = jsonify(results)#Response(jsonify(records))
+    resp.headers['num_results']= num_results 
+    resp.headers['Access-Control-Expose-Headers'] = 'num_results'
+    return resp
 
 ### SPECIAL ###
 
