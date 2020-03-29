@@ -426,66 +426,126 @@ def status():
 
 ####################################### STEM Resource ROUTES #######################################
 # These routes were added starting 1/19/20 to handle secure Airtable API requests for the STEM resource site
-# These may eventually be moved to a different server 
+# These may eventually be transferred to a serverless HTTP Proxy like Gloud Cloud Functions
 @app.route("/airtable", methods=['POST','GET'])
 def airtable():
     if request.method == 'GET':
         results = []
+        fields_to_del = ['Grade Range','Rating','Search Text','Rating','Votes','id','New Comments'];
         page_size = 100 # default
         query = request.args.get('query')
         # DEPRECATED: may eventually be adapted to return all pages one at a time if it helps page render speed
         if request.args.get('page_size'):
             return get_page_resp(request)
+        elif request.args.get('offset'):
+            return get_remaining(request)
         else:            
             for record in base.get_all(formula=query):
+                # only return desired fields
+                for field in fields_to_del:
+                    if field in record['fields']:
+                        del record['fields'][field]
                 results.append(record['fields'])
             print('returning ' + str(len(results)) + ' results')
             return json.dumps(results)
         # return json.dumps(base.get_all(formula=query, page_size=page_size))
 
     if request.method == 'POST':
-        print('resquest with args ', json.dumps(request.form))
+        print('request with args ', json.dumps(request.form))
+        # add exception handling here
         record_id = request.form.get('id')
+        record = base.get(record_id)
         fields = {}
+
+        # Ratings are deprecated
         if request.form.get('Rating'):
             fields = {'Rating': float(request.form.get('Rating')), 'Votes': int(request.form.get('Votes'))}
         elif request.form.get('Comment'):
-            record = base.get(record_id)
-            if 'Comments' in record['fields']:
-                comments = record['fields']['Comments'] + ', '
-            else:
-                comments = ''
-            comments = comments + request.form.get('Comment')
-            fields = {'Comments': comments}
+            fields = post_comment(record, 'Comment')
 
-        # this may become the new default so we can review comments
+        # this is the new default so we can review comments before they go live
         elif request.form.get('New Comment'):
-            record = base.get(record_id)
-            if 'New Comments' in record['fields']:
-                comments = record['fields']['New Comments'] + ', '
-            else:
-                comments = ''
-            comments = comments + request.form.get('New Comment')
-            fields = {'New Comments': comments}
+           fields = post_comment(record, 'New Comment')
+
         print('updating ', str(record_id), ' with ', json.dumps(fields))
         return json.dumps(base.update(record_id, fields))
 
-### TODO: add function descriptions ###
+# Post a comment to Airtable for the given record
+# 'field' can either be 'Comment' or 'New Comment'
+# @param {object} record - Airtable record to udpate
+# @param {string} key - used for retrieving comment from request
+#   and posting to Airtable
+def post_comment(record, key):
+    field_key = key + 's'
+    print("posting " + request.form.get(key) + " to " + field_key)
+    if field_key in record['fields']:
+        comments = record['fields'][field_key] + ', '
+    else:
+        comments = ''
+    comments = comments + request.form.get(key)
+    return {field_key: comments}
+
+# Return one page of results with the specificed page size and page number
+# This function is deprecated due to difficulties getting results one page at a time
+# when they've already been sorted on the site. We may bring this back as a way to 
+# speed up response time, by rendering the first page while other results are being returned
+# TODO: add exception handling, combine with get remaining
 def get_page_resp(request):
     page_size = request.args.get('page_size')
     page_num = 0 if request.args.get('page_num') is None else int(request.args.get('page_num'))
+    query = request.args.get('query')
     num_results = 0
+    results = []
+    fields_to_del = ['Grade Range','Rating','Search Text','Rating','Votes','id','New Comments'];
+
     print('querying base with page size ' + str(page_size) + ', page num ' + str(page_num))
     base_iter = base.get_iter(formula=query, page_size=page_size)
     for i, page in enumerate(base_iter):
         num_results += len(page)
         if i == page_num:
             for record in page:
+                 # only return desired fields
+                for field in fields_to_del:
+                    if field in record['fields']:
+                        del record['fields'][field]
                 results.append(record['fields'])
-    resp = jsonify(results)#Response(jsonify(records))
+    resp = jsonify(results)
     resp.headers['num_results']= num_results 
     resp.headers['Access-Control-Expose-Headers'] = 'num_results'
+    print('returning first page response')
     return resp
+
+#        combine with get_page_resp        #
+def get_remaining(request):
+    offset = request.args.get('offset')
+    query = request.args.get('query')
+    num_results = 0
+    results = []
+    fields_to_del = ['Grade Range','Rating','Search Text','Rating','Votes','id','New Comments'];
+
+    base_iter = base.get_iter(formula=query, page_size=offset)
+    for i, page in enumerate(base_iter):
+        if i != 0:
+            print('adding records from page ' + str(i))
+            # num_results += len(page)
+            for record in page:
+                 # only return desired fields
+                for field in fields_to_del:
+                    if field in record['fields']:
+                        del record['fields'][field]
+                results.append(record['fields'])
+    resp = jsonify(results)
+    resp.headers['offset'] = offset# resp.headers['num_results']= num_results 
+    resp.headers['Access-Control-Expose-Headers'] = 'offset'
+    # print('returning remaining with n=' + str(num_results))
+    return resp
+
+
+
+
+
+
+
 
 ### SPECIAL ###
 
