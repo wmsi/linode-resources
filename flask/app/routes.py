@@ -489,9 +489,9 @@ def multi_page_load(request, first):
 
     base_iter = base.get_iter(formula=query, page_size=page_size)
     for i, page in enumerate(base_iter):
+        num_results += len(page)
         if (i == 0 if first else i != 0):
             print('adding records from page ' + str(i))
-            # num_results += len(page)
             for record in page:
                  # only return desired fields
                 for field in fields_to_del:
@@ -499,8 +499,9 @@ def multi_page_load(request, first):
                         del record['fields'][field]
                 results.append(record['fields'])
     resp = jsonify(results)
-    resp.headers['offset'] = page_size # resp.headers['num_results']= num_results 
-    resp.headers['Access-Control-Expose-Headers'] = 'offset'
+    resp.headers['page_size'] = page_size 
+    resp.headers['num_results']= num_results 
+    resp.headers['Access-Control-Expose-Headers'] = 'page_size,num_results'
     # print('returning remaining with n=' + str(num_results))
     return resp
 
