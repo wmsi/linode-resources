@@ -426,7 +426,7 @@ def status():
 
 ####################################### STEM Resource ROUTES #######################################
 # These routes were added starting 1/19/20 to handle secure Airtable API requests for the STEM resource site
-# These may eventually be transferred to a serverless HTTP Proxy like Gloud Cloud Functions
+# These may eventually be transferred to a serverless HTTP Proxy like Cloud Cloud Functions
 @app.route("/airtable", methods=['POST','GET'])
 def airtable():
     if request.method == 'GET':
@@ -434,11 +434,8 @@ def airtable():
         fields_to_del = ['Grade Range','Rating','Search Text','Rating','Votes','id','New Comments'];
         page_size = 100 # default
         query = request.args.get('query')
-        # DEPRECATED: may eventually be adapted to return all pages one at a time if it helps page render speed
-        if request.args.get('page_size'):
-            return multi_page_load(request, True)
-        elif request.args.get('offset'):
-            return multi_page_load(request, False)
+        if request.args.get('offset'):
+            return multi_page_load(request)
         else:            
             for record in base.get_all(formula=query):
                 # only return desired fields
@@ -474,14 +471,9 @@ def airtable():
 # This helps front end speed, by allowing the site to load page 1
 # of results then store the rest
 # @param {object} request - HTTP Request
-# @param {boolean} first - True for the first page, False for remaining results
 # @returns {object} repsonse object to be returned from view
-
-def multi_page_load(request, first):
-    if(first):
-        page_size = request.args.get('page_size')
-    else:
-        page_size = request.args.get('offset')
+def multi_page_load(request):
+    page_size = request.args.get('page_size')
     query = request.args.get('query')
     num_results = 0
     results = []
@@ -490,14 +482,15 @@ def multi_page_load(request, first):
     base_iter = base.get_iter(formula=query, page_size=page_size)
     for i, page in enumerate(base_iter):
         num_results += len(page)
-        if (i == 0 if first else i != 0):
-            print('adding records from page ' + str(i))
+        if ((i == 0) if request.args.get('offset') == 'false' else (i != 0)):
+            # print('adding records from page ' + str(i))
             for record in page:
                  # only return desired fields
                 for field in fields_to_del:
                     if field in record['fields']:
                         del record['fields'][field]
                 results.append(record['fields'])
+
     resp = jsonify(results)
     resp.headers['page_size'] = page_size 
     resp.headers['num_results']= num_results 
@@ -506,10 +499,10 @@ def multi_page_load(request, first):
     return resp
 
 # Post a comment to Airtable for the given record
-# 'field' can either be 'Comment' or 'New Comment'
+# 'field_key' can either be 'Comments' or 'New Comments'
 # @param {object} record - Airtable record to udpate
-# @param {string} key - used for retrieving comment from request
-#   and posting to Airtable
+# @param {string} key - (value of either 'Comment' or 'New Comment') used for 
+#       retrieving comment from request and posting to Airtable 
 def post_comment(record, key):
     field_key = key + 's'
     print("posting " + request.form.get(key) + " to " + field_key)
@@ -520,11 +513,12 @@ def post_comment(record, key):
     comments = comments + request.form.get(key)
     return {field_key: comments}
 
+
+# DEPRECATED due to separate multi_page_load function and difficulties sorting
 # Return one page of results with the specificed page size and page number
 # This function is deprecated due to difficulties getting results one page at a time
 # when they've already been sorted on the site. We may bring this back as a way to 
 # speed up response time, by rendering the first page while other results are being returned
-# TODO: add exception handling 
 def get_page_resp(request):
     page_size = request.args.get('page_size')
     page_num = 0 if request.args.get('page_num') is None else int(request.args.get('page_num'))
